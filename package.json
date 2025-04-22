@@ -88,6 +88,7 @@
     "@types/webpack-env": "^1.18.0",
     "@typescript-eslint/eslint-plugin": "^5.59.0",
     "@typescript-eslint/parser": "^5.59.0",
+    "autoprefixer": "^10.4.21",
     "eslint": "^8.38.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-config-react-app": "^7.0.1",
@@ -98,9 +99,12 @@
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "immutable": "^4.3.0",
+    "postcss": "^8.5.3",
+    "postcss-loader": "^8.1.1",
     "prettier": "^2.8.7",
     "prettier-eslint-cli": "^7.1.0",
     "react-error-overlay": "6.0.11",
+    "tailwindcss": "3",
     "typescript": "^5.0.4"
   }
 }
