@@ -77,7 +77,7 @@ const MainCard = forwardRef(
             top: '50%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
-            width: { xs: `calc( 100% - 50px)`, sm: 'auto' },
+            width: { xs: `calc( 100% - 50px)`, sm: 'auto', xl: '100vw' },
             '& .MuiCardContent-root': {
               overflowY: 'auto',
               minHeight: 'auto',

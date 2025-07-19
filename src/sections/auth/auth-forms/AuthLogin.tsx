@@ -162,7 +162,7 @@ const AuthLogin = () => {
               )}
               <Grid item xs={12}>
                 <AnimateButton>
-                  <Button disableElevation disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained" color="primary">
+                  <Button size="large" type="submit" fullWidth className="bg-blue-500 text-white hover:bg-sky-400 hover:text-white">
                     Login
                   </Button>
                 </AnimateButton>

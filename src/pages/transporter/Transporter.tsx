@@ -3,14 +3,21 @@ import { Box, Button, Grid, Stack } from '@mui/material';
 import SkeletonProductPlaceholder from 'components/cards/skeleton/ProductPlaceholder';
 import UniversalDialog from 'components/popup/UniversalDialog';
 import AddTransporter from 'components/transporter/AddTransporter';
-import TransportTable from 'components/transporter/TransportTable';
 
 import { useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { TUniversalDialogProps } from 'types/types.UniversalDialog';
-
+import TransportTable from 'components/transporter/TransportTable';
+import { useQuery } from '@tanstack/react-query';
+import TransporterServiceInstance from 'services/transporter.services';
 const Transporter = () => {
   const [isLoading, setLoading] = useState(true);
+  const [transporterData, setTransporterData] = useState();
+  const [page, setPage] = useState<number>(0);
+  const [limit, setLimit] = useState<number>(20);
+  const [count, setCount] = useState<number>(0);
+
+  // -------------- Add transporter page pop up --------------
   const [transporterFormPopup, setTransporterFormPopup] = useState<TUniversalDialogProps>({
     action: {
       open: false,
@@ -20,7 +27,7 @@ const Transporter = () => {
     data: { existingData: {}, isEditMode: false }
   });
 
-  //-------------------handlers---------------
+  //-------------------handlers-------------------
   const handleTogglePopup = async (id?: string) => {
     if (transporterFormPopup.action.open === true) {
       // refetchTransporterData();
@@ -35,10 +42,24 @@ const Transporter = () => {
     });
   };
 
+  // -----------useQuery-----------
+  const { data: transporter, refetch: refetchTransporterAllData } = useQuery({
+    queryKey: ['transporters_data', page, limit],
+    queryFn: async () => {
+      setLoading(true);
+      const response = await TransporterServiceInstance.getAllTransporter(page, limit);
+      return response;
+    }
+  });
+
   //---------------useeffect--------------
   useEffect(() => {
-    setLoading(false);
-  }, []);
+    if (transporter) {
+      setTransporterData(transporter.data);
+      setCount(transporter.total);
+      setLoading(false);
+    }
+  }, [transporter]);
 
   return (
     <>
@@ -46,7 +67,7 @@ const Transporter = () => {
         <Grid container spacing={2.5}>
           <Grid item xs={12}>
             <Stack alignItems={'end'} sx={{ p: 1 }} spacing={2} textAlign={'center'} style={{ width: '100%' }}>
-              <Button onClick={() => handleTogglePopup()} sx={{ textAlign: 'center' }} variant="contained">
+              <Button onClick={() => handleTogglePopup()} sx={{ textAlign: 'center' }} variant="outlined">
                 Add Transport
               </Button>
             </Stack>
@@ -60,13 +81,21 @@ const Transporter = () => {
                   </Grid>
                 ))
               ) : (
-                <TransportTable />
+                <TransportTable
+                  data={transporterData || []}
+                  limit={limit}
+                  setLimit={setLimit}
+                  page={page}
+                  setPage={setPage}
+                  count={count}
+                  refetchTransporterAllData={refetchTransporterAllData}
+                />
               )}
             </Grid>
           </Grid>
         </Grid>
       </Box>
-      {/* -----------Universal dialog for open appointment steper----------------*/}
+      {/* -----------Universal dialog for open add transport page----------------*/}
       {!!transporterFormPopup && transporterFormPopup.action.open && (
         <UniversalDialog
           action={{ ...transporterFormPopup.action }}

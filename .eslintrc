@@ -5,7 +5,6 @@
   "parserOptions": {
     "project": "./tsconfig.json"
   },
-  "files": ["postcss.config.js"],
   "settings": {
     "import/resolver": {
       "node": {
@@ -67,11 +66,10 @@
     {
       "files": ["tailwind.config.js"],
       "parserOptions": {
-        "project": "./tsconfig.json"  // Optional: if you want to specify a separate tsconfig for tailwind.config.js
+        "project": "./tsconfig.json"  
       },
       "rules": {
-        // Disable TypeScript-specific rules for tailwind.config.js if necessary
-        "@typescript-eslint/no-var-requires": "off"  // Example rule to disable for this file
+        "@typescript-eslint/no-var-requires": "off"  
       }
     }
   ]
