@@ -1,5 +1,5 @@
 // action - state management
-import { REGISTER, LOGIN, LOGOUT } from './actions';
+import { REGISTER, LOGIN, LOGOUT, INIT } from './actions';
 
 // types
 import { AuthProps, AuthActionProps } from 'types/auth';
@@ -15,6 +15,15 @@ export const initialState: AuthProps = {
 
 const auth = (state = initialState, action: AuthActionProps) => {
   switch (action.type) {
+    case INIT: {
+      const { isLoggedIn, user } = action.payload!;
+      return {
+        ...state,
+        isInitialized: true,
+        isLoggedIn,
+        user
+      };
+    }
     case REGISTER: {
       const { user } = action.payload!;
       return {

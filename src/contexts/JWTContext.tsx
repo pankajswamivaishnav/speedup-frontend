@@ -58,7 +58,7 @@ export const JWTProvider = ({ children }: { children: React.ReactElement }) => {
         if (serviceToken && verifyToken(serviceToken)) {
           setSession(serviceToken);
           const response = await axios.get('/api/v1/auth/me');
-          const { user } = response.data;
+          const { user } = response.data.data;
           dispatch({
             type: LOGIN,
             payload: {
@@ -131,7 +131,6 @@ export const JWTProvider = ({ children }: { children: React.ReactElement }) => {
   const resetPassword = async (email: string) => {};
 
   const updateProfile = () => {};
-
   if (state.isInitialized !== undefined && !state.isInitialized) {
     return <Loader />;
   }

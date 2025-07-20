@@ -22,6 +22,7 @@ import { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import TransporterServiceInstance from 'services/transporter.services';
 import { TUniversalDialogProps } from 'types/types.UniversalDialog';
+import AddTransporter from './AddTransporter';
 
 // ===========================|| DATA WIDGET - PROJECT TABLE CARD ||=========================== //
 
@@ -57,21 +58,21 @@ const TransportTable = ({
       open: false,
       maxWidth: 'md'
     },
-    title: 'Transporter Detail',
+    title: 'Transporter Details',
     data: { existingData: {}, isEditMode: false }
   });
 
   //-------------------handlers-------------------
-  const handleTransporterDetailTogglePopup = async () => {
+  const handleTransporterDetailTogglePopup = async (transporterData?: any) => {
     if (transporterDetailsPopup.action.open === true) {
       // refetchTransporterData();
     }
     setTransporterDetailsPopup((prev: any) => {
       return {
         ...prev,
-        data: { isEditMode: false, existingData: {} },
+        data: { isEditMode: false, existingData: { transporterData } },
         action: { ...prev.action, open: !prev.action.open },
-        title: <FormattedMessage id="Transporter Detail" />
+        title: <FormattedMessage id="Transporter Details" />
       };
     });
   };
@@ -123,7 +124,7 @@ const TransportTable = ({
                   <TableCell align="right" sx={{ pr: 3 }}>
                     {row.officeNumber}
                   </TableCell>
-                  <TableCell align="right" onClick={handleTransporterDetailTogglePopup}>
+                  <TableCell align="right" onClick={() => handleTransporterDetailTogglePopup(row)}>
                     <Tooltip title="full-details">
                       <IconButton>
                         <EyeOutlined className="text-blue-500" />
@@ -161,7 +162,12 @@ const TransportTable = ({
           title={transporterDetailsPopup.title}
           hasPrimaryButton={false}
         >
-          <h1>Details Page</h1>
+          <AddTransporter
+            onClose={() => handleTransporterDetailTogglePopup()}
+            isEditMode={true}
+            existingData={transporterDetailsPopup.data.existingData}
+            isDisable={true}
+          />
         </UniversalDialog>
       )}
     </>

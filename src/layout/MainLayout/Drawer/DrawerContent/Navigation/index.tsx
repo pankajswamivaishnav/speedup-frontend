@@ -6,7 +6,7 @@ import { Box, Typography, useMediaQuery } from '@mui/material';
 
 // project import
 import NavGroup from './NavGroup';
-import menuItem from 'menu-items';
+import menuItem, { driverMenuItems, superAdminMenuItems, transporterMenuItems, vendorMenuItems } from 'menu-items';
 
 import { useSelector } from 'store';
 import useConfig from 'hooks/useConfig';
@@ -15,6 +15,8 @@ import { HORIZONTAL_MAX_ITEM } from 'config';
 // types
 import { NavItemType } from 'types/menu';
 import { MenuOrientation } from 'types/config';
+import useAuth from 'hooks/useAuth';
+import NavItem from './NavItem';
 
 // ==============================|| DRAWER CONTENT - NAVIGATION ||============================== //
 
@@ -28,12 +30,31 @@ const Navigation = () => {
   const [selectedItems, setSelectedItems] = useState<string | undefined>('');
   const [selectedLevel, setSelectedLevel] = useState<number>(0);
   const [menuItems, setMenuItems] = useState<{ items: NavItemType[] }>({ items: [] });
-
+  const { user } = useAuth();
   useLayoutEffect(() => {
-    setMenuItems(menuItem);
+    switch (user?.role) {
+      case 'super_admin':
+        setMenuItems(superAdminMenuItems);
+        break;
+
+      case 'transporter':
+        setMenuItems(transporterMenuItems);
+        break;
+
+      case 'driver':
+        setMenuItems(driverMenuItems);
+        break;
+
+      case 'vendor':
+        setMenuItems(vendorMenuItems);
+        break;
+
+      default:
+        setMenuItems(menuItem);
+    }
+
     // eslint-disable-next-line
   }, [menuItem]);
-
   const isHorizontal = menuOrientation === MenuOrientation.HORIZONTAL && !downLG;
 
   const lastItem = isHorizontal ? HORIZONTAL_MAX_ITEM : null;
@@ -53,7 +74,6 @@ const Navigation = () => {
       icon: item.icon
     }));
   }
-
   const navGroups = menuItems.items.slice(0, lastItemIndex + 1).map((item) => {
     switch (item.type) {
       case 'group':
@@ -69,6 +89,12 @@ const Navigation = () => {
             lastItemId={lastItemId}
             item={item}
           />
+        );
+      case 'item':
+        return (
+          <p className="flex flex-col">
+            <NavItem key={item.id} item={item} level={1} />{' '}
+          </p>
         );
       default:
         return (

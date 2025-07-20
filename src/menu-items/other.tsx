@@ -2,7 +2,7 @@
 import { FormattedMessage } from 'react-intl';
 
 // assets
-import { ChromeOutlined, QuestionOutlined, DeploymentUnitOutlined, UserAddOutlined } from '@ant-design/icons';
+import { ChromeOutlined, QuestionOutlined, DeploymentUnitOutlined, UserAddOutlined, StockOutlined } from '@ant-design/icons';
 
 // type
 import { NavItemType } from 'types/menu';
@@ -12,7 +12,8 @@ const icons = {
   ChromeOutlined,
   QuestionOutlined,
   DeploymentUnitOutlined,
-  UserAddOutlined
+  UserAddOutlined,
+  StockOutlined
 };
 
 // ==============================|| MENU ITEMS - SUPPORT ||============================== //
@@ -31,7 +32,7 @@ const other: NavItemType = {
     },
     {
       id: 'transporter',
-      title: <FormattedMessage id="transporter" />,
+      title: <FormattedMessage id="Transporters" />,
       type: 'item',
       url: '/transporter',
       icon: icons.UserAddOutlined
@@ -46,6 +47,22 @@ const other: NavItemType = {
       target: true
     }
   ]
+};
+
+export const drivers: NavItemType = {
+  id: 'drivers',
+  title: <FormattedMessage id="Drivers" />,
+  type: 'item',
+  url: '/drivers',
+  icon: icons.StockOutlined
+};
+
+export const transporters: NavItemType = {
+  id: 'transporters',
+  title: <FormattedMessage id="Transporters" />,
+  type: 'item',
+  url: '/transporters',
+  icon: icons.UserAddOutlined
 };
 
 export default other;

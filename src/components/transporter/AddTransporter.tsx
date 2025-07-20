@@ -1,7 +1,7 @@
 import { Button, FormHelperText, TextField } from '@mui/material';
 import { Box, Grid, InputLabel, Stack } from '@mui/material';
 import { Formik } from 'formik';
-import { RefObject } from 'react';
+import { RefObject, useEffect, useState } from 'react';
 import { useOutletContext } from 'react-router';
 import TransporterServiceInstance from 'services/transporter.services';
 
@@ -12,35 +12,51 @@ function useInputRef() {
 const AddTransporter = ({
   onClose,
   isEditMode,
-  existingData
+  existingData,
+  isDisable
 }: {
   onClose: (refetchData?: boolean) => void;
   isEditMode: Boolean;
   existingData: any;
+  isDisable?: boolean;
 }) => {
   const inputRef = useInputRef();
+  const [initialValues, setInitialValues] = useState({
+    transportName: '',
+    transporter_first_name: '',
+    transporter_last_name: '',
+    mobileNumber: '',
+    officeNumber: '',
+    registrationNumber: '',
+    gstNumber: '',
+    transportAddress: '',
+    faithLine: '',
+    panCardNumber: '',
+    pinCode: '',
+    city: '',
+    state: '',
+    country: 'INDIA',
+    email: '',
+    password: '',
+    role: 'transporter',
+    avatar: { public_id: '', url: '' }
+  });
+
+  // Pre-fill form when editing
+  useEffect(() => {
+    if (isEditMode && existingData) {
+      setInitialValues({
+        ...initialValues,
+        ...existingData.transporterData
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isEditMode, existingData]);
   return (
     <>
       <Formik
-        initialValues={{
-          transportName: '',
-          transporter_first_name: '',
-          transporter_last_name: '',
-          mobileNumber: '',
-          officeNumber: '',
-          registrationNumber: '',
-          gstNumber: '',
-          transportAddress: '',
-          faithLine: '',
-          panCardNumber: '',
-          pinCode: '',
-          city: '',
-          state: '',
-          country: 'INDIA',
-          email: '',
-          password: '',
-          avatar: { public_id: '', url: '' }
-        }}
+        initialValues={initialValues}
+        enableReinitialize={true}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
           setSubmitting(true);
           let response;
@@ -74,6 +90,7 @@ const AddTransporter = ({
                       placeholder="Transport Name"
                       autoFocus
                       inputRef={inputRef}
+                      disabled={isDisable}
                     />
                     {touched.transportName && errors.transportName && (
                       <FormHelperText error id="transporter-name-helper">
@@ -97,6 +114,7 @@ const AddTransporter = ({
                       placeholder="Transport email"
                       autoFocus
                       inputRef={inputRef}
+                      disabled={isDisable}
                     />
                     {touched.email && errors.email && (
                       <FormHelperText error id="transporter-email-helper">
@@ -120,6 +138,7 @@ const AddTransporter = ({
                       placeholder="First Name"
                       autoFocus
                       inputRef={inputRef}
+                      disabled={isDisable}
                     />
                     {touched.transporter_first_name && errors.transporter_first_name && (
                       <FormHelperText error id="transporter-first-name-helper">
@@ -143,6 +162,7 @@ const AddTransporter = ({
                       placeholder="Last Name"
                       autoFocus
                       inputRef={inputRef}
+                      disabled={isDisable}
                     />
                     {touched.transporter_last_name && errors.transporter_last_name && (
                       <FormHelperText error id="transporter-last-name-helper">
@@ -165,6 +185,7 @@ const AddTransporter = ({
                       onChange={handleChange}
                       id="transporter-mobile-number"
                       placeholder="Mobile Number"
+                      disabled={isDisable}
                     />
                     {touched.mobileNumber && errors.mobileNumber && (
                       <FormHelperText error id="transporter-mobile-number-helper">
@@ -187,6 +208,7 @@ const AddTransporter = ({
                       onChange={handleChange}
                       id="transporter-mobile-number"
                       placeholder="Mobile Number"
+                      disabled={isDisable}
                     />
                     {touched.officeNumber && errors.officeNumber && (
                       <FormHelperText error id="transporter-office-number-helper">
@@ -208,6 +230,7 @@ const AddTransporter = ({
                       onBlur={handleBlur}
                       onChange={handleChange}
                       placeholder="Enter Registration Number"
+                      disabled={isDisable}
                     />
                     {touched.registrationNumber && errors.registrationNumber && (
                       <FormHelperText error id="transporter-registration-number-helper">
@@ -227,6 +250,7 @@ const AddTransporter = ({
                       onBlur={handleBlur}
                       onChange={handleChange}
                       placeholder="Enter GST Number"
+                      disabled={isDisable}
                     />
                     {touched.gstNumber && errors.gstNumber && (
                       <FormHelperText error id="transporter-gst-number">
@@ -248,6 +272,7 @@ const AddTransporter = ({
                       onBlur={handleBlur}
                       onChange={handleChange}
                       placeholder="Address"
+                      disabled={isDisable}
                     />
                     {touched.transportAddress && errors.transportAddress && (
                       <FormHelperText error id="transporter-address-helper">
@@ -267,6 +292,7 @@ const AddTransporter = ({
                       onBlur={handleBlur}
                       onChange={handleChange}
                       placeholder="Last Name"
+                      disabled={isDisable}
                     />
                     {touched.faithLine && errors.faithLine && (
                       <FormHelperText error id="transporter-faithline-helper">
@@ -289,6 +315,7 @@ const AddTransporter = ({
                       onChange={handleChange}
                       id="panCardNumber"
                       placeholder="Pan Card Number"
+                      disabled={isDisable}
                     />
                     {touched.panCardNumber && errors.panCardNumber && (
                       <FormHelperText error id="personal-pan-number-helper">
@@ -311,6 +338,7 @@ const AddTransporter = ({
                       onChange={handleChange}
                       id="pinCode"
                       placeholder="Enter Pin Code"
+                      disabled={isDisable}
                     />
                     {touched.pinCode && errors.pinCode && (
                       <FormHelperText error id="personal-pin-code-helper">
@@ -333,6 +361,7 @@ const AddTransporter = ({
                       onChange={handleChange}
                       id="city"
                       placeholder="Enter city"
+                      disabled={isDisable}
                     />
                     {touched.city && errors.city && (
                       <FormHelperText error id="transporter-city-helper">
@@ -355,6 +384,7 @@ const AddTransporter = ({
                       onChange={handleChange}
                       id="state"
                       placeholder="Enter state"
+                      disabled={isDisable}
                     />
                     {touched.state && errors.state && (
                       <FormHelperText error id="transporter-city-helper">
@@ -377,6 +407,7 @@ const AddTransporter = ({
                       onChange={handleChange}
                       id="country"
                       placeholder="Enter Country"
+                      disabled={isDisable}
                     />
                     {touched.country && errors.country && (
                       <FormHelperText error id="transporter-country-helper">
@@ -399,6 +430,7 @@ const AddTransporter = ({
                       onChange={handleChange}
                       id="password"
                       placeholder="Enter Password"
+                      disabled={isDisable}
                     />
                     {touched.password && errors.password && (
                       <FormHelperText error id="transporter-password-helper">
@@ -407,16 +439,20 @@ const AddTransporter = ({
                     )}
                   </Stack>
                 </Grid>
-                <Grid item xs={12}>
-                  <Stack direction="row" justifyContent="flex-end" alignItems="center" spacing={2} sx={{ mt: 2.5 }}>
-                    <Button variant="outlined" color="secondary">
-                      Cancel
-                    </Button>
-                    <Button type="submit" variant="outlined">
-                      Save
-                    </Button>
-                  </Stack>
-                </Grid>
+                {isDisable ? (
+                  ''
+                ) : (
+                  <Grid item xs={12}>
+                    <Stack direction="row" justifyContent="flex-end" alignItems="center" spacing={2} sx={{ mt: 2.5 }}>
+                      <Button variant="outlined" color="secondary">
+                        Cancel
+                      </Button>
+                      <Button type="submit" variant="outlined">
+                        Save
+                      </Button>
+                    </Stack>
+                  </Grid>
+                )}
               </Grid>
             </Box>
           </form>
