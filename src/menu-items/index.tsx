@@ -1,6 +1,6 @@
 // types
 import { NavItemType } from 'types/menu';
-import other, { transporters, drivers } from './other';
+import other, { transporters, drivers, bilty } from './other';
 
 // ==============================|| MENU ITEMS ||============================== //
 
@@ -9,11 +9,11 @@ const menuItems: { items: NavItemType[] } = {
 };
 
 export const superAdminMenuItems: { items: NavItemType[] } = {
-  items: [transporters, drivers]
+  items: [transporters, drivers, bilty]
 };
 
 export const transporterMenuItems: { items: NavItemType[] } = {
-  items: []
+  items: [drivers, bilty]
 };
 
 export const driverMenuItems: { items: NavItemType[] } = {

@@ -7,50 +7,50 @@ import { FormattedMessage } from 'react-intl';
 import { TUniversalDialogProps } from 'types/types.UniversalDialog';
 import { useQuery } from '@tanstack/react-query';
 import TransporterServiceInstance from 'services/transporter.services';
-import DriverTable from 'components/drivers/DriverTable';
-import AddDriver from 'components/drivers/AddDriver';
 import useAuth from 'hooks/useAuth';
-import DriverServiceInstance from 'services/driver.services';
+import BiltyTable from 'components/Bilty/BiltyTable';
+import AddBilty from 'components/Bilty/AddBilty';
+import biltyServiceInstance from 'services/bilty.services';
 
-const Drivers = () => {
+const Bilty = () => {
   const [isLoading, setLoading] = useState(true);
-  const [driversData, setDriversData] = useState();
+  const [biltyData, setbiltyData] = useState();
   const [transportData, setTransportData] = useState<{ label: string; id: string }[]>([]);
   const [page, setPage] = useState<number>(0);
   const [limit, setLimit] = useState<number>(20);
   const [count, setCount] = useState<number>(0);
   const { user } = useAuth();
   // -------------- Add transporter page pop up --------------
-  const [driverFormPopup, setDriverFormPopup] = useState<TUniversalDialogProps>({
+  const [biltyFormPopup, setBiltyFormPopup] = useState<TUniversalDialogProps>({
     action: {
       open: false,
       maxWidth: 'lg'
     },
-    title: 'Add Driver',
+    title: 'Make Bilty',
     data: { existingData: {}, isEditMode: false }
   });
 
   //-------------------handlers-------------------
   const handleTogglePopup = async (id?: string) => {
-    if (driverFormPopup.action.open === true) {
+    if (biltyFormPopup.action.open === true) {
       // refetchTransporterData();
     }
-    setDriverFormPopup((prev: any) => {
+    setBiltyFormPopup((prev: any) => {
       return {
         ...prev,
         data: { isEditMode: false, existingData: {} },
         action: { ...prev.action, open: !prev.action.open },
-        title: <FormattedMessage id="Add Driver" />
+        title: <FormattedMessage id="Make Bilty" />
       };
     });
   };
 
   // -----------useQuery-----------
-  const { data: drivers, refetch: refetchDrivers } = useQuery({
-    queryKey: ['drivers_data', page, limit],
+  const { data: bilties, refetch: refetchBilties } = useQuery({
+    queryKey: ['bilties_data', page, limit],
     queryFn: async () => {
       setLoading(true);
-      const response = await DriverServiceInstance.getAllDrivers(page, limit);
+      const response = await biltyServiceInstance.getAllbilties(page, limit);
       return response;
     }
   });
@@ -74,13 +74,13 @@ const Drivers = () => {
   //---------------useeffect--------------
   useEffect(() => {
     fetchData();
-    if (drivers) {
-      setDriversData(drivers.data);
-      setCount(drivers.total);
+    if (bilties) {
+      setbiltyData(bilties.data);
+      setCount(bilties.total);
       setLoading(false);
     }
     // eslint-disable-next-line
-  }, [drivers]);
+  }, [bilties]);
 
   return (
     <>
@@ -89,7 +89,7 @@ const Drivers = () => {
           <Grid item xs={12}>
             <Stack alignItems={'end'} sx={{ p: 1 }} spacing={2} textAlign={'center'} style={{ width: '100%' }}>
               <Button onClick={() => handleTogglePopup()} sx={{ textAlign: 'center' }} variant="outlined">
-                Add Driver
+                Make Bilty
               </Button>
             </Stack>
           </Grid>
@@ -102,14 +102,14 @@ const Drivers = () => {
                   </Grid>
                 ))
               ) : (
-                <DriverTable
-                  data={driversData || []}
+                <BiltyTable
+                  data={biltyData || []}
                   limit={limit}
                   setLimit={setLimit}
                   page={page}
                   setPage={setPage}
                   count={count}
-                  refetchTransporterAllData={refetchDrivers}
+                  refetchTransporterAllData={refetchBilties}
                 />
               )}
             </Grid>
@@ -117,17 +117,17 @@ const Drivers = () => {
         </Grid>
       </Box>
       {/* -----------Universal dialog for open add transport page----------------*/}
-      {!!driverFormPopup && driverFormPopup.action.open && (
+      {!!biltyFormPopup && biltyFormPopup.action.open && (
         <UniversalDialog
-          action={{ ...driverFormPopup.action }}
+          action={{ ...biltyFormPopup.action }}
           onClose={handleTogglePopup}
-          title={driverFormPopup.title}
+          title={biltyFormPopup.title}
           hasPrimaryButton={false}
         >
-          <AddDriver
+          <AddBilty
             onClose={() => handleTogglePopup()}
-            isEditMode={driverFormPopup?.data?.isEditMode}
-            existingData={driverFormPopup?.data.existingData}
+            isEditMode={biltyFormPopup?.data?.isEditMode}
+            existingData={biltyFormPopup?.data.existingData}
             data={transportData}
           />
         </UniversalDialog>
@@ -136,4 +136,4 @@ const Drivers = () => {
   );
 };
 
-export default Drivers;
+export default Bilty;

@@ -25,7 +25,7 @@ class TransporterServices {
       store.dispatch(
         openSnackbar({
           open: true,
-          message: 'Something went wrong!',
+          message: error,
           variant: 'alert',
           alert: {
             color: 'error'

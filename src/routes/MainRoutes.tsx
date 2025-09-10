@@ -16,6 +16,7 @@ const MaintenanceComingSoon = Loadable(lazy(() => import('pages/maintenance/comi
 const SamplePage = Loadable(lazy(() => import('pages/extra-pages/sample-page')));
 const TransportPage = Loadable(lazy(() => import('pages/transporter/Transporter')));
 const DriversPage = Loadable(lazy(() => import('pages/driver/Drivers')));
+const BiltyPage = Loadable(lazy(() => import('pages/Bilty/Bilty')));
 // ==============================|| MAIN ROUTING ||============================== //
 
 const MainRoutes = {
@@ -40,6 +41,10 @@ const MainRoutes = {
         {
           path: 'drivers',
           element: <DriversPage />
+        },
+        {
+          path: 'bilties',
+          element: <BiltyPage />
         }
       ]
     },

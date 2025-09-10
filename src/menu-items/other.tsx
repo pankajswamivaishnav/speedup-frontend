@@ -2,7 +2,14 @@
 import { FormattedMessage } from 'react-intl';
 
 // assets
-import { ChromeOutlined, QuestionOutlined, DeploymentUnitOutlined, UserAddOutlined, StockOutlined } from '@ant-design/icons';
+import {
+  ChromeOutlined,
+  QuestionOutlined,
+  DeploymentUnitOutlined,
+  UserAddOutlined,
+  StockOutlined,
+  FilePdfOutlined
+} from '@ant-design/icons';
 
 // type
 import { NavItemType } from 'types/menu';
@@ -13,7 +20,8 @@ const icons = {
   QuestionOutlined,
   DeploymentUnitOutlined,
   UserAddOutlined,
-  StockOutlined
+  StockOutlined,
+  FilePdfOutlined
 };
 
 // ==============================|| MENU ITEMS - SUPPORT ||============================== //
@@ -63,6 +71,14 @@ export const transporters: NavItemType = {
   type: 'item',
   url: '/transporters',
   icon: icons.UserAddOutlined
+};
+
+export const bilty: NavItemType = {
+  id: 'bilties',
+  title: <FormattedMessage id="Bilty" />,
+  type: 'item',
+  url: '/bilties',
+  icon: icons.FilePdfOutlined
 };
 
 export default other;
