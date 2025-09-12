@@ -11,6 +11,8 @@ import useAuth from 'hooks/useAuth';
 import BiltyTable from 'components/Bilty/BiltyTable';
 import AddBilty from 'components/Bilty/AddBilty';
 import biltyServiceInstance from 'services/bilty.services';
+import MainCard from 'components/MainCard';
+// import PieChart from 'components/shared/PieChart';
 
 const Bilty = () => {
   const [isLoading, setLoading] = useState(true);
@@ -84,38 +86,50 @@ const Bilty = () => {
 
   return (
     <>
-      <Box sx={{ display: 'flex' }}>
-        <Grid container spacing={2.5}>
-          <Grid item xs={12}>
-            <Stack alignItems={'end'} sx={{ p: 1 }} spacing={2} textAlign={'center'} style={{ width: '100%' }}>
-              <Button onClick={() => handleTogglePopup()} sx={{ textAlign: 'center' }} variant="outlined">
-                Make Bilty
-              </Button>
-            </Stack>
-          </Grid>
-          <Grid item xs={12}>
-            <Grid container spacing={3}>
-              {isLoading ? (
-                [1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
-                  <Grid item xs={12} key={item}>
-                    <SkeletonProductPlaceholder />
-                  </Grid>
-                ))
-              ) : (
-                <BiltyTable
-                  data={biltyData || []}
-                  limit={limit}
-                  setLimit={setLimit}
-                  page={page}
-                  setPage={setPage}
-                  count={count}
-                  refetchTransporterAllData={refetchBilties}
-                />
-              )}
+      <Grid className="space-y-5">
+        <Box sx={{ display: 'flex' }} className="px-6">
+          <Grid container spacing={2.5}>
+            <Grid item xs={12}>
+              <Stack alignItems={'end'} sx={{ p: 1 }} spacing={2} textAlign={'center'} style={{ width: '100%' }}>
+                <Button onClick={() => handleTogglePopup()} sx={{ textAlign: 'center' }} variant="outlined">
+                  Make Bilty
+                </Button>
+              </Stack>
+            </Grid>
+            <Grid item xs={12}>
+              <Grid container spacing={3}>
+                {isLoading ? (
+                  [1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
+                    <Grid item xs={12} key={item}>
+                      <SkeletonProductPlaceholder />
+                    </Grid>
+                  ))
+                ) : (
+                  <BiltyTable
+                    data={biltyData || []}
+                    limit={limit}
+                    setLimit={setLimit}
+                    page={page}
+                    setPage={setPage}
+                    count={count}
+                    refetchTransporterAllData={refetchBilties}
+                  />
+                )}
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
-      </Box>
+        </Box>
+        {/*  bilties Reports  */}
+
+        <Box className="pr-6">
+          <MainCard title="Reports" className="w-full">
+            <div className="flex flex-col xl:flex-row gap-6">
+              <div className="flex-1">{/* <PieChart /> */} first</div>
+              <div className="flex-1">First right grid</div>
+            </div>
+          </MainCard>
+        </Box>
+      </Grid>
       {/* -----------Universal dialog for open add transport page----------------*/}
       {!!biltyFormPopup && biltyFormPopup.action.open && (
         <UniversalDialog

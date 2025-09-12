@@ -42,7 +42,7 @@ const BiltyTable = ({
   setLimit: React.Dispatch<React.SetStateAction<number>>;
   page: number;
   count: number;
-  refetchTransporterAllData: () => void;
+  refetchTransporterAllData?: () => void;
 }) => {
   const handleChangePage = (event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null, newPage: number) => {
     setPage(newPage);
@@ -81,7 +81,7 @@ const BiltyTable = ({
   const handleDeleteTransporter = async (id: string) => {
     try {
       const deleteTransport = await TransporterServiceInstance.deleteTransporter(id);
-      if (deleteTransport) {
+      if (deleteTransport && refetchTransporterAllData) {
         refetchTransporterAllData();
       }
     } catch (error) {

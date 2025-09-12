@@ -4,7 +4,7 @@ import axiosServices from 'utils/axios';
 // import axiosServices from 'utils/axios';
 
 class VendorServices {
-  // Get All Drivers
+  // Get All vendor
   async getAllVendors(page: Number, limit: Number) {
     try {
       const response = await axiosServices.get(`api/v1/admin/totalVendors?page=${page}&limit=${limit}`);
@@ -27,7 +27,7 @@ class VendorServices {
     }
   }
 
-  // Create Driver
+  // Create vendor
   async createVendor(data: any) {
     try {
       const response = await axiosServices.post(`api/v1/vendor/createVendor`, data);
@@ -57,6 +57,40 @@ class VendorServices {
           close: true
         })
       );
+    }
+  }
+
+  // delete vendor
+  async deleteVendor(id: string) {
+    try {
+      const response = await axiosServices.delete(`api/v1/admin/deleteVendor/${id}`);
+      if (response.status) {
+        store.dispatch(
+          openSnackbar({
+            open: true,
+            message: 'Transporter deleted successfully',
+            variant: 'alert',
+            alert: {
+              color: 'success'
+            },
+            close: true
+          })
+        );
+        return response.data.data;
+      }
+    } catch (error) {
+      store.dispatch(
+        openSnackbar({
+          open: true,
+          message: 'Transporter not deleted',
+          variant: 'alert',
+          alert: {
+            color: 'error'
+          },
+          close: true
+        })
+      );
+      throw error;
     }
   }
 }

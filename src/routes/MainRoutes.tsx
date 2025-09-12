@@ -5,6 +5,7 @@ import MainLayout from 'layout/MainLayout';
 import CommonLayout from 'layout/CommonLayout';
 import Loadable from 'components/Loadable';
 import AuthGuard from 'utils/route-guard/AuthGuard';
+import Vendor from 'pages/vendor/Vendor';
 
 // pages routing
 const MaintenanceError = Loadable(lazy(() => import('pages/maintenance/404')));
@@ -45,6 +46,10 @@ const MainRoutes = {
         {
           path: 'bilties',
           element: <BiltyPage />
+        },
+        {
+          path: 'vendors',
+          element: <Vendor />
         }
       ]
     },

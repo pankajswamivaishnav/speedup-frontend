@@ -8,7 +8,8 @@ import {
   DeploymentUnitOutlined,
   UserAddOutlined,
   StockOutlined,
-  FilePdfOutlined
+  FilePdfOutlined,
+  UserOutlined
 } from '@ant-design/icons';
 
 // type
@@ -21,7 +22,8 @@ const icons = {
   DeploymentUnitOutlined,
   UserAddOutlined,
   StockOutlined,
-  FilePdfOutlined
+  FilePdfOutlined,
+  UserOutlined
 };
 
 // ==============================|| MENU ITEMS - SUPPORT ||============================== //
@@ -79,6 +81,14 @@ export const bilty: NavItemType = {
   type: 'item',
   url: '/bilties',
   icon: icons.FilePdfOutlined
+};
+
+export const vendors: NavItemType = {
+  id: 'vendors',
+  title: <FormattedMessage id="Vendors" />,
+  type: 'item',
+  url: '/vendors',
+  icon: icons.UserOutlined
 };
 
 export default other;
