@@ -12,7 +12,8 @@ import BiltyTable from 'components/Bilty/BiltyTable';
 import AddBilty from 'components/Bilty/AddBilty';
 import biltyServiceInstance from 'services/bilty.services';
 import MainCard from 'components/MainCard';
-// import PieChart from 'components/shared/PieChart';
+import PieChart from 'components/shared/PieChart';
+import BarChart from 'components/shared/BarChart';
 
 const Bilty = () => {
   const [isLoading, setLoading] = useState(true);
@@ -122,10 +123,14 @@ const Bilty = () => {
         {/*  bilties Reports  */}
 
         <Box className="pr-6">
-          <MainCard title="Reports" className="w-full">
+          <MainCard title="Turn-Over Reports" className="w-full">
             <div className="flex flex-col xl:flex-row gap-6">
-              <div className="flex-1">{/* <PieChart /> */} first</div>
-              <div className="flex-1">First right grid</div>
+              <div className="flex-1">
+                <PieChart />
+              </div>
+              <div className="flex-1">
+                <BarChart />
+              </div>
             </div>
           </MainCard>
         </Box>

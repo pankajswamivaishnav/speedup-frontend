@@ -5,6 +5,7 @@ import { List, ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
 
 // assets
 import { EditOutlined, ProfileOutlined, LogoutOutlined, UserOutlined, WalletOutlined } from '@ant-design/icons';
+import { useNavigate } from 'react-router';
 
 // ==============================|| HEADER PROFILE - PROFILE TAB ||============================== //
 
@@ -14,8 +15,12 @@ interface Props {
 
 const ProfileTab = ({ handleLogout }: Props) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const navigate = useNavigate();
   const handleListItemClick = (event: React.MouseEvent<HTMLDivElement>, index: number) => {
     setSelectedIndex(index);
+    if (index === 1) {
+      navigate('/profile');
+    }
   };
 
   return (
