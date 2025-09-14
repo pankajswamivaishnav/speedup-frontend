@@ -10,13 +10,14 @@ import { TUniversalDialogProps } from 'types/types.UniversalDialog';
 import TransportTable from 'components/transporter/TransportTable';
 import { useQuery } from '@tanstack/react-query';
 import TransporterServiceInstance from 'services/transporter.services';
+import Search from 'layout/MainLayout/Header/HeaderContent/Search';
 const Transporter = () => {
   const [isLoading, setLoading] = useState(true);
   const [transporterData, setTransporterData] = useState();
   const [page, setPage] = useState<number>(0);
   const [limit, setLimit] = useState<number>(20);
   const [count, setCount] = useState<number>(0);
-
+  const [query, setQuery] = useState<string>('');
   // -------------- Add transporter page pop up --------------
   const [transporterFormPopup, setTransporterFormPopup] = useState<TUniversalDialogProps>({
     action: {
@@ -44,10 +45,10 @@ const Transporter = () => {
 
   // -----------useQuery-----------
   const { data: transporter, refetch: refetchTransporterAllData } = useQuery({
-    queryKey: ['transporters_data', page, limit],
+    queryKey: ['transporters_data', page, limit, query],
     queryFn: async () => {
       setLoading(true);
-      const response = await TransporterServiceInstance.getAllTransporter(page, limit);
+      const response = await TransporterServiceInstance.getAllTransporter(page, limit, query);
       return response;
     }
   });
@@ -60,16 +61,19 @@ const Transporter = () => {
       setLoading(false);
     }
   }, [transporter]);
-
+  console.log('query', query);
   return (
     <>
       <Box sx={{ display: 'flex' }}>
         <Grid container spacing={2.5}>
-          <Grid item xs={12}>
+          <Grid item xs={12} className="flex flex-col xl:flex-row">
             <Stack alignItems={'end'} sx={{ p: 1 }} spacing={2} textAlign={'center'} style={{ width: '100%' }}>
               <Button onClick={() => handleTogglePopup()} sx={{ textAlign: 'center' }} variant="outlined">
                 Add Transport
               </Button>
+            </Stack>
+            <Stack alignItems={'start'} sx={{ p: 1 }} spacing={2}>
+              <Search setQuery={setQuery} />
             </Stack>
           </Grid>
           <Grid item xs={12}>

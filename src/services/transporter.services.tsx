@@ -37,9 +37,9 @@ class TransporterServices {
     }
   }
   // Get All Transport
-  async getAllTransporter(page: Number, limit: Number) {
+  async getAllTransporter(page: Number, limit: Number, query?: string) {
     try {
-      const response = await axiosServices.get(`api/v1/admin/totalTransporter?page=${page}&limit=${limit}`);
+      const response = await axiosServices.get(`api/v1/admin/totalTransporter?page=${page}&limit=${limit}&filter=${query}`);
       if (response.status) {
         return response.data;
       }

@@ -5,6 +5,8 @@
   "dependencies": {
     "@ant-design/colors": "^7.0.0",
     "@ant-design/icons": "5.x",
+    "@cloudinary/react": "^1.14.3",
+    "@cloudinary/url-gen": "^1.22.0",
     "@emotion/cache": "^11.10.7",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",

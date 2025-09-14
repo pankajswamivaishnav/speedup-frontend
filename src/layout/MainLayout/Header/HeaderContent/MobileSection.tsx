@@ -23,7 +23,8 @@ const MobileSection = () => {
 
   const [open, setOpen] = useState(false);
   const anchorRef = useRef<any>(null);
-
+  const [query, setQuery] = useState<string>('');
+  console.log('query mobile section', query);
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
   };
@@ -89,7 +90,7 @@ const MobileSection = () => {
               <ClickAwayListener onClickAway={handleClose}>
                 <AppBar color="inherit">
                   <Toolbar>
-                    <Search />
+                    <Search setQuery={setQuery} />
                     <Profile />
                   </Toolbar>
                 </AppBar>

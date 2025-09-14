@@ -11,6 +11,7 @@ import DriverTable from 'components/drivers/DriverTable';
 import AddDriver from 'components/drivers/AddDriver';
 import useAuth from 'hooks/useAuth';
 import DriverServiceInstance from 'services/driver.services';
+import Search from 'layout/MainLayout/Header/HeaderContent/Search';
 
 const Drivers = () => {
   const [isLoading, setLoading] = useState(true);
@@ -20,6 +21,8 @@ const Drivers = () => {
   const [limit, setLimit] = useState<number>(20);
   const [count, setCount] = useState<number>(0);
   const { user } = useAuth();
+  const [query, setQuery] = useState<string>('');
+  console.log('query driver', query);
   // -------------- Add transporter page pop up --------------
   const [driverFormPopup, setDriverFormPopup] = useState<TUniversalDialogProps>({
     action: {
@@ -86,11 +89,14 @@ const Drivers = () => {
     <>
       <Box sx={{ display: 'flex' }}>
         <Grid container spacing={2.5}>
-          <Grid item xs={12}>
+          <Grid item xs={12} className="flex flex-col xl:flex-row">
             <Stack alignItems={'end'} sx={{ p: 1 }} spacing={2} textAlign={'center'} style={{ width: '100%' }}>
               <Button onClick={() => handleTogglePopup()} sx={{ textAlign: 'center' }} variant="outlined">
                 Add Driver
               </Button>
+            </Stack>
+            <Stack alignItems={'start'} sx={{ p: 1 }} spacing={2}>
+              <Search setQuery={setQuery} />
             </Stack>
           </Grid>
           <Grid item xs={12}>

@@ -14,12 +14,13 @@ export type UserProfile = {
   name?: string;
   role?: string;
   tier?: string;
+
 };
 
 export interface AuthProps {
   isLoggedIn: boolean;
   isInitialized?: boolean;
-  user?: UserProfile | null;
+  user?: any | null;
   token?: string | null;
 }
 
@@ -31,7 +32,7 @@ export interface AuthActionProps {
 export interface InitialLoginContextProps {
   isLoggedIn: boolean;
   isInitialized?: boolean;
-  user?: UserProfile | null | undefined;
+  user?: any | null | undefined;
 }
 
 export interface JWTDataProps {
@@ -41,7 +42,7 @@ export interface JWTDataProps {
 export type JWTContextType = {
   isLoggedIn: boolean;
   isInitialized?: boolean;
-  user?: UserProfile | null | undefined;
+  user?: any | null | undefined;
   logout: () => void;
   login: (email: string, password: string) => Promise<void>;
   register: (email: string, password: string, firstName: string, lastName: string) => Promise<void>;

@@ -14,6 +14,7 @@ import biltyServiceInstance from 'services/bilty.services';
 import MainCard from 'components/MainCard';
 import PieChart from 'components/shared/PieChart';
 import BarChart from 'components/shared/BarChart';
+import Search from 'layout/MainLayout/Header/HeaderContent/Search';
 
 const Bilty = () => {
   const [isLoading, setLoading] = useState(true);
@@ -23,6 +24,8 @@ const Bilty = () => {
   const [limit, setLimit] = useState<number>(20);
   const [count, setCount] = useState<number>(0);
   const { user } = useAuth();
+  const [query, setQuery] = useState<string>('');
+  console.log('query bilty', query);
   // -------------- Add transporter page pop up --------------
   const [biltyFormPopup, setBiltyFormPopup] = useState<TUniversalDialogProps>({
     action: {
@@ -89,12 +92,15 @@ const Bilty = () => {
     <>
       <Grid className="space-y-5">
         <Box sx={{ display: 'flex' }} className="px-6">
-          <Grid container spacing={2.5}>
-            <Grid item xs={12}>
+          <Grid container spacing={2.5} className="flex flex-col xl:flex-row">
+            <Grid item xs={12} className="flex flex-col xl:flex-row">
               <Stack alignItems={'end'} sx={{ p: 1 }} spacing={2} textAlign={'center'} style={{ width: '100%' }}>
                 <Button onClick={() => handleTogglePopup()} sx={{ textAlign: 'center' }} variant="outlined">
                   Make Bilty
                 </Button>
+              </Stack>
+              <Stack alignItems={'start'} sx={{ p: 1 }} spacing={2}>
+                <Search setQuery={setQuery} />
               </Stack>
             </Grid>
             <Grid item xs={12}>

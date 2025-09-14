@@ -5,8 +5,10 @@ import { Box, FormControl, InputAdornment, OutlinedInput } from '@mui/material';
 import { SearchOutlined } from '@ant-design/icons';
 
 // ==============================|| HEADER CONTENT - SEARCH ||============================== //
-
-const Search = () => (
+type SearchProps = {
+  setQuery: (value: string) => void;
+};
+const Search: React.FC<SearchProps> = ({ setQuery }) => (
   <Box sx={{ width: '100%', ml: { xs: 0, md: 1 } }}>
     <FormControl sx={{ width: { xs: '100%', md: 224 } }}>
       <OutlinedInput
@@ -21,7 +23,8 @@ const Search = () => (
         inputProps={{
           'aria-label': 'weight'
         }}
-        placeholder="Ctrl + K"
+        placeholder="Search..."
+        onChange={(e) => setQuery(e.target.value)}
       />
     </FormControl>
   </Box>

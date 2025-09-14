@@ -1,5 +1,6 @@
 import { Button, FormHelperText, TextField } from '@mui/material';
 import { Box, Grid, InputLabel, Stack } from '@mui/material';
+import UploadImage from 'components/shared/UploadImage';
 import { Formik } from 'formik';
 import { RefObject, useEffect, useState } from 'react';
 import { useOutletContext } from 'react-router';
@@ -21,6 +22,7 @@ const AddTransporter = ({
   isDisable?: boolean;
 }) => {
   const inputRef = useInputRef();
+  const [image, setImage] = useState<{ public_id: string; url: string } | null>(null);
   const [initialValues, setInitialValues] = useState({
     transportName: '',
     transporter_first_name: '',
@@ -59,6 +61,10 @@ const AddTransporter = ({
         enableReinitialize={true}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
           setSubmitting(true);
+          if (image) {
+            values.avatar.public_id = image?.public_id;
+            values.avatar.url = image.url;
+          }
           let response;
           if (isEditMode) {
             response = await await TransporterServiceInstance.createTransporter(values);
@@ -438,6 +444,9 @@ const AddTransporter = ({
                       </FormHelperText>
                     )}
                   </Stack>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <UploadImage setImage={setImage} />
                 </Grid>
                 {isDisable ? (
                   ''

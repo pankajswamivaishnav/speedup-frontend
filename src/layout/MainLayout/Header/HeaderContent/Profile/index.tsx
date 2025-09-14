@@ -15,7 +15,6 @@ import IconButton from 'components/@extended/IconButton';
 import useAuth from 'hooks/useAuth';
 
 // assets
-import avatar1 from 'assets/images/users/avatar-1.png';
 import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
 
 // types
@@ -51,8 +50,8 @@ function a11yProps(index: number) {
 const Profile = () => {
   const theme = useTheme();
   const navigate = useNavigate();
-
   const { logout, user } = useAuth();
+
   const handleLogout = async () => {
     try {
       await logout();
@@ -107,7 +106,7 @@ const Profile = () => {
         onClick={handleToggle}
       >
         <Stack direction="row" spacing={2} alignItems="center" sx={{ p: 0.5 }}>
-          <Avatar alt="profile user" src={avatar1} size="xs" />
+          <Avatar alt="profile user" src={user?.avatar?.url} size="xs" />
           <Typography variant="subtitle1">{user?.name}</Typography>
         </Stack>
       </ButtonBase>
@@ -148,11 +147,19 @@ const Profile = () => {
                     <Grid container justifyContent="space-between" alignItems="center">
                       <Grid item>
                         <Stack direction="row" spacing={1.25} alignItems="center">
-                          <Avatar alt="profile user" src={avatar1} sx={{ width: 32, height: 32 }} />
+                          <Avatar alt="profile user" src={user?.avatar?.url} sx={{ width: 32, height: 32 }} />
                           <Stack>
-                            <Typography variant="h6">{user?.name}</Typography>
+                            <Typography variant="h6">{`${user?.transporter_first_name} ${user?.transporter_last_name}`}</Typography>
                             <Typography variant="body2" color="textSecondary">
-                              UI/UX Designer
+                              {user?.role === 'super_admin'
+                                ? 'SUPER ADMIN'
+                                : user?.role === 'transporter'
+                                ? 'Transporter'
+                                : user?.role === 'driver'
+                                ? 'Driver'
+                                : user?.role === 'vendor'
+                                ? 'Vendor'
+                                : 'UNKNOWN'}
                             </Typography>
                           </Stack>
                         </Stack>

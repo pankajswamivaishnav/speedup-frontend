@@ -70,7 +70,7 @@ const SamplePage = () => {
     fetchData();
     // eslint-disable-next-line
   }, []);
-  console.log(driversCount, vendorsCount, biltiesCount);
+  console.log('transportersData', transportersData);
   return (
     <MainCard title="Super Admin Page">
       <Typography variant="body2">

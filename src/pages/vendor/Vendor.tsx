@@ -10,12 +10,15 @@ import { useQuery } from '@tanstack/react-query';
 import VendorTable from 'components/vendor/VendorTable';
 import VendorServiceInstance from 'services/vendor.services';
 import AddVendor from 'components/vendor/AddVendor';
+import Search from 'layout/MainLayout/Header/HeaderContent/Search';
 const Vendor = () => {
   const [isLoading, setLoading] = useState(true);
   const [vendorData, setVendorData] = useState();
   const [page, setPage] = useState<number>(0);
   const [limit, setLimit] = useState<number>(20);
   const [count, setCount] = useState<number>(0);
+  const [query, setQuery] = useState<string>('');
+  console.log('query vendor', query);
 
   // -------------- Add transporter page pop up --------------
   const [vendorFormPopup, setVendorFormPopup] = useState<TUniversalDialogProps>({
@@ -65,11 +68,14 @@ const Vendor = () => {
     <>
       <Box sx={{ display: 'flex' }}>
         <Grid container spacing={2.5}>
-          <Grid item xs={12}>
+          <Grid item xs={12} className="flex flex-col xl:flex-row">
             <Stack alignItems={'end'} sx={{ p: 1 }} spacing={2} textAlign={'center'} style={{ width: '100%' }}>
               <Button onClick={() => handleTogglePopup()} sx={{ textAlign: 'center' }} variant="outlined">
                 Add Vendor
               </Button>
+            </Stack>
+            <Stack alignItems={'start'} sx={{ p: 1 }} spacing={2}>
+              <Search setQuery={setQuery} />
             </Stack>
           </Grid>
           <Grid item xs={12}>
