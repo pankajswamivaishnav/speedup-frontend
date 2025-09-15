@@ -5,9 +5,9 @@ import axiosServices from 'utils/axios';
 
 class VendorServices {
   // Get All vendor
-  async getAllVendors(page: Number, limit: Number) {
+  async getAllVendors(page: Number, limit: Number, query?: String) {
     try {
-      const response = await axiosServices.get(`api/v1/admin/totalVendors?page=${page}&limit=${limit}`);
+      const response = await axiosServices.get(`api/v1/admin/totalVendors?page=${page}&limit=${limit}&filter=${query}`);
       if (response.status) {
         return response.data;
       }

@@ -53,10 +53,10 @@ const Bilty = () => {
 
   // -----------useQuery-----------
   const { data: bilties, refetch: refetchBilties } = useQuery({
-    queryKey: ['bilties_data', page, limit],
+    queryKey: ['bilties_data', page, limit, query],
     queryFn: async () => {
       setLoading(true);
-      const response = await biltyServiceInstance.getAllbilties(page, limit);
+      const response = await biltyServiceInstance.getAllbilties(page, limit, query);
       return response;
     }
   });

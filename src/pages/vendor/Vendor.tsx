@@ -18,7 +18,6 @@ const Vendor = () => {
   const [limit, setLimit] = useState<number>(20);
   const [count, setCount] = useState<number>(0);
   const [query, setQuery] = useState<string>('');
-  console.log('query vendor', query);
 
   // -------------- Add transporter page pop up --------------
   const [vendorFormPopup, setVendorFormPopup] = useState<TUniversalDialogProps>({
@@ -47,10 +46,10 @@ const Vendor = () => {
 
   // -----------useQuery-----------
   const { data: vendors, refetch: refetchVendorAllData } = useQuery({
-    queryKey: ['vendors_data', page, limit],
+    queryKey: ['vendors_data', page, limit, query],
     queryFn: async () => {
       setLoading(true);
-      const response = await VendorServiceInstance.getAllVendors(page, limit);
+      const response = await VendorServiceInstance.getAllVendors(page, limit, query);
       return response;
     }
   });

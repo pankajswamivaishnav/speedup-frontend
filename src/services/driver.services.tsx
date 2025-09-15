@@ -5,9 +5,9 @@ import axiosServices from 'utils/axios';
 
 class DriverServices {
   // Get All Drivers
-  async getAllDrivers(page: Number, limit: Number) {
+  async getAllDrivers(page: Number, limit: Number, query?: String) {
     try {
-      const response = await axiosServices.get(`api/v1/getAllDrivers?page=${page}&limit=${limit}`);
+      const response = await axiosServices.get(`api/v1/getAllDrivers?page=${page}&limit=${limit}&filter=${query}`);
       if (response.status) {
         return response.data;
       }

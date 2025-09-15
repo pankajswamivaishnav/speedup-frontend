@@ -4,9 +4,9 @@ import axiosServices from 'utils/axios';
 
 class BiltyServices {
   // Get All Bilty
-  async getAllbilties(page: Number, limit: Number) {
+  async getAllbilties(page: Number, limit: Number, query?: string) {
     try {
-      const response = await axiosServices.get(`api/v1/getAllBilties?page=${page}&limit${limit}`);
+      const response = await axiosServices.get(`api/v1/getAllBilties?page=${page}&limit${limit}&filter=${query}`);
       if (response.status) {
         return response.data;
       }

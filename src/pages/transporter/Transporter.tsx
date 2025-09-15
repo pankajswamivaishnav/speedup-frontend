@@ -61,7 +61,6 @@ const Transporter = () => {
       setLoading(false);
     }
   }, [transporter]);
-  console.log('query', query);
   return (
     <>
       <Box sx={{ display: 'flex' }}>

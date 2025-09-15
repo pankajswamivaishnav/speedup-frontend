@@ -22,7 +22,6 @@ const Drivers = () => {
   const [count, setCount] = useState<number>(0);
   const { user } = useAuth();
   const [query, setQuery] = useState<string>('');
-  console.log('query driver', query);
   // -------------- Add transporter page pop up --------------
   const [driverFormPopup, setDriverFormPopup] = useState<TUniversalDialogProps>({
     action: {
@@ -50,10 +49,10 @@ const Drivers = () => {
 
   // -----------useQuery-----------
   const { data: drivers, refetch: refetchDrivers } = useQuery({
-    queryKey: ['drivers_data', page, limit],
+    queryKey: ['drivers_data', page, limit, query],
     queryFn: async () => {
       setLoading(true);
-      const response = await DriverServiceInstance.getAllDrivers(page, limit);
+      const response = await DriverServiceInstance.getAllDrivers(page, limit, query);
       return response;
     }
   });
