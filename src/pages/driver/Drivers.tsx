@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Stack } from '@mui/material';
+import { Box, Button, Grid } from '@mui/material';
 
 import SkeletonProductPlaceholder from 'components/cards/skeleton/ProductPlaceholder';
 import UniversalDialog from 'components/popup/UniversalDialog';
@@ -12,6 +12,7 @@ import AddDriver from 'components/drivers/AddDriver';
 import useAuth from 'hooks/useAuth';
 import DriverServiceInstance from 'services/driver.services';
 import Search from 'layout/MainLayout/Header/HeaderContent/Search';
+import { exportToCsv } from 'utils/download';
 
 const Drivers = () => {
   const [isLoading, setLoading] = useState(true);
@@ -45,6 +46,45 @@ const Drivers = () => {
         title: <FormattedMessage id="Add Driver" />
       };
     });
+  };
+
+  const handleDownload = async () => {
+    try {
+      const columns = [
+        { header: 'Bilty Number', key: 'biltyNumber', width: 25 },
+        { header: 'Transport ID', key: 'transportId', width: 30 },
+        { header: 'GST Number', key: 'gstNumber', width: 20 },
+        { header: 'Registration Number', key: 'registrationNumber', width: 20 },
+        { header: 'Transporter Number', key: 'transporterNumber', width: 20 },
+        { header: 'Truck Number', key: 'truckNumber', width: 18 },
+        { header: 'From', key: 'from', width: 18 },
+        { header: 'To', key: 'to', width: 18 },
+        { header: 'Driver Name', key: 'driverName', width: 22 },
+        { header: 'Driver Phone', key: 'driverPhoneNumber', width: 20 },
+        { header: 'Date', key: 'date', width: 25 },
+
+        // sender information
+        { header: 'Sender Name', key: 'senderInformation.name', width: 22 },
+        { header: 'Sender Number', key: 'senderInformation.number', width: 20 },
+
+        // receiver information
+        { header: 'Receiver Name', key: 'receiverInformation.name', width: 22 },
+        { header: 'Receiver Number', key: 'receiverInformation.number', width: 20 },
+
+        { header: 'Goods Category', key: 'goodsCategory', width: 25 },
+        { header: 'Weight', key: 'weight', width: 15 },
+        { header: 'Truck Charge', key: 'truckCharge', width: 20 },
+        { header: 'Advance Payment', key: 'advancePayment', width: 20 },
+        { header: 'Remaining Payment', key: 'remainingPayment', width: 22 },
+        { header: 'Broking Charge', key: 'brokingCharge', width: 20 },
+        { header: 'Payment Type', key: 'paymentType', width: 18 },
+        { header: 'Is Deleted', key: 'isDeleted', width: 12 }
+      ];
+
+      if (driversData) {
+        await exportToCsv(columns, driversData, 'drivers');
+      }
+    } catch (error) {}
   };
 
   // -----------useQuery-----------
@@ -88,16 +128,23 @@ const Drivers = () => {
     <>
       <Box sx={{ display: 'flex' }}>
         <Grid container spacing={2.5}>
-          <Grid item xs={12} className="flex flex-col xl:flex-row">
-            <Stack alignItems={'end'} sx={{ p: 1 }} spacing={2} textAlign={'center'} style={{ width: '100%' }}>
-              <Button onClick={() => handleTogglePopup()} sx={{ textAlign: 'center' }} variant="outlined">
+          <Grid item xs={12} className="flex flex-col xl:flex-row justify-between items-center gap-2 mb-5">
+            {/* Left side - Buttons */}
+            <div className="flex gap-2">
+              <Button onClick={() => handleTogglePopup()} variant="outlined">
                 Add Driver
               </Button>
-            </Stack>
-            <Stack alignItems={'start'} sx={{ p: 1 }} spacing={2}>
+              <Button onClick={() => handleDownload()} variant="outlined">
+                Download Drivers
+              </Button>
+            </div>
+
+            {/* Right side - Search */}
+            <div className="w-full xl:w-auto pr-5">
               <Search setQuery={setQuery} />
-            </Stack>
+            </div>
           </Grid>
+
           <Grid item xs={12}>
             <Grid container spacing={3}>
               {isLoading ? (

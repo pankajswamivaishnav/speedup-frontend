@@ -9,7 +9,10 @@ import {
   UserAddOutlined,
   StockOutlined,
   FilePdfOutlined,
-  UserOutlined
+  UserOutlined,
+  IdcardOutlined,
+  TruckOutlined,
+  ShopOutlined
 } from '@ant-design/icons';
 
 // type
@@ -23,7 +26,10 @@ const icons = {
   UserAddOutlined,
   StockOutlined,
   FilePdfOutlined,
-  UserOutlined
+  UserOutlined,
+  IdcardOutlined,
+  TruckOutlined,
+  ShopOutlined
 };
 
 // ==============================|| MENU ITEMS - SUPPORT ||============================== //
@@ -89,6 +95,30 @@ export const vendors: NavItemType = {
   type: 'item',
   url: '/vendors',
   icon: icons.UserOutlined
+};
+
+export const transportCards: NavItemType = {
+  id: 'transportCards',
+  title: <FormattedMessage id="Transport Cards" />,
+  type: 'item',
+  url: '/transport-cards',
+  icon: icons.IdcardOutlined
+};
+
+export const driverCards: NavItemType = {
+  id: 'driverCards',
+  title: <FormattedMessage id="Driver Cards" />,
+  type: 'item',
+  url: '/driver-cards',
+  icon: icons.TruckOutlined
+};
+
+export const vendorCards: NavItemType = {
+  id: 'vendorCards',
+  title: <FormattedMessage id="Vendor Cards" />,
+  type: 'item',
+  url: '/vendor-cards',
+  icon: icons.ShopOutlined
 };
 
 export default other;

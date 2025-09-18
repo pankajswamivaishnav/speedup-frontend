@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Stack } from '@mui/material';
+import { Box, Button, Grid } from '@mui/material';
 
 import SkeletonProductPlaceholder from 'components/cards/skeleton/ProductPlaceholder';
 import UniversalDialog from 'components/popup/UniversalDialog';
@@ -11,6 +11,7 @@ import VendorTable from 'components/vendor/VendorTable';
 import VendorServiceInstance from 'services/vendor.services';
 import AddVendor from 'components/vendor/AddVendor';
 import Search from 'layout/MainLayout/Header/HeaderContent/Search';
+import { exportToCsv } from 'utils/download';
 const Vendor = () => {
   const [isLoading, setLoading] = useState(true);
   const [vendorData, setVendorData] = useState();
@@ -44,6 +45,28 @@ const Vendor = () => {
     });
   };
 
+  const handleDownload = async () => {
+    try {
+      const columns = [
+        { header: 'Vendor Name', key: 'vendorName', width: 25 },
+        { header: 'Phone Number', key: 'vendorPhoneNumber', width: 20 },
+        { header: 'Email', key: 'vendorEmail', width: 30 },
+        { header: 'Secondary Phone', key: 'vendorSecondaryPhoneNumber', width: 20 },
+        { header: 'Business', key: 'vendorBussiness', width: 25 },
+        { header: 'Address', key: 'vendorAddress', width: 40 },
+        { header: 'Pin Code', key: 'pinCode', width: 12 },
+        { header: 'City', key: 'city', width: 20 },
+        { header: 'State', key: 'state', width: 20 },
+        { header: 'Avatar URL', key: 'avatar.url', width: 40 },
+        { header: 'Is Deleted', key: 'isDeleted', width: 12 }
+      ];
+
+      if (vendorData) {
+        await exportToCsv(columns, vendorData, 'vendors');
+      }
+    } catch (error) {}
+  };
+
   // -----------useQuery-----------
   const { data: vendors, refetch: refetchVendorAllData } = useQuery({
     queryKey: ['vendors_data', page, limit, query],
@@ -62,21 +85,27 @@ const Vendor = () => {
       setLoading(false);
     }
   }, [vendors]);
-
   return (
     <>
       <Box sx={{ display: 'flex' }}>
         <Grid container spacing={2.5}>
-          <Grid item xs={12} className="flex flex-col xl:flex-row">
-            <Stack alignItems={'end'} sx={{ p: 1 }} spacing={2} textAlign={'center'} style={{ width: '100%' }}>
-              <Button onClick={() => handleTogglePopup()} sx={{ textAlign: 'center' }} variant="outlined">
+          <Grid item xs={12} className="flex flex-col xl:flex-row justify-between items-center gap-2 mb-5">
+            {/* Left Side - Buttons */}
+            <div className="flex gap-2">
+              <Button onClick={() => handleTogglePopup()} variant="outlined">
                 Add Vendor
               </Button>
-            </Stack>
-            <Stack alignItems={'start'} sx={{ p: 1 }} spacing={2}>
+              <Button onClick={() => handleDownload()} variant="outlined">
+                Download Vendors
+              </Button>
+            </div>
+
+            {/* Right Side - Search */}
+            <div className="w-full xl:w-auto">
               <Search setQuery={setQuery} />
-            </Stack>
+            </div>
           </Grid>
+
           <Grid item xs={12}>
             <Grid container spacing={3}>
               {isLoading ? (

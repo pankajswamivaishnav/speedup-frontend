@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Stack } from '@mui/material';
+import { Box, Button, Grid } from '@mui/material';
 
 import SkeletonProductPlaceholder from 'components/cards/skeleton/ProductPlaceholder';
 import UniversalDialog from 'components/popup/UniversalDialog';
@@ -11,6 +11,8 @@ import TransportTable from 'components/transporter/TransportTable';
 import { useQuery } from '@tanstack/react-query';
 import TransporterServiceInstance from 'services/transporter.services';
 import Search from 'layout/MainLayout/Header/HeaderContent/Search';
+import { exportToCsv } from 'utils/download';
+
 const Transporter = () => {
   const [isLoading, setLoading] = useState(true);
   const [transporterData, setTransporterData] = useState();
@@ -43,6 +45,38 @@ const Transporter = () => {
     });
   };
 
+  const handleDownload = async () => {
+    try {
+      const columns = [
+        { header: 'Avatar', key: 'avatar', width: 35 },
+        { header: 'ID', key: '_id', width: 35 },
+        { header: 'Transport Name', key: 'transportName', width: 30 },
+        { header: 'Transporter First Name', key: 'transporter_first_name', width: 30 },
+        { header: 'Transporter Last Name', key: 'transporter_last_name', width: 30 },
+        { header: 'Mobile Number', key: 'mobileNumber', width: 30 },
+        { header: 'Office Number', key: 'officeNumber', width: 30 },
+        { header: 'Registration Number', key: 'registrationNumber', width: 30 },
+        { header: 'GST Number', key: 'gstNumber', width: 30 },
+        { header: 'Transport Address', key: 'transportAddress', width: 30 },
+        { header: 'Faith Line', key: 'faithLine', width: 30 },
+        { header: 'PAN Card Number', key: 'panCardNumber', width: 30 },
+        { header: 'Pin Code', key: 'pinCode', width: 30 },
+        { header: 'City', key: 'city', width: 30 },
+        { header: 'State', key: 'state', width: 30 },
+        { header: 'Country', key: 'country', width: 30 },
+        { header: 'Email', key: 'email', width: 30 },
+        { header: 'Password', key: 'password', width: 30 },
+        { header: 'Is Deleted', key: 'isDeleted', width: 30 },
+        { header: 'Role', key: 'role', width: 30 },
+        { header: 'Version', key: '__v', width: 30 }
+      ];
+
+      if (transporterData) {
+        await exportToCsv(columns, transporterData, 'transporters');
+      }
+    } catch (error) {}
+  };
+
   // -----------useQuery-----------
   const { data: transporter, refetch: refetchTransporterAllData } = useQuery({
     queryKey: ['transporters_data', page, limit, query],
@@ -61,20 +95,28 @@ const Transporter = () => {
       setLoading(false);
     }
   }, [transporter]);
+
   return (
     <>
       <Box sx={{ display: 'flex' }}>
         <Grid container spacing={2.5}>
-          <Grid item xs={12} className="flex flex-col xl:flex-row">
-            <Stack alignItems={'end'} sx={{ p: 1 }} spacing={2} textAlign={'center'} style={{ width: '100%' }}>
-              <Button onClick={() => handleTogglePopup()} sx={{ textAlign: 'center' }} variant="outlined">
+          <Grid item xs={12} className="flex flex-col xl:flex-row justify-between items-center gap-2 mb-5">
+            {/* Left side - Buttons */}
+            <div className="flex gap-2">
+              <Button onClick={() => handleTogglePopup()} variant="outlined">
                 Add Transport
               </Button>
-            </Stack>
-            <Stack alignItems={'start'} sx={{ p: 1 }} spacing={2}>
+              <Button onClick={() => handleDownload()} variant="outlined">
+                Download Transporters
+              </Button>
+            </div>
+
+            {/* Right side - Search */}
+            <div className="w-full xl:w-auto">
               <Search setQuery={setQuery} />
-            </Stack>
+            </div>
           </Grid>
+
           <Grid item xs={12}>
             <Grid container spacing={3}>
               {isLoading ? (
