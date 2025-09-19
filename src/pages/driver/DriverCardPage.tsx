@@ -1,8 +1,42 @@
+import { Button, Grid } from '@mui/material';
 import MainCard from 'components/MainCard';
 import { VisitingCardProps } from 'components/cards/VisitingCard';
 import VisitingCardGrid from 'components/cards/VisitingCardGrid';
+import AddDriverCard from 'components/drivers/AddDriverCard';
+import UniversalDialog from 'components/popup/UniversalDialog';
+import Search from 'layout/MainLayout/Header/HeaderContent/Search';
+import { useState } from 'react';
+import { FormattedMessage } from 'react-intl';
+import { TUniversalDialogProps } from 'types/types.UniversalDialog';
 
 const DriverCardPage = () => {
+  const [query, setQuery] = useState<string>('');
+  console.log('query driver', query);
+  // -------------- Add transporter card pop up --------------
+  const [driverCardFormPopup, setDriverCardFormPopup] = useState<TUniversalDialogProps>({
+    action: {
+      open: false,
+      maxWidth: 'md'
+    },
+    title: 'Add Driver Card',
+    data: { existingData: {}, isEditMode: false }
+  });
+  console.log('query', query);
+
+  //-------------------handlers-------------------
+  const handleTogglePopup = async (id?: string) => {
+    if (driverCardFormPopup.action.open === true) {
+      // refetchTransporterData();
+    }
+    setDriverCardFormPopup((prev: any) => {
+      return {
+        ...prev,
+        data: { isEditMode: false, existingData: {} },
+        action: { ...prev.action, open: !prev.action.open },
+        title: <FormattedMessage id="Add Driver Card" />
+      };
+    });
+  };
   // Sample data for demonstration
   const sampleCards: VisitingCardProps[] = [
     {
@@ -81,8 +115,36 @@ const DriverCardPage = () => {
   return (
     <>
       <MainCard border={false} boxShadow sx={{ height: '100%' }}>
+        <Grid item xs={12} className="flex flex-col xl:flex-row justify-between items-center gap-2 mb-5">
+          {/* Left side - Buttons */}
+          <div className="flex gap-2">
+            <Button onClick={() => handleTogglePopup()} variant="outlined">
+              Add Card
+            </Button>
+          </div>
+
+          {/* Right side - Search */}
+          <div className="w-full xl:w-auto">
+            <Search setQuery={setQuery} />
+          </div>
+        </Grid>
         <VisitingCardGrid cards={sampleCards} title="Speed Up Professional Drivers" />
       </MainCard>
+      {/* -----------Universal dialog for open add driver card----------------*/}
+      {!!driverCardFormPopup && driverCardFormPopup.action.open && (
+        <UniversalDialog
+          action={{ ...driverCardFormPopup.action }}
+          onClose={handleTogglePopup}
+          title={driverCardFormPopup.title}
+          hasPrimaryButton={false}
+        >
+          <AddDriverCard
+            onClose={() => handleTogglePopup()}
+            isEditMode={driverCardFormPopup?.data?.isEditMode}
+            existingData={driverCardFormPopup?.data.existingData}
+          />
+        </UniversalDialog>
+      )}
     </>
   );
 };

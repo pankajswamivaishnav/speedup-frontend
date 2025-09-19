@@ -1,8 +1,42 @@
+import { Button, Divider, Grid } from '@mui/material';
 import MainCard from 'components/MainCard';
 import { VisitingCardProps } from 'components/cards/VisitingCard';
 import VisitingCardGrid from 'components/cards/VisitingCardGrid';
+import UniversalDialog from 'components/popup/UniversalDialog';
+import AddTransportCard from 'components/transporter/AddTransportCard';
+import Search from 'layout/MainLayout/Header/HeaderContent/Search';
+import { useState } from 'react';
+import { FormattedMessage } from 'react-intl';
+import { TUniversalDialogProps } from 'types/types.UniversalDialog';
 
 const TransportCardsPage = () => {
+  const [query, setQuery] = useState<string>('');
+
+  // -------------- Add transporter card pop up --------------
+  const [transportCardFormPopup, setTransportCardFormPopup] = useState<TUniversalDialogProps>({
+    action: {
+      open: false,
+      maxWidth: 'md'
+    },
+    title: 'Add Transport Card',
+    data: { existingData: {}, isEditMode: false }
+  });
+  console.log('query', query);
+
+  //-------------------handlers-------------------
+  const handleTogglePopup = async (id?: string) => {
+    if (transportCardFormPopup.action.open === true) {
+      // refetchTransporterData();
+    }
+    setTransportCardFormPopup((prev: any) => {
+      return {
+        ...prev,
+        data: { isEditMode: false, existingData: {} },
+        action: { ...prev.action, open: !prev.action.open },
+        title: <FormattedMessage id="Add Transport Card" />
+      };
+    });
+  };
   // Sample data for demonstration
   const sampleCards: VisitingCardProps[] = [
     {
@@ -78,11 +112,41 @@ const TransportCardsPage = () => {
       skills: ['JavaScript', 'React', 'Python', 'MongoDB', 'Express']
     }
   ];
+
   return (
     <>
       <MainCard border={false} boxShadow sx={{ height: '100%' }}>
+        <Grid item xs={12} className="flex flex-col xl:flex-row justify-between items-center gap-2 mb-5">
+          {/* Left side - Buttons */}
+          <div className="flex gap-2">
+            <Button onClick={() => handleTogglePopup()} variant="outlined">
+              Add Card
+            </Button>
+          </div>
+
+          {/* Right side - Search */}
+          <div className="w-full xl:w-auto">
+            <Search setQuery={setQuery} />
+          </div>
+        </Grid>
+        <Divider />
         <VisitingCardGrid cards={sampleCards} title="Our Speed Up Transporters" />
       </MainCard>
+      {/* -----------Universal dialog for open add transport card----------------*/}
+      {!!transportCardFormPopup && transportCardFormPopup.action.open && (
+        <UniversalDialog
+          action={{ ...transportCardFormPopup.action }}
+          onClose={handleTogglePopup}
+          title={transportCardFormPopup.title}
+          hasPrimaryButton={false}
+        >
+          <AddTransportCard
+            onClose={() => handleTogglePopup()}
+            isEditMode={transportCardFormPopup?.data?.isEditMode}
+            existingData={transportCardFormPopup?.data.existingData}
+          />
+        </UniversalDialog>
+      )}
     </>
   );
 };
