@@ -25,10 +25,12 @@ const AddDriver = ({
   const inputRef = useInputRef();
 
   const [initialValues, setInitialValues] = useState({
-    driverName: '',
-    driverPhoneNumber: '',
+    first_name: '',
+    last_name: '',
+    mobileNumber: '',
     truckNumber: '',
     address: '',
+    password: '',
     licenseNumber: '',
     transportId: ''
   });
@@ -68,24 +70,48 @@ const AddDriver = ({
               <Grid container spacing={3}>
                 <Grid item xs={12} sm={6} spacing={3}>
                   <Stack spacing={1.25}>
-                    <InputLabel htmlFor="driver-name">
-                      Driver Name <span style={{ color: 'red' }}>*</span>
+                    <InputLabel htmlFor="driver-first-name">
+                      Driver First Name <span style={{ color: 'red' }}>*</span>
                     </InputLabel>
                     <TextField
                       fullWidth
-                      id="driver-name"
-                      value={values.driverName}
-                      name="driverName"
+                      id="driver-first_name"
+                      value={values.first_name}
+                      name="first_name"
                       onBlur={handleBlur}
                       onChange={handleChange}
-                      placeholder="Driver Name"
+                      placeholder="Driver First Name"
                       autoFocus
                       inputRef={inputRef}
                       disabled={isDisable}
                     />
-                    {touched.driverName && errors.driverName && (
+                    {touched.first_name && errors.first_name && (
+                      <FormHelperText error id="driver-first-name-helper">
+                        {errors.first_name}
+                      </FormHelperText>
+                    )}
+                  </Stack>
+                </Grid>
+                <Grid item xs={12} sm={6} spacing={3}>
+                  <Stack spacing={1.25}>
+                    <InputLabel htmlFor="driver-last-name">
+                      Driver Last Name <span style={{ color: 'red' }}>*</span>
+                    </InputLabel>
+                    <TextField
+                      fullWidth
+                      id="driver-last-name"
+                      value={values.last_name}
+                      name="last_name"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      placeholder="Driver Last Name"
+                      autoFocus
+                      inputRef={inputRef}
+                      disabled={isDisable}
+                    />
+                    {touched.last_name && errors.last_name && (
                       <FormHelperText error id="driver-name-helper">
-                        {errors.driverName}
+                        {errors.last_name}
                       </FormHelperText>
                     )}
                   </Stack>
@@ -98,8 +124,8 @@ const AddDriver = ({
                     <TextField
                       fullWidth
                       id="driver-phone-number"
-                      value={values.driverPhoneNumber}
-                      name="driverPhoneNumber"
+                      value={values.mobileNumber}
+                      name="mobileNumber"
                       onBlur={handleBlur}
                       onChange={handleChange}
                       placeholder="Driver Number"
@@ -107,9 +133,9 @@ const AddDriver = ({
                       inputRef={inputRef}
                       disabled={isDisable}
                     />
-                    {touched.driverPhoneNumber && errors.driverPhoneNumber && (
+                    {touched.mobileNumber && errors.mobileNumber && (
                       <FormHelperText error id="transporter-email-helper">
-                        {errors.driverPhoneNumber}
+                        {errors.mobileNumber}
                       </FormHelperText>
                     )}
                   </Stack>
@@ -186,10 +212,37 @@ const AddDriver = ({
                     )}
                   </Stack>
                 </Grid>
+                <Grid item xs={12} sm={6} spacing={3}>
+                  <Stack spacing={1.25}>
+                    <InputLabel htmlFor="driver-name">
+                      Password <span style={{ color: 'red' }}>*</span>
+                    </InputLabel>
+                    <TextField
+                      fullWidth
+                      id="driver-name"
+                      value={values.password}
+                      name="password"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      placeholder="Enter password"
+                      autoFocus
+                      inputRef={inputRef}
+                      disabled={isDisable}
+                    />
+                    {touched.password && errors.password && (
+                      <FormHelperText error id="driver-name-helper">
+                        {errors.password}
+                      </FormHelperText>
+                    )}
+                  </Stack>
+                </Grid>
                 {isDisable ? (
                   ''
                 ) : (
                   <Grid item xs={12} sm={6}>
+                    <InputLabel htmlFor="driver-last-name" className="mb-2">
+                      Choose Transport <span style={{ color: 'red' }}>*</span>
+                    </InputLabel>
                     <Stack spacing={1.25}>
                       <Autocomplete
                         options={data}
@@ -202,6 +255,7 @@ const AddDriver = ({
                     </Stack>
                   </Grid>
                 )}
+
                 {isDisable ? (
                   ''
                 ) : (

@@ -49,7 +49,7 @@ class VendorServices {
       store.dispatch(
         openSnackbar({
           open: true,
-          message: error,
+          message: 'error occured when vendor is registered service instance !!',
           variant: 'alert',
           alert: {
             color: 'error'

@@ -109,10 +109,10 @@ const DriverTable = ({
                     <Grid container spacing={2} alignItems="center" sx={{ flexWrap: 'nowrap' }}>
                       <Grid item xs zeroMinWidth>
                         <Typography align="left" variant="subtitle1">
-                          {row.driverName}
+                          {`${row.first_name} ${row.last_name}`}
                         </Typography>
                         <Typography align="left" variant="caption" color="secondary">
-                          {row.driverPhoneNumber}
+                          {row.mobileNumber}
                         </Typography>
                       </Grid>
                     </Grid>

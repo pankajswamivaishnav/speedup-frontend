@@ -144,7 +144,16 @@ const Message = () => {
                   >
                     <ListItemButton>
                       <ListItemAvatar>
-                        <Avatar alt="profile user" src={avatar2} />
+                        <Avatar
+                          alt="profile user"
+                          src={avatar2}
+                          sx={{
+                            '& img': {
+                              objectFit: 'cover', // keep full cover
+                              objectPosition: 'center top' // move image slightly down (face shows better)
+                            }
+                          }}
+                        />
                       </ListItemAvatar>
                       <ListItemText
                         primary={

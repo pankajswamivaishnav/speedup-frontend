@@ -1,5 +1,6 @@
 import { Button, FormHelperText, TextField } from '@mui/material';
 import { Box, Grid, InputLabel, Stack } from '@mui/material';
+import UploadImage from 'components/shared/UploadImage';
 import { Formik } from 'formik';
 import { RefObject, useEffect, useState } from 'react';
 import { useOutletContext } from 'react-router';
@@ -21,13 +22,16 @@ const AddVendor = ({
   isDisable?: boolean;
 }) => {
   const inputRef = useInputRef();
+  const [image, setImage] = useState<{ public_id: string; url: string } | null>(null);
+
   const [initialValues, setInitialValues] = useState({
-    vendorName: '',
-    vendorPhoneNumber: '',
-    vendorEmail: '',
+    first_name: '',
+    last_name: '',
+    mobileNumber: '',
+    email: '',
     vendorSecondaryPhoneNumber: '',
-    vendorBussiness: '',
-    vendorAddress: '',
+    business: '',
+    address: '',
     isDeleted: '',
     pinCode: '',
     city: '',
@@ -35,7 +39,7 @@ const AddVendor = ({
     country: 'INDIA',
     password: '',
     role: 'vendor',
-    avatar: { public_id: '', url: 'https://avatar.iran.liara.run/public/boy' }
+    avatar: { public_id: '', url: '' }
   });
 
   // Pre-fill form when editing
@@ -56,6 +60,10 @@ const AddVendor = ({
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
           setSubmitting(true);
           let response;
+          if (image) {
+            values.avatar.public_id = image?.public_id;
+            values.avatar.url = image.url;
+          }
           if (isEditMode) {
             response = await VendorServiceInstance.createVendor(values);
           } else {
@@ -73,24 +81,48 @@ const AddVendor = ({
               <Grid container spacing={3}>
                 <Grid item xs={12} sm={6} spacing={3}>
                   <Stack spacing={1.25}>
-                    <InputLabel htmlFor="vendor-name">
-                      Vendor Name <span style={{ color: 'red' }}>*</span>
+                    <InputLabel htmlFor="vendor-first-name">
+                      Vendor First Name <span style={{ color: 'red' }}>*</span>
                     </InputLabel>
                     <TextField
                       fullWidth
-                      id="vendor-name"
-                      value={values.vendorName}
-                      name="vendorName"
+                      id="vendor-first-name"
+                      value={values.first_name}
+                      name="first_name"
                       onBlur={handleBlur}
                       onChange={handleChange}
-                      placeholder="Vendor Name"
+                      placeholder="Vendor First Name"
                       autoFocus
                       inputRef={inputRef}
                       disabled={isDisable}
                     />
-                    {touched.vendorName && errors.vendorName && (
+                    {touched.first_name && errors.first_name && (
+                      <FormHelperText error id="vendor-first-name-helper">
+                        {errors.first_name}
+                      </FormHelperText>
+                    )}
+                  </Stack>
+                </Grid>
+                <Grid item xs={12} sm={6} spacing={3}>
+                  <Stack spacing={1.25}>
+                    <InputLabel htmlFor="vendor-last-name">
+                      Vendor Last Name <span style={{ color: 'red' }}>*</span>
+                    </InputLabel>
+                    <TextField
+                      fullWidth
+                      id="vendor-last-name"
+                      value={values.last_name}
+                      name="last_name"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      placeholder="Vendor Last Name"
+                      autoFocus
+                      inputRef={inputRef}
+                      disabled={isDisable}
+                    />
+                    {touched.last_name && errors.last_name && (
                       <FormHelperText error id="vendor-name-helper">
-                        {errors.vendorName}
+                        {errors.last_name}
                       </FormHelperText>
                     )}
                   </Stack>
@@ -103,8 +135,8 @@ const AddVendor = ({
                     <TextField
                       fullWidth
                       id="vendor-email"
-                      value={values.vendorEmail}
-                      name="vendorEmail"
+                      value={values.email}
+                      name="email"
                       onBlur={handleBlur}
                       onChange={handleChange}
                       placeholder="Vendor email"
@@ -112,9 +144,9 @@ const AddVendor = ({
                       inputRef={inputRef}
                       disabled={isDisable}
                     />
-                    {touched.vendorEmail && errors.vendorEmail && (
+                    {touched.email && errors.email && (
                       <FormHelperText error id="transporter-email-helper">
-                        {errors.vendorEmail}
+                        {errors.email}
                       </FormHelperText>
                     )}
                   </Stack>
@@ -127,8 +159,8 @@ const AddVendor = ({
                     <TextField
                       fullWidth
                       id="vendor-phone-number"
-                      value={values.vendorPhoneNumber}
-                      name="vendorPhoneNumber"
+                      value={values.mobileNumber}
+                      name="mobileNumber"
                       onBlur={handleBlur}
                       onChange={handleChange}
                       placeholder="Vendor Phone Number"
@@ -136,9 +168,9 @@ const AddVendor = ({
                       inputRef={inputRef}
                       disabled={isDisable}
                     />
-                    {touched.vendorPhoneNumber && errors.vendorPhoneNumber && (
+                    {touched.mobileNumber && errors.mobileNumber && (
                       <FormHelperText error id="vendor-phone-number-helper">
-                        {errors.vendorPhoneNumber}
+                        {errors.mobileNumber}
                       </FormHelperText>
                     )}
                   </Stack>
@@ -175,8 +207,8 @@ const AddVendor = ({
                     <TextField
                       fullWidth
                       id="vendor-addresss"
-                      value={values.vendorAddress}
-                      name="vendorAddress"
+                      value={values.address}
+                      name="address"
                       onBlur={handleBlur}
                       onChange={handleChange}
                       placeholder="Vendor Address"
@@ -184,9 +216,9 @@ const AddVendor = ({
                       inputRef={inputRef}
                       disabled={isDisable}
                     />
-                    {touched.vendorAddress && errors.vendorAddress && (
+                    {touched.address && errors.address && (
                       <FormHelperText error id="vendor-address-helper">
-                        {errors.vendorAddress}
+                        {errors.address}
                       </FormHelperText>
                     )}
                   </Stack>
@@ -199,17 +231,17 @@ const AddVendor = ({
                     <TextField
                       type="text"
                       fullWidth
-                      value={values.vendorBussiness}
-                      name="vendorBussiness"
+                      value={values.business}
+                      name="business"
                       onBlur={handleBlur}
                       onChange={handleChange}
                       id="vendor-business"
                       placeholder="Mobile Number"
                       disabled={isDisable}
                     />
-                    {touched.vendorBussiness && errors.vendorBussiness && (
+                    {touched.business && errors.business && (
                       <FormHelperText error id="vendor-business-helper">
-                        {errors.vendorBussiness}
+                        {errors.business}
                       </FormHelperText>
                     )}
                   </Stack>
@@ -328,6 +360,9 @@ const AddVendor = ({
                       </FormHelperText>
                     )}
                   </Stack>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <UploadImage setImage={setImage} />
                 </Grid>
                 {isDisable ? (
                   ''

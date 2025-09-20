@@ -106,7 +106,17 @@ const Profile = () => {
         onClick={handleToggle}
       >
         <Stack direction="row" spacing={2} alignItems="center" sx={{ p: 0.5 }}>
-          <Avatar alt="profile user" src={user?.avatar?.url} size="xs" />
+          <Avatar
+            alt="profile user"
+            src={user?.avatar?.url}
+            size="xs"
+            sx={{
+              '& img': {
+                objectFit: 'cover', // keep full cover
+                objectPosition: 'center top' // move image slightly down (face shows better)
+              }
+            }}
+          />
           <Typography variant="subtitle1">{user?.name}</Typography>
         </Stack>
       </ButtonBase>
@@ -147,7 +157,18 @@ const Profile = () => {
                     <Grid container justifyContent="space-between" alignItems="center">
                       <Grid item>
                         <Stack direction="row" spacing={1.25} alignItems="center">
-                          <Avatar alt="profile user" src={user?.avatar?.url} sx={{ width: 32, height: 32 }} />
+                          <Avatar
+                            alt="profile user"
+                            src={user?.avatar?.url}
+                            sx={{
+                              width: 32,
+                              height: 32,
+                              '& img': {
+                                objectFit: 'cover',
+                                objectPosition: 'center top'
+                              }
+                            }}
+                          />
                           <Stack>
                             <Typography variant="h6">{`${user?.transporter_first_name} ${user?.transporter_last_name}`}</Typography>
                             <Typography variant="body2" color="textSecondary">

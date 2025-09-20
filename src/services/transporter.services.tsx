@@ -25,7 +25,7 @@ class TransporterServices {
       store.dispatch(
         openSnackbar({
           open: true,
-          message: error,
+          message: 'error occured when create transport service instance !!',
           variant: 'alert',
           alert: {
             color: 'error'

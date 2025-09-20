@@ -110,18 +110,18 @@ const VendorTable = ({
                     <Grid container spacing={2} alignItems="center" sx={{ flexWrap: 'nowrap' }}>
                       <Grid item xs zeroMinWidth>
                         <Typography align="left" variant="subtitle1">
-                          {row.vendorName}
+                          {`${row.first_name} ${row.last_name}`}
                         </Typography>
                         <Typography align="left" variant="caption" color="secondary">
-                          {row?.vendorEmail}
+                          {row?.email}
                         </Typography>
                       </Grid>
                     </Grid>
                   </TableCell>
-                  <TableCell>{row.vendorAddress}</TableCell>
-                  <TableCell>{row.vendorPhoneNumber}</TableCell>
+                  <TableCell>{row.address}</TableCell>
+                  <TableCell>{row.mobileNumber}</TableCell>
                   <TableCell align="right" sx={{ pr: 3 }}>
-                    {row.vendorBussiness}
+                    {row.business}
                   </TableCell>
                   <TableCell align="right" onClick={() => handleVendorDetailTogglePopup(row)}>
                     <Tooltip title="full-details">

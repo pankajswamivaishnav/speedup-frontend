@@ -67,7 +67,11 @@ const VisitingCard: React.FC<VisitingCardProps> = ({
               bgcolor: 'hsl(var(--primary))',
               fontSize: '2rem',
               fontWeight: 600,
-              backgroundColor: theme.palette.primary.main
+              backgroundColor: theme.palette.primary.main,
+              '& img': {
+                objectFit: 'cover', // keep full cover
+                objectPosition: 'center top' // move image slightly down (face shows better)
+              }
             }}
           >
             {(first_name ?? '')

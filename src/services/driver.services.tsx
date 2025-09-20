@@ -49,7 +49,7 @@ class DriverServices {
       store.dispatch(
         openSnackbar({
           open: true,
-          message: error,
+          message: 'error occured when create driver service instance !!',
           variant: 'alert',
           alert: {
             color: 'error'
