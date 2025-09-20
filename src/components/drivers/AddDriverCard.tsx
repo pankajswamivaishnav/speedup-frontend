@@ -1,4 +1,5 @@
-import { Button, FormHelperText, TextField } from '@mui/material';
+import { Button, FormHelperText, MenuItem, Select, TextField } from '@mui/material';
+import { FormControl } from '@mui/material';
 import { Box, Grid, InputLabel, Stack } from '@mui/material';
 import UploadImage from 'components/shared/UploadImage';
 import { Formik } from 'formik';
@@ -29,9 +30,11 @@ const AddDriverCard = ({
   const [initialValues, setInitialValues] = useState({
     first_name: '',
     last_name: '',
+    email: '',
     mobileNumber: '',
     truckNumber: '',
     address: '',
+    role: '',
     licenseNumber: '',
     avatar: { public_id: '', url: '' }
   });
@@ -59,9 +62,9 @@ const AddDriverCard = ({
           }
           let response;
           if (isEditMode) {
-            response = await DriverServiceInstance.createDriver(values);
+            response = await DriverServiceInstance.createDriverCard(values);
           } else {
-            response = await DriverServiceInstance.createDriver(values);
+            response = await DriverServiceInstance.createDriverCard(values);
           }
           if (response) {
             onClose(true);
@@ -106,7 +109,7 @@ const AddDriverCard = ({
                       fullWidth
                       id="driver-last-name"
                       value={values.last_name}
-                      name="first_name"
+                      name="last_name"
                       onBlur={handleBlur}
                       onChange={handleChange}
                       placeholder="Driver Last Name"
@@ -139,8 +142,30 @@ const AddDriverCard = ({
                       disabled={isDisable}
                     />
                     {touched.mobileNumber && errors.mobileNumber && (
-                      <FormHelperText error id="transporter-email-helper">
+                      <FormHelperText error id="driver-phone-helper">
                         {errors.mobileNumber}
+                      </FormHelperText>
+                    )}
+                  </Stack>
+                </Grid>
+                <Grid item xs={12} sm={6} spacing={3}>
+                  <Stack spacing={1.25}>
+                    <InputLabel htmlFor="driver-email">Driver Email</InputLabel>
+                    <TextField
+                      fullWidth
+                      id="driver-email"
+                      value={values.email}
+                      name="email"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      placeholder="Driver Email"
+                      autoFocus
+                      inputRef={inputRef}
+                      disabled={isDisable}
+                    />
+                    {touched.email && errors.email && (
+                      <FormHelperText error id="driver-email-helper">
+                        {errors.email}
                       </FormHelperText>
                     )}
                   </Stack>
@@ -195,9 +220,7 @@ const AddDriverCard = ({
                 </Grid>
                 <Grid item xs={12} sm={6} spacing={3}>
                   <Stack spacing={1.25}>
-                    <InputLabel htmlFor="license-number">
-                      License Number <span style={{ color: 'red' }}>*</span>
-                    </InputLabel>
+                    <InputLabel htmlFor="license-number">License Number</InputLabel>
                     <TextField
                       fullWidth
                       id="license-number"
@@ -217,6 +240,28 @@ const AddDriverCard = ({
                     )}
                   </Stack>
                 </Grid>
+                <Grid item xs={12} sm={6} spacing={3}>
+                  <Stack spacing={1.25}>
+                    <InputLabel htmlFor="role">
+                      Role <span style={{ color: 'red' }}>*</span>
+                    </InputLabel>
+                    <FormControl fullWidth size="medium">
+                      <Select id="role" name="role" value={values.role} onChange={handleChange} onBlur={handleBlur} displayEmpty>
+                        <MenuItem value="">
+                          <em>Select Role</em>
+                        </MenuItem>
+                        <MenuItem value="driver">Truck Driver</MenuItem>
+                        <MenuItem value="owner">Truck Owner</MenuItem>
+                      </Select>
+                    </FormControl>
+                    {touched.role && errors.role && (
+                      <FormHelperText error id="role-helper">
+                        {errors.role}
+                      </FormHelperText>
+                    )}
+                  </Stack>
+                </Grid>
+
                 <Grid item xs={12} sm={6}>
                   <UploadImage setImage={setImage} />
                 </Grid>

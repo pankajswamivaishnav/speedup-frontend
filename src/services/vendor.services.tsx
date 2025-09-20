@@ -93,6 +93,62 @@ class VendorServices {
       throw error;
     }
   }
+
+  // -------------- Vendor Cards Services ----------------
+  // Create Vendor Card
+  async createVendorCard(data: any) {
+    try {
+      const response = await axiosServices.post(`api/v1/createVendorCard`, data);
+      if (response) {
+        store.dispatch(
+          openSnackbar({
+            open: true,
+            message: 'Vendor Card created successfully',
+            variant: 'alert',
+            alert: {
+              color: 'info'
+            },
+            close: true
+          })
+        );
+        return true;
+      }
+    } catch (error) {
+      store.dispatch(
+        openSnackbar({
+          open: true,
+          message: 'error in vendor created card service instance.',
+          variant: 'alert',
+          alert: {
+            color: 'error'
+          },
+          close: true
+        })
+      );
+    }
+  }
+  // get all vendors cards
+  async getAllVendorCards(query?: string) {
+    try {
+      const response = await axiosServices.get(`api/v1/getAllVendorCards?filter=${query}`);
+      if (response.status) {
+        return response.data;
+      }
+    } catch (error) {
+      store.dispatch(
+        openSnackbar({
+          open: true,
+          message: 'Something went wrong vendor card service !!',
+          variant: 'alert',
+          alert: {
+            color: 'error'
+          },
+          close: true
+        })
+      );
+      throw error;
+    }
+  }
 }
 
 const VendorServiceInstance = new VendorServices();

@@ -92,6 +92,64 @@ class TransporterServices {
       throw error;
     }
   }
+
+  // -------------- Transport Cards Services ----------------
+  // Create Transport Card
+  async createTransportCard(data: any) {
+    try {
+      const response = await axiosServices.post(`api/v1/createTransportCard`, data);
+      if (response.status === 201) {
+        store.dispatch(
+          openSnackbar({
+            open: true,
+            message: 'Transporter Card created successfully.',
+            variant: 'alert',
+            alert: {
+              color: 'info'
+            },
+            close: true
+          })
+        );
+        return response.data;
+      }
+    } catch (error) {
+      store.dispatch(
+        openSnackbar({
+          open: true,
+          message: 'error occured in transport card service instance !!',
+          variant: 'alert',
+          alert: {
+            color: 'error'
+          },
+          close: true
+        })
+      );
+      throw error;
+    }
+  }
+
+  // get all transport cards
+  async getAllTransportCards(query?: string) {
+    try {
+      const response = await axiosServices.get(`api/v1/getAllTransportCards?filter=${query}`);
+      if (response.status) {
+        return response.data;
+      }
+    } catch (error) {
+      store.dispatch(
+        openSnackbar({
+          open: true,
+          message: 'Something went wrong transport card service !!',
+          variant: 'alert',
+          alert: {
+            color: 'error'
+          },
+          close: true
+        })
+      );
+      throw error;
+    }
+  }
 }
 
 const TransporterServiceInstance = new TransporterServices();

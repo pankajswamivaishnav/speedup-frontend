@@ -1,33 +1,36 @@
 import React from 'react';
 import { Card, Avatar } from '@mui/material';
-import { Mail, Phone, MapPin, Globe, Briefcase, Building } from 'lucide-react';
+import { Mail, Phone, MapPin, Building2, Building, Truck } from 'lucide-react';
 import { Box } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 export interface VisitingCardProps {
-  name: string;
-  jobTitle?: string;
-  company?: string;
-  email?: string;
-  phone?: string;
+  first_name?: string;
+  last_name?: string;
+  mobileNumber?: string;
+  officeNumber?: string;
   address?: string;
-  website?: string;
-  imageUrl?: string;
-  department?: string;
-  linkedin?: string;
-  skills?: string[];
+  role?: string;
+  city?: string;
+  avatar?: { public_id: string; url: string };
+  truckNumber?: string;
+  business?: string;
+  transportName?: string;
+  email?: string;
 }
 
 const VisitingCard: React.FC<VisitingCardProps> = ({
-  name,
-  jobTitle,
-  company,
+  first_name,
+  last_name,
+  mobileNumber,
+  officeNumber,
+  truckNumber,
+  business,
+  role,
+  city,
+  transportName,
+  avatar,
   email,
-  phone,
-  address,
-  website,
-  imageUrl,
-  department,
-  skills = []
+  address
 }) => {
   const theme = useTheme();
   return (
@@ -54,8 +57,8 @@ const VisitingCard: React.FC<VisitingCardProps> = ({
         {/* Profile Section */}
         <Box className={`flex items-start gap-4 mb-4`}>
           <Avatar
-            src={imageUrl}
-            alt={name}
+            src={avatar?.url || 'https://avatar.iran.liara.run/public/boy'}
+            alt={`${first_name} ${last_name}`}
             sx={{
               width: 80,
               height: 80,
@@ -67,7 +70,7 @@ const VisitingCard: React.FC<VisitingCardProps> = ({
               backgroundColor: theme.palette.primary.main
             }}
           >
-            {name
+            {(first_name ?? '')
               .split(' ')
               .map((n) => n[0])
               .join('')
@@ -75,12 +78,15 @@ const VisitingCard: React.FC<VisitingCardProps> = ({
           </Avatar>
 
           <div className="flex-1 pt-1">
-            <h3 className="text-xl font-bold text-white mb-1 leading-tight">{name}</h3>
-            {jobTitle && <p className="text-white/90 text-sm font-medium mb-1">{jobTitle}</p>}
-            {company && (
+            <h3 className="text-xl font-bold text-white mb-1 leading-tight">{`${first_name} ${last_name}`}</h3>
+            {(business || role || transportName) && (
               <div className="flex items-center gap-1 text-white/80 text-sm">
-                <Building size={14} />
-                <span>{company}</span>
+                {transportName || business ? (
+                  <Building size={14} className="text-white/80" />
+                ) : (
+                  <Truck size={14} className="text-white/80" />
+                )}
+                <span className="text-white/80">{business?.toUpperCase() || role?.toUpperCase() || transportName?.toUpperCase()}</span>
               </div>
             )}
           </div>
@@ -91,45 +97,54 @@ const VisitingCard: React.FC<VisitingCardProps> = ({
           {email && (
             <div className="flex items-center gap-3 text-text-body">
               <div className="flex items-center justify-center w-8 h-8 rounded-full bg-primary/10">
-                <Mail size={16} className="text-primary" />
+                <Mail size={16} color={theme.palette.primary.main} />
               </div>
               <span className="text-sm font-medium truncate">{email}</span>
             </div>
           )}
 
-          {phone && (
+          {mobileNumber && (
             <div className="flex items-center gap-3 text-text-body">
               <div className="flex items-center justify-center w-8 h-8 rounded-full bg-primary/10">
-                <Phone size={16} className="text-primary" />
+                <Phone size={16} color={theme.palette.primary.main} />
               </div>
-              <span className="text-sm font-medium">{phone}</span>
+              <span className="text-sm font-medium">{mobileNumber}</span>
+            </div>
+          )}
+
+          {officeNumber && (
+            <div className="flex items-center gap-3 text-text-body">
+              <div className="flex items-center justify-center w-8 h-8 rounded-full bg-primary/10">
+                <Phone size={16} color={theme.palette.primary.main} />
+              </div>
+              <span className="text-sm font-medium">{officeNumber}</span>
+            </div>
+          )}
+
+          {truckNumber && (
+            <div className="flex items-center gap-3 text-text-body">
+              <div className="flex items-center justify-center w-8 h-8 rounded-full bg-primary/10">
+                <Truck size={16} color={theme.palette.primary.main} />
+              </div>
+              <span className="text-sm font-medium truncate">{truckNumber}</span>
             </div>
           )}
 
           {address && (
             <div className="flex items-center gap-3 text-text-body">
               <div className="flex items-center justify-center w-8 h-8 rounded-full bg-primary/10">
-                <MapPin size={16} className="text-primary" />
+                <MapPin size={16} color={theme.palette.primary.main} />
               </div>
               <span className="text-sm font-medium truncate">{address}</span>
             </div>
           )}
 
-          {website && (
+          {city && (
             <div className="flex items-center gap-3 text-text-body">
               <div className="flex items-center justify-center w-8 h-8 rounded-full bg-primary/10">
-                <Globe size={16} className="text-primary" />
+                <Building2 size={16} color={theme.palette.primary.main} />
               </div>
-              <span className="text-sm font-medium truncate">{website}</span>
-            </div>
-          )}
-
-          {department && (
-            <div className="flex items-center gap-3 text-text-body">
-              <div className="flex items-center justify-center w-8 h-8 rounded-full bg-primary/10">
-                <Briefcase size={16} className="text-primary" />
-              </div>
-              <span className="text-sm font-medium">{department}</span>
+              <span className="text-sm font-medium">{city}</span>
             </div>
           )}
         </div>

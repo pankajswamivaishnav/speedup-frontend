@@ -58,11 +58,11 @@ const AddTransportCard = ({
           }
           let response;
           if (isEditMode) {
-            response = await await TransporterServiceInstance.createTransporter(values);
+            response = await await TransporterServiceInstance.createTransportCard(values);
           } else {
-            response = await TransporterServiceInstance.createTransporter(values);
+            response = await TransporterServiceInstance.createTransportCard(values);
           }
-          if (response) {
+          if (response.success) {
             onClose(true);
             setSubmitting(false);
           }

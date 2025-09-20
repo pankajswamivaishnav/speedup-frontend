@@ -57,9 +57,9 @@ const AddVendorCard = ({
           }
           let response;
           if (isEditMode) {
-            response = await VendorServiceInstance.createVendor(values);
+            response = await VendorServiceInstance.createVendorCard(values);
           } else {
-            response = await VendorServiceInstance.createVendor(values);
+            response = await VendorServiceInstance.createVendorCard(values);
           }
           if (response) {
             onClose(true);
