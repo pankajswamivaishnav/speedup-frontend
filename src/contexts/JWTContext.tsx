@@ -128,7 +128,9 @@ export const JWTProvider = ({ children }: { children: React.ReactElement }) => {
     dispatch({ type: LOGOUT });
   };
 
-  const resetPassword = async (email: string) => {};
+  const resetPassword = async (email: string) => {
+    await axios.post('api/v1/forgotPassword', { email: email });
+  };
 
   const updateProfile = () => {};
   if (state.isInitialized !== undefined && !state.isInitialized) {

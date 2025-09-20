@@ -25,7 +25,6 @@ const TransportCardsPage = () => {
     title: 'Add Transport Card',
     data: { existingData: {}, isEditMode: false }
   });
-  console.log('query', query);
 
   //-------------------handlers-------------------
   const handleTogglePopup = async (id?: string) => {
@@ -59,7 +58,6 @@ const TransportCardsPage = () => {
     }
     // eslint-disable-next-line
   }, [transportCardData]);
-  console.log('transportCards', transportCards);
   return (
     <>
       <MainCard border={false} boxShadow sx={{ height: '100%' }}>

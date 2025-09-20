@@ -58,7 +58,6 @@ const DriverCardPage = () => {
     }
     // eslint-disable-next-line
   }, [driverCardsData]);
-  console.log('driver cards data-->', driverCards);
   return (
     <>
       <MainCard border={false} boxShadow sx={{ height: '100%' }}>
