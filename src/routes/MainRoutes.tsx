@@ -7,6 +7,7 @@ import Loadable from 'components/Loadable';
 import AuthGuard from 'utils/route-guard/AuthGuard';
 import Vendor from 'pages/vendor/Vendor';
 import ProfilePage from 'pages/Profile/ProfilePage';
+// import LandingPage from 'pages/extra-pages/LandingPage';
 
 // pages routing
 const MaintenanceError = Loadable(lazy(() => import('pages/maintenance/404')));
@@ -28,7 +29,7 @@ const MainRoutes = {
   path: '/',
   children: [
     {
-      path: '/',
+      path: 'dashboard',
       element: (
         <AuthGuard>
           <MainLayout />
@@ -36,7 +37,7 @@ const MainRoutes = {
       ),
       children: [
         {
-          path: 'dashboard',
+          path: '',
           element: <SamplePage />
         },
         {
