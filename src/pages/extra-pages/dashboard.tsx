@@ -22,7 +22,7 @@ import { ThemeMode } from 'types/config';
 
 // ==============================|| SAMPLE PAGE ||============================== //
 
-const SamplePage = () => {
+const Dashboard = () => {
   const [transportersData, setTransportersData] = useState<any>();
   const [driversData, setDriversData] = useState<any>();
   const [vendorsData, setVendorsData] = useState<any>();
@@ -223,4 +223,4 @@ const SamplePage = () => {
   );
 };
 
-export default SamplePage;
+export default Dashboard;
