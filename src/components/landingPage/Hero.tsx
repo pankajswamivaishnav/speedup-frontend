@@ -144,8 +144,7 @@ const Hero = () => {
         >
           <iframe
             src="https://www.loom.com/embed/af500895729d4fc2b4f01b60b1cdbd07"
-            width="100%"
-            height="315"
+            className="w-full md:w-full lg:w-[600px] xl:w-[600px] h-[315px]"
             frameBorder="0"
             allow="autoplay; fullscreen"
             allowFullScreen
