@@ -29,7 +29,7 @@ const MainRoutes = {
   path: '/',
   children: [
     {
-      path: 'dashboard',
+      path: '',
       element: (
         <AuthGuard>
           <MainLayout />
@@ -37,7 +37,7 @@ const MainRoutes = {
       ),
       children: [
         {
-          path: '',
+          path: 'dashboard',
           element: <SamplePage />
         },
         {

@@ -11,14 +11,14 @@ const Footer = () => {
   const legal = ['Privacy Policy', 'Terms of Service', 'Cookie Policy', 'Data Processing', 'Security'];
 
   return (
-    <footer className="bg-foreground text-white">
+    <footer className="bg-primary-800 text-white">
       <div className="container mx-auto px-4 py-16">
         <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-8">
           {/* Brand */}
           <div className="lg:col-span-2">
             <div className="flex items-center gap-2 mb-4">
-              <Truck className="w-8 h-8 text-accent" />
-              <span className="text-2xl font-bold">BiltyManager</span>
+              <Truck className="w-8 h-8 text-accent-500" />
+              <span className="text-2xl font-bold">SpeedUp</span>
             </div>
             <p className="text-white/80 mb-6 max-w-md">
               The complete transport management solution for modern logistics companies. Streamline your operations, track shipments, and
@@ -28,15 +28,15 @@ const Footer = () => {
             {/* Contact Info */}
             <div className="space-y-3">
               <div className="flex items-center gap-3 text-white/80">
-                <Phone className="w-4 h-4 text-accent" />
+                <Phone className="w-4 h-4 text-accent-500" />
                 <span>+91-9876543210</span>
               </div>
               <div className="flex items-center gap-3 text-white/80">
-                <Mail className="w-4 h-4 text-accent" />
-                <span>info@biltymanager.com</span>
+                <Mail className="w-4 h-4 text-accent-500" />
+                <span>info@SpeedUp.com</span>
               </div>
               <div className="flex items-center gap-3 text-white/80">
-                <MapPin className="w-4 h-4 text-accent" />
+                <MapPin className="w-4 h-4 text-accent-500" />
                 <span>Mumbai, Maharashtra, India</span>
               </div>
             </div>
@@ -48,7 +48,7 @@ const Footer = () => {
             <ul className="space-y-2">
               {solutions.map((item) => (
                 <li key={item}>
-                  <a href="#" className="text-white/80 hover:text-accent transition-colors duration-300">
+                  <a href="#" className="text-white/80 hover:text-accent-500 transition-colors duration-300">
                     {item}
                   </a>
                 </li>
@@ -62,7 +62,7 @@ const Footer = () => {
             <ul className="space-y-2">
               {company.map((item) => (
                 <li key={item}>
-                  <a href="#" className="text-white/80 hover:text-accent transition-colors duration-300">
+                  <a href="#" className="text-white/80 hover:text-accent-500 transition-colors duration-300">
                     {item}
                   </a>
                 </li>
@@ -76,7 +76,7 @@ const Footer = () => {
             <ul className="space-y-2">
               {resources.map((item) => (
                 <li key={item}>
-                  <a href="#" className="text-white/80 hover:text-accent transition-colors duration-300">
+                  <a href="#" className="text-white/80 hover:text-accent-500 transition-colors duration-300">
                     {item}
                   </a>
                 </li>
@@ -89,20 +89,20 @@ const Footer = () => {
 
         {/* Bottom */}
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-          <div className="text-white/60 text-sm">© 2024 BiltyManager. All rights reserved.</div>
+          <div className="text-white/60 text-sm">© 2024 SpeedUp. All rights reserved.</div>
 
           {/* Social Links */}
           <div className="flex gap-4">
-            <a href="#" className="text-white/60 hover:text-accent transition-colors duration-300">
+            <a href="#" className="text-white/60 hover:text-accent-500 transition-colors duration-300">
               <Facebook className="w-5 h-5" />
             </a>
-            <a href="#" className="text-white/60 hover:text-accent transition-colors duration-300">
+            <a href="#" className="text-white/60 hover:text-accent-500 transition-colors duration-300">
               <Twitter className="w-5 h-5" />
             </a>
-            <a href="#" className="text-white/60 hover:text-accent transition-colors duration-300">
+            <a href="#" className="text-white/60 hover:text-accent-500 transition-colors duration-300">
               <Linkedin className="w-5 h-5" />
             </a>
-            <a href="#" className="text-white/60 hover:text-accent transition-colors duration-300">
+            <a href="#" className="text-white/60 hover:text-accent-500 transition-colors duration-300">
               <Instagram className="w-5 h-5" />
             </a>
           </div>
@@ -110,7 +110,7 @@ const Footer = () => {
           {/* Legal Links */}
           <div className="flex gap-6 text-sm">
             {legal.map((item) => (
-              <a key={item} href="#" className="text-white/60 hover:text-accent transition-colors duration-300">
+              <a key={item} href="#" className="text-white/60 hover:text-accent-500 transition-colors duration-300">
                 {item}
               </a>
             ))}

@@ -50,7 +50,7 @@ const other: NavItemType = {
       id: 'transporter',
       title: <FormattedMessage id="Transporters" />,
       type: 'item',
-      url: '/transporter',
+      url: '/transporters',
       icon: icons.UserAddOutlined
     },
     {
