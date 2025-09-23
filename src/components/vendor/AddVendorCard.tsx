@@ -159,6 +159,7 @@ const AddVendorCard = ({
                       autoFocus
                       inputRef={inputRef}
                       disabled={isDisable}
+                      inputProps={{ maxLength: 10 }}
                     />
                     {touched.mobileNumber && errors.mobileNumber && (
                       <FormHelperText error id="vendor-phone-number-helper">

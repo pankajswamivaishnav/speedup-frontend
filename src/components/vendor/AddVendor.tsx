@@ -167,6 +167,7 @@ const AddVendor = ({
                       autoFocus
                       inputRef={inputRef}
                       disabled={isDisable}
+                      inputProps={{ maxLength: 10 }}
                     />
                     {touched.mobileNumber && errors.mobileNumber && (
                       <FormHelperText error id="vendor-phone-number-helper">
@@ -261,6 +262,7 @@ const AddVendor = ({
                       id="pin-code"
                       placeholder="Enter Pin Code"
                       disabled={isDisable}
+                      inputProps={{ maxLength: 6 }}
                     />
                     {touched.pinCode && errors.pinCode && (
                       <FormHelperText error id="pin-code-helper">

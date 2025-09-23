@@ -140,6 +140,7 @@ const AddDriverCard = ({
                       autoFocus
                       inputRef={inputRef}
                       disabled={isDisable}
+                      inputProps={{ maxLength: 10 }}
                     />
                     {touched.mobileNumber && errors.mobileNumber && (
                       <FormHelperText error id="driver-phone-helper">
@@ -186,6 +187,7 @@ const AddDriverCard = ({
                       autoFocus
                       inputRef={inputRef}
                       disabled={isDisable}
+                      inputProps={{ maxLength: 10 }}
                     />
                     {touched.truckNumber && errors.truckNumber && (
                       <FormHelperText error id="truck-number-helper">
@@ -196,9 +198,7 @@ const AddDriverCard = ({
                 </Grid>
                 <Grid item xs={12} sm={6} spacing={3}>
                   <Stack spacing={1.25}>
-                    <InputLabel htmlFor="address">
-                      Address <span style={{ color: 'red' }}>*</span>
-                    </InputLabel>
+                    <InputLabel htmlFor="address">Address</InputLabel>
                     <TextField
                       fullWidth
                       id="address"
@@ -232,6 +232,7 @@ const AddDriverCard = ({
                       autoFocus
                       inputRef={inputRef}
                       disabled={isDisable}
+                      inputProps={{ maxLength: 15 }}
                     />
                     {touched.licenseNumber && errors.licenseNumber && (
                       <FormHelperText error id="transporter-last-name-helper">
@@ -242,9 +243,7 @@ const AddDriverCard = ({
                 </Grid>
                 <Grid item xs={12} sm={6} spacing={3}>
                   <Stack spacing={1.25}>
-                    <InputLabel htmlFor="role">
-                      Role <span style={{ color: 'red' }}>*</span>
-                    </InputLabel>
+                    <InputLabel htmlFor="role">Role</InputLabel>
                     <FormControl fullWidth size="medium">
                       <Select id="role" name="role" value={values.role} onChange={handleChange} onBlur={handleBlur} displayEmpty>
                         <MenuItem value="">

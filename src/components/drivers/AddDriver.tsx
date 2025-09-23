@@ -132,6 +132,7 @@ const AddDriver = ({
                       autoFocus
                       inputRef={inputRef}
                       disabled={isDisable}
+                      inputProps={{ maxLength: 10 }}
                     />
                     {touched.mobileNumber && errors.mobileNumber && (
                       <FormHelperText error id="transporter-email-helper">
@@ -156,6 +157,7 @@ const AddDriver = ({
                       autoFocus
                       inputRef={inputRef}
                       disabled={isDisable}
+                      inputProps={{ maxLength: 10 }}
                     />
                     {touched.truckNumber && errors.truckNumber && (
                       <FormHelperText error id="truck-number-helper">
@@ -204,6 +206,7 @@ const AddDriver = ({
                       autoFocus
                       inputRef={inputRef}
                       disabled={isDisable}
+                      inputProps={{ maxLength: 15 }}
                     />
                     {touched.licenseNumber && errors.licenseNumber && (
                       <FormHelperText error id="transporter-last-name-helper">

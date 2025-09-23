@@ -173,6 +173,7 @@ const AddBilty = ({
                       autoFocus
                       inputRef={inputRef}
                       disabled={isDisable}
+                      inputProps={{ maxLength: 10 }}
                     />
                     {touched.truckNumber && errors.truckNumber && (
                       <FormHelperText error id="truck-number-helper">
@@ -269,6 +270,7 @@ const AddBilty = ({
                       autoFocus
                       inputRef={inputRef}
                       disabled={isDisable}
+                      inputProps={{ maxLength: 10 }}
                     />
                     {touched.senderNumber && errors.senderNumber && (
                       <FormHelperText error id="sender-number-helper">
@@ -317,6 +319,7 @@ const AddBilty = ({
                       autoFocus
                       inputRef={inputRef}
                       disabled={isDisable}
+                      inputProps={{ maxLength: 10 }}
                     />
                     {touched.receiverNumber && errors.receiverNumber && (
                       <FormHelperText error id="receiver-number-helper">
@@ -341,6 +344,7 @@ const AddBilty = ({
                       autoFocus
                       inputRef={inputRef}
                       disabled={isDisable}
+                      inputProps={{ maxLength: 10 }}
                     />
                     {touched.transporterNumber && errors.transporterNumber && (
                       <FormHelperText error id="transporter-number-helper">
@@ -413,6 +417,7 @@ const AddBilty = ({
                       autoFocus
                       inputRef={inputRef}
                       disabled={isDisable}
+                      inputProps={{ maxLength: 8 }}
                     />
                     {touched.truckCharge && errors.truckCharge && (
                       <FormHelperText error id="weight-helper">
@@ -437,6 +442,7 @@ const AddBilty = ({
                       autoFocus
                       inputRef={inputRef}
                       disabled={isDisable}
+                      inputProps={{ maxLength: 8 }}
                     />
                     {touched.advancePayment && errors.advancePayment && (
                       <FormHelperText error id="advance-payment-helper">
@@ -461,6 +467,7 @@ const AddBilty = ({
                       autoFocus
                       inputRef={inputRef}
                       disabled={isDisable}
+                      inputProps={{ maxLength: 8 }}
                     />
                     {touched.remainingPayment && errors.remainingPayment && (
                       <FormHelperText error id="remaining-payment-helper">
@@ -508,6 +515,7 @@ const AddBilty = ({
                       autoFocus
                       inputRef={inputRef}
                       disabled={isDisable}
+                      inputProps={{ maxLength: 8 }}
                     />
                     {touched.brokingCharge && errors.brokingCharge && (
                       <FormHelperText error id="broking-charge-helper">

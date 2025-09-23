@@ -41,7 +41,6 @@ const UploadImage = ({ setImage }: UploadImageProps) => {
     <div>
       <Grid item xs={12}>
         <Typography color="error.main">
-          *{' '}
           <Typography component="span" color="textSecondary">
             Recommended resolution is 640*640 with file size
           </Typography>

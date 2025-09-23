@@ -192,6 +192,7 @@ const AddTransporter = ({
                       id="transporter-mobile-number"
                       placeholder="Mobile Number"
                       disabled={isDisable}
+                      inputProps={{ maxLength: 10 }}
                     />
                     {touched.mobileNumber && errors.mobileNumber && (
                       <FormHelperText error id="transporter-mobile-number-helper">
@@ -202,9 +203,7 @@ const AddTransporter = ({
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <Stack spacing={1.25}>
-                    <InputLabel htmlFor="transporter-office-number">
-                      Office Number <span style={{ color: 'red' }}>*</span>
-                    </InputLabel>
+                    <InputLabel htmlFor="transporter-office-number">Office Number</InputLabel>
                     <TextField
                       type="text"
                       fullWidth
@@ -215,6 +214,7 @@ const AddTransporter = ({
                       id="transporter-mobile-number"
                       placeholder="Mobile Number"
                       disabled={isDisable}
+                      inputProps={{ maxLength: 10 }}
                     />
                     {touched.officeNumber && errors.officeNumber && (
                       <FormHelperText error id="transporter-office-number-helper">
@@ -257,6 +257,7 @@ const AddTransporter = ({
                       onChange={handleChange}
                       placeholder="Enter GST Number"
                       disabled={isDisable}
+                      inputProps={{ maxLength: 15 }}
                     />
                     {touched.gstNumber && errors.gstNumber && (
                       <FormHelperText error id="transporter-gst-number">
@@ -279,6 +280,7 @@ const AddTransporter = ({
                       onChange={handleChange}
                       placeholder="Address"
                       disabled={isDisable}
+                      inputProps={{ maxLength: 10 }}
                     />
                     {touched.transportAddress && errors.transportAddress && (
                       <FormHelperText error id="transporter-address-helper">
