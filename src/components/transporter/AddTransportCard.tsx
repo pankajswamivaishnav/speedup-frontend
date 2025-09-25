@@ -2,6 +2,7 @@ import { Button, FormHelperText, TextField } from '@mui/material';
 import { Box, Grid, InputLabel, Stack } from '@mui/material';
 import UploadImage from 'components/shared/UploadImage';
 import { Formik } from 'formik';
+import * as Yup from 'yup';
 import { RefObject, useEffect, useState } from 'react';
 import { useOutletContext } from 'react-router';
 import TransporterServiceInstance from 'services/transporter.services';
@@ -50,6 +51,17 @@ const AddTransportCard = ({
       <Formik
         initialValues={initialValues}
         enableReinitialize={true}
+        validationSchema={Yup.object({
+          transportName: Yup.string().required('Transport name is required'),
+          first_name: Yup.string().required('First name is required'),
+          last_name: Yup.string().required('Last name is required'),
+          email: Yup.string().email('Must be a valid email').required('Email is required'),
+          mobileNumber: Yup.string()
+            .matches(/^\d{10}$/, 'Mobile number must be 10 digits')
+            .required('Mobile number is required'),
+          address: Yup.string().required('Address is required'),
+          city: Yup.string().required('City is required')
+        })}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
           setSubmitting(true);
           if (image) {
@@ -68,7 +80,7 @@ const AddTransportCard = ({
           }
         }}
       >
-        {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, setFieldValue, touched, values }) => (
+        {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, setFieldValue, touched, values, submitCount }) => (
           <form onSubmit={handleSubmit}>
             <Box>
               <Grid container spacing={3}>
@@ -89,7 +101,7 @@ const AddTransportCard = ({
                       inputRef={inputRef}
                       disabled={isDisable}
                     />
-                    {touched.transportName && errors.transportName && (
+                    {(touched.transportName || submitCount > 0) && errors.transportName && (
                       <FormHelperText error id="transporter-name-helper">
                         {errors.transportName}
                       </FormHelperText>
@@ -113,7 +125,7 @@ const AddTransportCard = ({
                       inputRef={inputRef}
                       disabled={isDisable}
                     />
-                    {touched.email && errors.email && (
+                    {(touched.email || submitCount > 0) && errors.email && (
                       <FormHelperText error id="transporter-email-helper">
                         {errors.email}
                       </FormHelperText>
@@ -137,7 +149,7 @@ const AddTransportCard = ({
                       inputRef={inputRef}
                       disabled={isDisable}
                     />
-                    {touched.first_name && errors.first_name && (
+                    {(touched.first_name || submitCount > 0) && errors.first_name && (
                       <FormHelperText error id="transporter-first-name-helper">
                         {errors.first_name}
                       </FormHelperText>
@@ -161,7 +173,7 @@ const AddTransportCard = ({
                       inputRef={inputRef}
                       disabled={isDisable}
                     />
-                    {touched.last_name && errors.last_name && (
+                    {(touched.last_name || submitCount > 0) && errors.last_name && (
                       <FormHelperText error id="transporter-last-name-helper">
                         {errors.last_name}
                       </FormHelperText>
@@ -185,7 +197,7 @@ const AddTransportCard = ({
                       disabled={isDisable}
                       inputProps={{ maxLength: 10 }}
                     />
-                    {touched.mobileNumber && errors.mobileNumber && (
+                    {(touched.mobileNumber || submitCount > 0) && errors.mobileNumber && (
                       <FormHelperText error id="transporter-mobile-number-helper">
                         {errors.mobileNumber}
                       </FormHelperText>
@@ -207,7 +219,7 @@ const AddTransportCard = ({
                       disabled={isDisable}
                       inputProps={{ maxLength: 10 }}
                     />
-                    {touched.officeNumber && errors.officeNumber && (
+                    {(touched.officeNumber || submitCount > 0) && errors.officeNumber && (
                       <FormHelperText error id="transporter-office-number-helper">
                         {errors.officeNumber}
                       </FormHelperText>
@@ -230,7 +242,7 @@ const AddTransportCard = ({
                       placeholder="Address"
                       disabled={isDisable}
                     />
-                    {touched.address && errors.address && (
+                    {(touched.address || submitCount > 0) && errors.address && (
                       <FormHelperText error id="transporter-address-helper">
                         {errors.address}
                       </FormHelperText>
@@ -253,7 +265,7 @@ const AddTransportCard = ({
                       placeholder="Enter city"
                       disabled={isDisable}
                     />
-                    {touched.city && errors.city && (
+                    {(touched.city || submitCount > 0) && errors.city && (
                       <FormHelperText error id="transporter-city-helper">
                         {errors.city}
                       </FormHelperText>

@@ -2,6 +2,7 @@ import { Button, FormHelperText, TextField } from '@mui/material';
 import { Box, Grid, InputLabel, Stack } from '@mui/material';
 import UploadImage from 'components/shared/UploadImage';
 import { Formik } from 'formik';
+import { vendorValidationSchema } from 'pages/validation/validation';
 import { RefObject, useEffect, useState } from 'react';
 import { useOutletContext } from 'react-router';
 import VendorServiceInstance from 'services/vendor.services';
@@ -57,6 +58,7 @@ const AddVendor = ({
       <Formik
         initialValues={initialValues}
         enableReinitialize={true}
+        validationSchema={vendorValidationSchema}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
           setSubmitting(true);
           let response;
@@ -129,9 +131,7 @@ const AddVendor = ({
                 </Grid>
                 <Grid item xs={12} sm={6} spacing={3}>
                   <Stack spacing={1.25}>
-                    <InputLabel htmlFor="vendor-email">
-                      Email <span style={{ color: 'red' }}>*</span>
-                    </InputLabel>
+                    <InputLabel htmlFor="vendor-email">Email</InputLabel>
                     <TextField
                       fullWidth
                       id="vendor-email"
@@ -144,11 +144,6 @@ const AddVendor = ({
                       inputRef={inputRef}
                       disabled={isDisable}
                     />
-                    {touched.email && errors.email && (
-                      <FormHelperText error id="transporter-email-helper">
-                        {errors.email}
-                      </FormHelperText>
-                    )}
                   </Stack>
                 </Grid>
                 <Grid item xs={12} sm={6} spacing={3}>
@@ -178,9 +173,7 @@ const AddVendor = ({
                 </Grid>
                 <Grid item xs={12} sm={6} spacing={3}>
                   <Stack spacing={1.25}>
-                    <InputLabel htmlFor="vendor-second-phone-number">
-                      Vendor Second Phone Number <span style={{ color: 'red' }}>*</span>
-                    </InputLabel>
+                    <InputLabel htmlFor="vendor-second-phone-number">Vendor Second Phone Number</InputLabel>
                     <TextField
                       fullWidth
                       id="vendor-second-phone-number"
@@ -193,11 +186,6 @@ const AddVendor = ({
                       inputRef={inputRef}
                       disabled={isDisable}
                     />
-                    {touched.vendorSecondaryPhoneNumber && errors.vendorSecondaryPhoneNumber && (
-                      <FormHelperText error id="vendor-second-phone-number-helper">
-                        {errors.vendorSecondaryPhoneNumber}
-                      </FormHelperText>
-                    )}
                   </Stack>
                 </Grid>
                 <Grid item xs={12} sm={6} spacing={3}>
@@ -317,29 +305,7 @@ const AddVendor = ({
                     )}
                   </Stack>
                 </Grid>
-                <Grid item xs={12} sm={6}>
-                  <Stack spacing={1.25}>
-                    <InputLabel htmlFor="country">
-                      Country <span style={{ color: 'red' }}>*</span>
-                    </InputLabel>
-                    <TextField
-                      type="text"
-                      fullWidth
-                      value={values.country}
-                      name="country"
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      id="country"
-                      placeholder="Enter Country"
-                      disabled={isDisable}
-                    />
-                    {touched.country && errors.country && (
-                      <FormHelperText error id="country-helper">
-                        {errors.country}
-                      </FormHelperText>
-                    )}
-                  </Stack>
-                </Grid>
+
                 <Grid item xs={12} sm={6}>
                   <Stack spacing={1.25}>
                     <InputLabel htmlFor="password">

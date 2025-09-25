@@ -2,6 +2,7 @@ import { Button, FormHelperText, TextField } from '@mui/material';
 import { Box, Grid, InputLabel, Stack } from '@mui/material';
 import UploadImage from 'components/shared/UploadImage';
 import { Formik } from 'formik';
+import { vendorValidationCardSchema } from 'pages/validation/validation';
 import { RefObject, useEffect, useState } from 'react';
 import { useOutletContext } from 'react-router';
 import VendorServiceInstance from 'services/vendor.services';
@@ -49,6 +50,7 @@ const AddVendorCard = ({
       <Formik
         initialValues={initialValues}
         enableReinitialize={true}
+        validationSchema={vendorValidationCardSchema}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
           setSubmitting(true);
           if (image) {
@@ -121,9 +123,7 @@ const AddVendorCard = ({
                 </Grid>
                 <Grid item xs={12} sm={6} spacing={3}>
                   <Stack spacing={1.25}>
-                    <InputLabel htmlFor="vendor-email">
-                      Email <span style={{ color: 'red' }}>*</span>
-                    </InputLabel>
+                    <InputLabel htmlFor="vendor-email">Email</InputLabel>
                     <TextField
                       fullWidth
                       id="vendor-email"

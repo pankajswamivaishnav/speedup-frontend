@@ -5,6 +5,7 @@ import { Formik } from 'formik';
 import { RefObject, useEffect, useState } from 'react';
 import { useOutletContext } from 'react-router';
 import TransporterServiceInstance from 'services/transporter.services';
+import { transporterValidationSchema } from 'pages/validation/validation';
 
 function useInputRef() {
   return useOutletContext<RefObject<HTMLInputElement>>();
@@ -59,6 +60,7 @@ const AddTransporter = ({
       <Formik
         initialValues={initialValues}
         enableReinitialize={true}
+        validationSchema={transporterValidationSchema}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
           setSubmitting(true);
           if (image) {
@@ -77,7 +79,7 @@ const AddTransporter = ({
           }
         }}
       >
-        {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, setFieldValue, touched, values }) => (
+        {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, setFieldValue, touched, values, submitCount }) => (
           <form onSubmit={handleSubmit}>
             <Box>
               <Grid container spacing={3}>
@@ -98,7 +100,7 @@ const AddTransporter = ({
                       inputRef={inputRef}
                       disabled={isDisable}
                     />
-                    {touched.transportName && errors.transportName && (
+                    {(touched.transportName || submitCount > 0) && errors.transportName && (
                       <FormHelperText error id="transporter-name-helper">
                         {errors.transportName}
                       </FormHelperText>
@@ -122,7 +124,7 @@ const AddTransporter = ({
                       inputRef={inputRef}
                       disabled={isDisable}
                     />
-                    {touched.email && errors.email && (
+                    {(touched.email || submitCount > 0) && errors.email && (
                       <FormHelperText error id="transporter-email-helper">
                         {errors.email}
                       </FormHelperText>
@@ -146,7 +148,7 @@ const AddTransporter = ({
                       inputRef={inputRef}
                       disabled={isDisable}
                     />
-                    {touched.transporter_first_name && errors.transporter_first_name && (
+                    {(touched.transporter_first_name || submitCount > 0) && errors.transporter_first_name && (
                       <FormHelperText error id="transporter-first-name-helper">
                         {errors.transporter_first_name}
                       </FormHelperText>
@@ -170,7 +172,7 @@ const AddTransporter = ({
                       inputRef={inputRef}
                       disabled={isDisable}
                     />
-                    {touched.transporter_last_name && errors.transporter_last_name && (
+                    {(touched.transporter_last_name || submitCount > 0) && errors.transporter_last_name && (
                       <FormHelperText error id="transporter-last-name-helper">
                         {errors.transporter_last_name}
                       </FormHelperText>
@@ -194,7 +196,7 @@ const AddTransporter = ({
                       disabled={isDisable}
                       inputProps={{ maxLength: 10 }}
                     />
-                    {touched.mobileNumber && errors.mobileNumber && (
+                    {(touched.mobileNumber || submitCount > 0) && errors.mobileNumber && (
                       <FormHelperText error id="transporter-mobile-number-helper">
                         {errors.mobileNumber}
                       </FormHelperText>
@@ -216,7 +218,7 @@ const AddTransporter = ({
                       disabled={isDisable}
                       inputProps={{ maxLength: 10 }}
                     />
-                    {touched.officeNumber && errors.officeNumber && (
+                    {(touched.officeNumber || submitCount > 0) && errors.officeNumber && (
                       <FormHelperText error id="transporter-office-number-helper">
                         {errors.officeNumber}
                       </FormHelperText>
@@ -238,7 +240,7 @@ const AddTransporter = ({
                       placeholder="Enter Registration Number"
                       disabled={isDisable}
                     />
-                    {touched.registrationNumber && errors.registrationNumber && (
+                    {(touched.registrationNumber || submitCount > 0) && errors.registrationNumber && (
                       <FormHelperText error id="transporter-registration-number-helper">
                         {errors.registrationNumber}
                       </FormHelperText>
@@ -259,7 +261,7 @@ const AddTransporter = ({
                       disabled={isDisable}
                       inputProps={{ maxLength: 15 }}
                     />
-                    {touched.gstNumber && errors.gstNumber && (
+                    {(touched.gstNumber || submitCount > 0) && errors.gstNumber && (
                       <FormHelperText error id="transporter-gst-number">
                         {errors.gstNumber}
                       </FormHelperText>
@@ -282,7 +284,7 @@ const AddTransporter = ({
                       disabled={isDisable}
                       inputProps={{ maxLength: 10 }}
                     />
-                    {touched.transportAddress && errors.transportAddress && (
+                    {(touched.transportAddress || submitCount > 0) && errors.transportAddress && (
                       <FormHelperText error id="transporter-address-helper">
                         {errors.transportAddress}
                       </FormHelperText>
@@ -302,7 +304,7 @@ const AddTransporter = ({
                       placeholder="Last Name"
                       disabled={isDisable}
                     />
-                    {touched.faithLine && errors.faithLine && (
+                    {(touched.faithLine || submitCount > 0) && errors.faithLine && (
                       <FormHelperText error id="transporter-faithline-helper">
                         {errors.faithLine}
                       </FormHelperText>
@@ -325,7 +327,7 @@ const AddTransporter = ({
                       placeholder="Pan Card Number"
                       disabled={isDisable}
                     />
-                    {touched.panCardNumber && errors.panCardNumber && (
+                    {(touched.panCardNumber || submitCount > 0) && errors.panCardNumber && (
                       <FormHelperText error id="personal-pan-number-helper">
                         {errors.panCardNumber}
                       </FormHelperText>
@@ -348,7 +350,7 @@ const AddTransporter = ({
                       placeholder="Enter Pin Code"
                       disabled={isDisable}
                     />
-                    {touched.pinCode && errors.pinCode && (
+                    {(touched.pinCode || submitCount > 0) && errors.pinCode && (
                       <FormHelperText error id="personal-pin-code-helper">
                         {errors.pinCode}
                       </FormHelperText>
@@ -371,7 +373,7 @@ const AddTransporter = ({
                       placeholder="Enter city"
                       disabled={isDisable}
                     />
-                    {touched.city && errors.city && (
+                    {(touched.city || submitCount > 0) && errors.city && (
                       <FormHelperText error id="transporter-city-helper">
                         {errors.city}
                       </FormHelperText>
@@ -394,7 +396,7 @@ const AddTransporter = ({
                       placeholder="Enter state"
                       disabled={isDisable}
                     />
-                    {touched.state && errors.state && (
+                    {(touched.state || submitCount > 0) && errors.state && (
                       <FormHelperText error id="transporter-city-helper">
                         {errors.state}
                       </FormHelperText>
@@ -417,7 +419,7 @@ const AddTransporter = ({
                       placeholder="Enter Country"
                       disabled={isDisable}
                     />
-                    {touched.country && errors.country && (
+                    {(touched.country || submitCount > 0) && errors.country && (
                       <FormHelperText error id="transporter-country-helper">
                         {errors.country}
                       </FormHelperText>
@@ -440,7 +442,7 @@ const AddTransporter = ({
                       placeholder="Enter Password"
                       disabled={isDisable}
                     />
-                    {touched.password && errors.password && (
+                    {(touched.password || submitCount > 0) && errors.password && (
                       <FormHelperText error id="transporter-password-helper">
                         {errors.password}
                       </FormHelperText>

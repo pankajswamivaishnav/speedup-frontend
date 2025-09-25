@@ -1,6 +1,7 @@
 import { Autocomplete, Button, FormHelperText, TextField } from '@mui/material';
 import { Box, Grid, InputLabel, Stack } from '@mui/material';
 import { Formik } from 'formik';
+import { driverValidationSchema } from 'pages/validation/validation';
 import { RefObject, useEffect, useState } from 'react';
 import { useOutletContext } from 'react-router';
 import DriverServiceInstance from 'services/driver.services';
@@ -50,6 +51,7 @@ const AddDriver = ({
       <Formik
         initialValues={initialValues}
         enableReinitialize={true}
+        validationSchema={driverValidationSchema}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
           setSubmitting(true);
           let response;
