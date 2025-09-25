@@ -10,6 +10,7 @@ import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 
 import moment from 'moment';
 import biltyServiceInstance from 'services/bilty.services';
+import { biltiesValidationSchema } from 'pages/validation/validation';
 
 function useInputRef() {
   return useOutletContext<RefObject<HTMLInputElement>>();
@@ -70,6 +71,7 @@ const AddBilty = ({
       <Formik
         initialValues={initialValues}
         enableReinitialize={true}
+        validationSchema={biltiesValidationSchema}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting, setFieldValue }) => {
           setSubmitting(true);
           let response;

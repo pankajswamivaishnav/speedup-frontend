@@ -54,3 +54,31 @@ export const vendorValidationCardSchema = Yup.object({
   business: Yup.string().required('Business name is required'),
   city: Yup.string().required('City is required')
 });
+
+export const biltiesValidationSchema = Yup.object({
+  transportId: Yup.string().required('Transporter is required'),
+  gstNumber: Yup.string().required('GST Number is required'),
+  registrationNumber: Yup.string().required('Registration Number is required'),
+  transporterNumber: Yup.number().typeError('Transporter Number must be a number').required('Transporter Number is required'),
+  truckNumber: Yup.string().required('Truck number is required'),
+  driverName: Yup.string().required('Driver name is required'),
+  driverPhoneNumber: Yup.string()
+    .required('Driver phone number is required')
+    .matches(/^[0-9]{10}$/, 'Driver phone number must be 10 digits'),
+  from: Yup.string().required('Loading place (from) is required'),
+  to: Yup.string().required('Drop point (to) is required'),
+  date: Yup.date().required('Date is required'),
+  senderName: Yup.string().required('Sender name is required'),
+  senderNumber: Yup.number().required('Sender number is required'),
+  receiverNumber: Yup.number().required('Receiver number is required'),
+  receiverName: Yup.string().required('Receiver name is required'),
+  goodsCategory: Yup.string().required('Goods category is required'),
+  weight: Yup.string().required('Weight is required'),
+  truckCharge: Yup.string().required('Truck charge is required'),
+  advancePayment: Yup.string().required('Advance payment is required'),
+  remainingPayment: Yup.string().required('Remaining payment is required'),
+  brokingCharge: Yup.string().required('Broking charge is required'),
+  paymentType: Yup.string()
+    .oneOf(['cash', 'upi', 'banktransfer', 'netbanking'], 'Invalid payment type')
+    .required('Payment type is required')
+});
