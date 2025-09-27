@@ -117,6 +117,40 @@ class DriverServices {
       throw error;
     }
   }
+
+  // delete driver
+  async deleteDriver(id: string) {
+    try {
+      const response = await axiosServices.delete(`api/v1/deleteDriver/${id}`);
+      if (response.data.success) {
+        store.dispatch(
+          openSnackbar({
+            open: true,
+            message: 'Driver deleted successfully.',
+            variant: 'alert',
+            alert: {
+              color: 'info'
+            },
+            close: true
+          })
+        );
+        return true;
+      }
+    } catch (error) {
+      store.dispatch(
+        openSnackbar({
+          open: true,
+          message: 'Driver not deleted successfully.',
+          variant: 'alert',
+          alert: {
+            color: 'error'
+          },
+          close: true
+        })
+      );
+      throw error;
+    }
+  }
 }
 
 const DriverServiceInstance = new DriverServices();

@@ -68,10 +68,10 @@ class VendorServices {
         store.dispatch(
           openSnackbar({
             open: true,
-            message: 'Transporter deleted successfully',
+            message: 'Vendor deleted successfully',
             variant: 'alert',
             alert: {
-              color: 'success'
+              color: 'primary'
             },
             close: true
           })
@@ -82,7 +82,7 @@ class VendorServices {
       store.dispatch(
         openSnackbar({
           open: true,
-          message: 'Transporter not deleted',
+          message: 'Vendor not deleted',
           variant: 'alert',
           alert: {
             color: 'error'

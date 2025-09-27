@@ -20,9 +20,9 @@ import MainCard from 'components/MainCard';
 import UniversalDialog from 'components/popup/UniversalDialog';
 import { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
-import TransporterServiceInstance from 'services/transporter.services';
 import { TUniversalDialogProps } from 'types/types.UniversalDialog';
 import AddDriver from './AddDriver';
+import DriverServiceInstance from 'services/driver.services';
 
 // ===========================|| DATA WIDGET - PROJECT TABLE CARD ||=========================== //
 
@@ -33,7 +33,7 @@ const DriverTable = ({
   page,
   setPage,
   count,
-  refetchTransporterAllData
+  refetchDriversAllData
 }: {
   data: any;
   limit: number;
@@ -41,7 +41,7 @@ const DriverTable = ({
   setLimit: React.Dispatch<React.SetStateAction<number>>;
   page: number;
   count: number;
-  refetchTransporterAllData?: () => void;
+  refetchDriversAllData?: () => void;
 }) => {
   const handleChangePage = (event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null, newPage: number) => {
     setPage(newPage);
@@ -77,14 +77,14 @@ const DriverTable = ({
   };
 
   // Delete transporter
-  const handleDeleteTransporter = async (id: string) => {
+  const handleDeleteDriver = async (id: string) => {
     try {
-      const deleteTransport = await TransporterServiceInstance.deleteTransporter(id);
-      if (deleteTransport && refetchTransporterAllData) {
-        refetchTransporterAllData();
+      const deleteTransport = await DriverServiceInstance.deleteDriver(id);
+      if (deleteTransport && refetchDriversAllData) {
+        refetchDriversAllData();
       }
     } catch (error) {
-      console.log('Error occured while delete transporter', error);
+      console.log('Error occured while delete driver', error);
     }
   };
   return (
@@ -129,7 +129,7 @@ const DriverTable = ({
                     </Tooltip>
                   </TableCell>
                   <TableCell>
-                    <Tooltip title="delete" onClick={() => handleDeleteTransporter(row._id)}>
+                    <Tooltip title="delete" onClick={() => handleDeleteDriver(row._id)}>
                       <IconButton>
                         <DeleteOutlined className="text-red-600" />
                       </IconButton>

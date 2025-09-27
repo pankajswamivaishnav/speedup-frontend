@@ -161,7 +161,7 @@ const Drivers = () => {
                   page={page}
                   setPage={setPage}
                   count={count}
-                  refetchTransporterAllData={refetchDrivers}
+                  refetchDriversAllData={refetchDrivers}
                 />
               )}
             </Grid>

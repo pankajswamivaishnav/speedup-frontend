@@ -23,6 +23,7 @@ const BiltyPage = Loadable(lazy(() => import('pages/Bilty/Bilty')));
 const TransportCardPage = Loadable(lazy(() => import('pages/transporter/TransportCardsPage')));
 const DriverCardPage = Loadable(lazy(() => import('pages/driver/DriverCardPage')));
 const VendorCardPage = Loadable(lazy(() => import('pages/vendor/VendorCardPage')));
+const BiltyDocumentPage = Loadable(lazy(() => import('pages/Bilty/BiltyDocumentPage')));
 // ==============================|| MAIN ROUTING ||============================== //
 
 const MainRoutes = {
@@ -71,6 +72,10 @@ const MainRoutes = {
         {
           path: 'vendor-cards',
           element: <VendorCardPage />
+        },
+        {
+          path: 'bilty-document',
+          element: <BiltyDocumentPage />
         }
       ]
     },

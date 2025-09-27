@@ -21,9 +21,10 @@ import MainCard from 'components/MainCard';
 import UniversalDialog from 'components/popup/UniversalDialog';
 import { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
-import TransporterServiceInstance from 'services/transporter.services';
 import { TUniversalDialogProps } from 'types/types.UniversalDialog';
 import AddBilty from './AddBilty';
+import biltyServiceInstance from 'services/bilty.services';
+import UniversalPopup from 'components/UniversalPopup';
 
 // ===========================|| DATA WIDGET - PROJECT TABLE CARD ||=========================== //
 
@@ -34,7 +35,7 @@ const BiltyTable = ({
   page,
   setPage,
   count,
-  refetchTransporterAllData
+  refetchBiltyAllData
 }: {
   data: any;
   limit: number;
@@ -42,7 +43,7 @@ const BiltyTable = ({
   setLimit: React.Dispatch<React.SetStateAction<number>>;
   page: number;
   count: number;
-  refetchTransporterAllData?: () => void;
+  refetchBiltyAllData?: () => void;
 }) => {
   const handleChangePage = (event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null, newPage: number) => {
     setPage(newPage);
@@ -52,13 +53,15 @@ const BiltyTable = ({
     setLimit(parseInt(event?.target.value!, 10));
     setPage(0);
   };
-  // -------------- Show transporter details page pop up --------------
+  // -------------- constants ------------------
+  const [UniversalPopupModal, setUniversalPopupModal] = useState({ open: false, id: '' });
+  // -------------- Show bilty details page pop up --------------
   const [biltiesDetailsPopup, setBiltyDetailsPopup] = useState<TUniversalDialogProps>({
     action: {
       open: false,
       maxWidth: 'md'
     },
-    title: 'Driver Detail',
+    title: 'Bilty Detail',
     data: { existingData: {}, isEditMode: false }
   });
 
@@ -77,15 +80,15 @@ const BiltyTable = ({
     });
   };
 
-  // Delete transporter
-  const handleDeleteTransporter = async (id: string) => {
+  // Delete Bilty
+  const handleDeleteBilty = async (id: string) => {
     try {
-      const deleteTransport = await TransporterServiceInstance.deleteTransporter(id);
-      if (deleteTransport && refetchTransporterAllData) {
-        refetchTransporterAllData();
+      const deleteBilty = await biltyServiceInstance.deleteBilty(id);
+      if (deleteBilty && refetchBiltyAllData) {
+        refetchBiltyAllData();
       }
     } catch (error) {
-      console.log('Error occured while delete transporter', error);
+      console.log('Error occured while delete bilty', error);
     }
   };
   return (
@@ -134,7 +137,7 @@ const BiltyTable = ({
                     </Tooltip>
                   </TableCell>
                   <TableCell>
-                    <Tooltip title="delete" onClick={() => handleDeleteTransporter(row._id)}>
+                    <Tooltip title="delete" onClick={() => setUniversalPopupModal({ open: true, id: row._id })}>
                       <IconButton>
                         <DeleteOutlined className="text-red-600" />
                       </IconButton>

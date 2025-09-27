@@ -6,7 +6,6 @@ import { useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { TUniversalDialogProps } from 'types/types.UniversalDialog';
 import { useQuery } from '@tanstack/react-query';
-import TransporterServiceInstance from 'services/transporter.services';
 import useAuth from 'hooks/useAuth';
 import BiltyTable from 'components/Bilty/BiltyTable';
 import AddBilty from 'components/Bilty/AddBilty';
@@ -16,6 +15,7 @@ import PieChart from 'components/shared/PieChart';
 import BarChart from 'components/shared/BarChart';
 import Search from 'layout/MainLayout/Header/HeaderContent/Search';
 import { exportToCsv } from 'utils/download';
+import TransporterServiceInstance from 'services/transporter.services';
 
 const Bilty = () => {
   const [isLoading, setLoading] = useState(true);
@@ -165,7 +165,7 @@ const Bilty = () => {
                     page={page}
                     setPage={setPage}
                     count={count}
-                    refetchTransporterAllData={refetchBilties}
+                    refetchBiltyAllData={refetchBilties}
                   />
                 )}
               </Grid>
