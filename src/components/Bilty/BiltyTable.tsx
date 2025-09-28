@@ -13,7 +13,9 @@ import {
   Typography,
   TablePagination,
   Tooltip,
-  IconButton
+  IconButton,
+  Stack,
+  Button
 } from '@mui/material';
 
 // project imports
@@ -24,7 +26,6 @@ import { FormattedMessage } from 'react-intl';
 import { TUniversalDialogProps } from 'types/types.UniversalDialog';
 import AddBilty from './AddBilty';
 import biltyServiceInstance from 'services/bilty.services';
-import UniversalPopup from 'components/UniversalPopup';
 
 // ===========================|| DATA WIDGET - PROJECT TABLE CARD ||=========================== //
 
@@ -53,8 +54,6 @@ const BiltyTable = ({
     setLimit(parseInt(event?.target.value!, 10));
     setPage(0);
   };
-  // -------------- constants ------------------
-  const [UniversalPopupModal, setUniversalPopupModal] = useState({ open: false, id: '' });
   // -------------- Show bilty details page pop up --------------
   const [biltiesDetailsPopup, setBiltyDetailsPopup] = useState<TUniversalDialogProps>({
     action: {
@@ -62,6 +61,15 @@ const BiltyTable = ({
       maxWidth: 'md'
     },
     title: 'Bilty Detail',
+    data: { existingData: {}, isEditMode: false }
+  });
+
+  const [deleteConfirmModal, setDeleteConfirmModal] = useState<TUniversalDialogProps>({
+    action: {
+      open: false,
+      maxWidth: 'md'
+    },
+    title: 'Delete Bilty Confirmation',
     data: { existingData: {}, isEditMode: false }
   });
 
@@ -80,6 +88,15 @@ const BiltyTable = ({
     });
   };
 
+  const handleDeleteBiltyToggle = async (id: string) => {
+    setDeleteConfirmModal((prev) => ({
+      ...prev,
+      data: { isEditMode: false, existingData: { id } },
+      action: { ...prev.action, open: !prev.action.open },
+      title: <FormattedMessage id="Delete Bilty Confirmation" defaultMessage="Delete Bilty Confirmation" />
+    }));
+  };
+
   // Delete Bilty
   const handleDeleteBilty = async (id: string) => {
     try {
@@ -91,6 +108,7 @@ const BiltyTable = ({
       console.log('Error occured while delete bilty', error);
     }
   };
+
   return (
     <>
       <MainCard content={false} sx={{ width: '90vw', overflowX: 'hidden' }}>
@@ -137,7 +155,7 @@ const BiltyTable = ({
                     </Tooltip>
                   </TableCell>
                   <TableCell>
-                    <Tooltip title="delete" onClick={() => setUniversalPopupModal({ open: true, id: row._id })}>
+                    <Tooltip title="delete" onClick={() => handleDeleteBiltyToggle(row._id)}>
                       <IconButton>
                         <DeleteOutlined className="text-red-600" />
                       </IconButton>
@@ -175,6 +193,28 @@ const BiltyTable = ({
           />
         </UniversalDialog>
       )}
+
+      {/* Delete modal */}
+      <UniversalDialog
+        action={{ ...deleteConfirmModal.action }}
+        onClose={() => handleDeleteBiltyToggle('')}
+        title={deleteConfirmModal.title}
+        hasPrimaryButton={false}
+      >
+        <>
+          <h3 className="text-xl">Are you sure you want to delete this bilty.</h3>
+          <Grid item xs={12}>
+            <Stack direction="row" justifyContent="flex-end" alignItems="center" spacing={2} sx={{ mt: 2.5 }}>
+              <Button variant="outlined" color="secondary" onClick={() => handleDeleteBiltyToggle('')}>
+                Cancel
+              </Button>
+              <Button type="submit" variant="outlined" onClick={() => handleDeleteBilty(deleteConfirmModal.data.existingData.id)}>
+                Delete
+              </Button>
+            </Stack>
+          </Grid>
+        </>
+      </UniversalDialog>
     </>
   );
 };

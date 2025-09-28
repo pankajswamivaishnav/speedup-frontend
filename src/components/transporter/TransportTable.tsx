@@ -12,7 +12,9 @@ import {
   Typography,
   TablePagination,
   Tooltip,
-  IconButton
+  IconButton,
+  Stack,
+  Button
 } from '@mui/material';
 
 // project imports
@@ -61,6 +63,14 @@ const TransportTable = ({
     title: 'Transporter Details',
     data: { existingData: {}, isEditMode: false }
   });
+  const [deleteConfirmModal, setDeleteConfirmModal] = useState<TUniversalDialogProps>({
+    action: {
+      open: false,
+      maxWidth: 'md'
+    },
+    title: 'Delete Bilty Confirmation',
+    data: { existingData: {}, isEditMode: false }
+  });
 
   //-------------------handlers-------------------
   const handleTransporterDetailTogglePopup = async (transporterData?: any) => {
@@ -75,6 +85,15 @@ const TransportTable = ({
         title: <FormattedMessage id="Transporter Details" />
       };
     });
+  };
+
+  const handleDeleteTransporterToggle = async (id: string) => {
+    setDeleteConfirmModal((prev) => ({
+      ...prev,
+      data: { isEditMode: false, existingData: { id } },
+      action: { ...prev.action, open: !prev.action.open },
+      title: <FormattedMessage id="Delete Bilty Confirmation" defaultMessage="Delete Bilty Confirmation" />
+    }));
   };
 
   // Delete transporter
@@ -132,7 +151,7 @@ const TransportTable = ({
                     </Tooltip>
                   </TableCell>
                   <TableCell>
-                    <Tooltip title="delete" onClick={() => handleDeleteTransporter(row._id)}>
+                    <Tooltip title="delete" onClick={() => handleDeleteTransporterToggle(row._id)}>
                       <IconButton>
                         <DeleteOutlined className="text-red-600" />
                       </IconButton>
@@ -170,6 +189,28 @@ const TransportTable = ({
           />
         </UniversalDialog>
       )}
+
+      {/* Delete modal */}
+      <UniversalDialog
+        action={{ ...deleteConfirmModal.action }}
+        onClose={() => handleDeleteTransporterToggle('')}
+        title={deleteConfirmModal.title}
+        hasPrimaryButton={false}
+      >
+        <>
+          <h3 className="text-xl">Are you sure you want to delete this transporter.</h3>
+          <Grid item xs={12}>
+            <Stack direction="row" justifyContent="flex-end" alignItems="center" spacing={2} sx={{ mt: 2.5 }}>
+              <Button variant="outlined" color="secondary" onClick={() => handleDeleteTransporterToggle('')}>
+                Cancel
+              </Button>
+              <Button type="submit" variant="outlined" onClick={() => handleDeleteTransporter(deleteConfirmModal.data.existingData.id)}>
+                Delete
+              </Button>
+            </Stack>
+          </Grid>
+        </>
+      </UniversalDialog>
     </>
   );
 };

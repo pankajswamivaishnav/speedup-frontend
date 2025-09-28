@@ -12,7 +12,9 @@ import {
   Typography,
   TablePagination,
   Tooltip,
-  IconButton
+  IconButton,
+  Stack,
+  Button
 } from '@mui/material';
 
 // project imports
@@ -61,6 +63,15 @@ const DriverTable = ({
     data: { existingData: {}, isEditMode: false }
   });
 
+  const [deleteConfirmModal, setDeleteConfirmModal] = useState<TUniversalDialogProps>({
+    action: {
+      open: false,
+      maxWidth: 'md'
+    },
+    title: 'Delete Driver Confirmation',
+    data: { existingData: {}, isEditMode: false }
+  });
+
   //-------------------handlers-------------------
   const handleDriverDetailTogglePopup = async (transporterData?: any) => {
     if (driversDetailsPopup.action.open === true) {
@@ -74,6 +85,15 @@ const DriverTable = ({
         title: <FormattedMessage id="Driver Detail" />
       };
     });
+  };
+
+  const handleDeleteDriverToggle = async (id: string) => {
+    setDeleteConfirmModal((prev) => ({
+      ...prev,
+      data: { isEditMode: false, existingData: { id } },
+      action: { ...prev.action, open: !prev.action.open },
+      title: <FormattedMessage id="Delete Bilty Confirmation" defaultMessage="Delete Bilty Confirmation" />
+    }));
   };
 
   // Delete transporter
@@ -129,7 +149,7 @@ const DriverTable = ({
                     </Tooltip>
                   </TableCell>
                   <TableCell>
-                    <Tooltip title="delete" onClick={() => handleDeleteDriver(row._id)}>
+                    <Tooltip title="delete" onClick={() => handleDeleteDriverToggle(row._id)}>
                       <IconButton>
                         <DeleteOutlined className="text-red-600" />
                       </IconButton>
@@ -167,6 +187,28 @@ const DriverTable = ({
           />
         </UniversalDialog>
       )}
+
+      {/* Delete modal */}
+      <UniversalDialog
+        action={{ ...deleteConfirmModal.action }}
+        onClose={() => handleDeleteDriverToggle('')}
+        title={deleteConfirmModal.title}
+        hasPrimaryButton={false}
+      >
+        <>
+          <h3 className="text-xl">Are you sure you want to delete this driver.</h3>
+          <Grid item xs={12}>
+            <Stack direction="row" justifyContent="flex-end" alignItems="center" spacing={2} sx={{ mt: 2.5 }}>
+              <Button variant="outlined" color="secondary" onClick={() => handleDeleteDriverToggle('')}>
+                Cancel
+              </Button>
+              <Button type="submit" variant="outlined" onClick={() => handleDeleteDriver(deleteConfirmModal.data.existingData.id)}>
+                Delete
+              </Button>
+            </Stack>
+          </Grid>
+        </>
+      </UniversalDialog>
     </>
   );
 };

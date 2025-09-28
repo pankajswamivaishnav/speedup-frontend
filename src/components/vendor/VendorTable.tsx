@@ -12,7 +12,9 @@ import {
   Typography,
   TablePagination,
   Tooltip,
-  IconButton
+  IconButton,
+  Stack,
+  Button
 } from '@mui/material';
 
 // project imports
@@ -61,6 +63,15 @@ const VendorTable = ({
     data: { existingData: {}, isEditMode: false }
   });
 
+  const [deleteConfirmModal, setDeleteConfirmModal] = useState<TUniversalDialogProps>({
+    action: {
+      open: false,
+      maxWidth: 'md'
+    },
+    title: 'Delete Bilty Confirmation',
+    data: { existingData: {}, isEditMode: false }
+  });
+
   //-------------------handlers-------------------
   const handleVendorDetailTogglePopup = async (vendorData?: any) => {
     if (vendorDetailsPopup.action.open === true) {
@@ -74,6 +85,15 @@ const VendorTable = ({
         title: <FormattedMessage id="Vendor Details" />
       };
     });
+  };
+
+  const handleDeleteVendorToggle = async (id: string) => {
+    setDeleteConfirmModal((prev) => ({
+      ...prev,
+      data: { isEditMode: false, existingData: { id } },
+      action: { ...prev.action, open: !prev.action.open },
+      title: <FormattedMessage id="Delete Vendor Confirmation" defaultMessage="Delete vendor Confirmation" />
+    }));
   };
 
   // Delete transporter
@@ -131,7 +151,7 @@ const VendorTable = ({
                     </Tooltip>
                   </TableCell>
                   <TableCell>
-                    <Tooltip title="delete" onClick={() => handleDeleteVendor(row._id)}>
+                    <Tooltip title="delete" onClick={() => handleDeleteVendorToggle(row._id)}>
                       <IconButton>
                         <DeleteOutlined className="text-red-600" />
                       </IconButton>
@@ -169,6 +189,27 @@ const VendorTable = ({
           />
         </UniversalDialog>
       )}
+      {/* Delete model confirmation */}
+      <UniversalDialog
+        action={{ ...deleteConfirmModal.action }}
+        onClose={() => handleDeleteVendorToggle('')}
+        title={deleteConfirmModal.title}
+        hasPrimaryButton={false}
+      >
+        <>
+          <h3 className="text-xl">Are you sure you want to delete this vendor.</h3>
+          <Grid item xs={12}>
+            <Stack direction="row" justifyContent="flex-end" alignItems="center" spacing={2} sx={{ mt: 2.5 }}>
+              <Button variant="outlined" color="secondary" onClick={() => handleDeleteVendorToggle('')}>
+                Cancel
+              </Button>
+              <Button type="submit" variant="outlined" onClick={() => handleDeleteVendor(deleteConfirmModal.data.existingData.id)}>
+                Delete
+              </Button>
+            </Stack>
+          </Grid>
+        </>
+      </UniversalDialog>
     </>
   );
 };

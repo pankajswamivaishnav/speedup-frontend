@@ -70,7 +70,7 @@ class TransporterServices {
             message: 'Transporter deleted successfully',
             variant: 'alert',
             alert: {
-              color: 'success'
+              color: 'info'
             },
             close: true
           })
