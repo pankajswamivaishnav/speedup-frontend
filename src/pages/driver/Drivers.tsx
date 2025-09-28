@@ -15,7 +15,6 @@ import Search from 'layout/MainLayout/Header/HeaderContent/Search';
 import { exportToCsv } from 'utils/download';
 
 const Drivers = () => {
-  const [isLoading, setLoading] = useState(true);
   const [driversData, setDriversData] = useState();
   const [transportData, setTransportData] = useState<{ label: string; id: string }[]>([]);
   const [page, setPage] = useState<number>(0);
@@ -88,10 +87,14 @@ const Drivers = () => {
   };
 
   // -----------useQuery-----------
-  const { data: drivers, refetch: refetchDrivers } = useQuery({
+  const {
+    data: drivers,
+    refetch: refetchDrivers,
+    isLoading,
+    isFetching
+  } = useQuery({
     queryKey: ['drivers_data', page, limit, query],
     queryFn: async () => {
-      setLoading(true);
       const response = await DriverServiceInstance.getAllDrivers(page, limit, query);
       return response;
     }
@@ -119,7 +122,6 @@ const Drivers = () => {
     if (drivers) {
       setDriversData(drivers.data);
       setCount(drivers.total);
-      setLoading(false);
     }
     // eslint-disable-next-line
   }, [drivers]);
@@ -147,7 +149,7 @@ const Drivers = () => {
 
           <Grid item xs={12}>
             <Grid container spacing={3}>
-              {isLoading ? (
+              {isLoading || isFetching ? (
                 [1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
                   <Grid item xs={12} key={item}>
                     <SkeletonProductPlaceholder />

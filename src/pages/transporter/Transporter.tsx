@@ -14,7 +14,7 @@ import Search from 'layout/MainLayout/Header/HeaderContent/Search';
 import { exportToCsv } from 'utils/download';
 
 const Transporter = () => {
-  const [isLoading, setLoading] = useState(true);
+  // const [isLoading, setLoading] = useState(true);
   const [transporterData, setTransporterData] = useState();
   const [page, setPage] = useState<number>(0);
   const [limit, setLimit] = useState<number>(20);
@@ -78,13 +78,18 @@ const Transporter = () => {
   };
 
   // -----------useQuery-----------
-  const { data: transporter, refetch: refetchTransporterAllData } = useQuery({
+  const {
+    data: transporter,
+    refetch: refetchTransporterAllData,
+    isLoading,
+    isFetching
+  } = useQuery({
     queryKey: ['transporters_data', page, limit, query],
     queryFn: async () => {
-      setLoading(true);
       const response = await TransporterServiceInstance.getAllTransporter(page, limit, query);
       return response;
-    }
+    },
+    refetchOnWindowFocus: false
   });
 
   //---------------useeffect--------------
@@ -92,7 +97,6 @@ const Transporter = () => {
     if (transporter) {
       setTransporterData(transporter.data);
       setCount(transporter.total);
-      setLoading(false);
     }
   }, [transporter]);
 
@@ -119,7 +123,7 @@ const Transporter = () => {
 
           <Grid item xs={12}>
             <Grid container spacing={3}>
-              {isLoading ? (
+              {isLoading || isFetching ? (
                 [1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
                   <Grid item xs={12} key={item}>
                     <SkeletonProductPlaceholder />

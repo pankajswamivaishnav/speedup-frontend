@@ -13,7 +13,6 @@ import AddVendor from 'components/vendor/AddVendor';
 import Search from 'layout/MainLayout/Header/HeaderContent/Search';
 import { exportToCsv } from 'utils/download';
 const Vendor = () => {
-  const [isLoading, setLoading] = useState(true);
   const [vendorData, setVendorData] = useState();
   const [page, setPage] = useState<number>(0);
   const [limit, setLimit] = useState<number>(20);
@@ -68,10 +67,14 @@ const Vendor = () => {
   };
 
   // -----------useQuery-----------
-  const { data: vendors, refetch: refetchVendorAllData } = useQuery({
+  const {
+    data: vendors,
+    refetch: refetchVendorAllData,
+    isLoading,
+    isFetching
+  } = useQuery({
     queryKey: ['vendors_data', page, limit, query],
     queryFn: async () => {
-      setLoading(true);
       const response = await VendorServiceInstance.getAllVendors(page, limit, query);
       return response;
     }
@@ -82,7 +85,6 @@ const Vendor = () => {
     if (vendors) {
       setVendorData(vendors.data);
       setCount(vendors.total);
-      setLoading(false);
     }
   }, [vendors]);
   return (
@@ -108,7 +110,7 @@ const Vendor = () => {
 
           <Grid item xs={12}>
             <Grid container spacing={3}>
-              {isLoading ? (
+              {isLoading || isFetching ? (
                 [1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
                   <Grid item xs={12} key={item}>
                     <SkeletonProductPlaceholder />

@@ -14,7 +14,6 @@ import { TUniversalDialogProps } from 'types/types.UniversalDialog';
 
 const TransportCardsPage = () => {
   const [query, setQuery] = useState<string>('');
-  const [isLoading, setLoading] = useState(true);
   const [transportCards, setTransportCardData] = useState<VisitingCardProps[]>([]);
   // -------------- Add transporter card pop up --------------
   const [transportCardFormPopup, setTransportCardFormPopup] = useState<TUniversalDialogProps>({
@@ -42,10 +41,13 @@ const TransportCardsPage = () => {
   };
 
   // -----------useQuery-----------
-  const { data: transportCardData } = useQuery({
+  const {
+    data: transportCardData,
+    isLoading,
+    isFetching
+  } = useQuery({
     queryKey: ['drivers_data', query],
     queryFn: async () => {
-      setLoading(true);
       const response = await TransporterServiceInstance.getAllTransportCards(query);
       return response;
     }
@@ -54,7 +56,6 @@ const TransportCardsPage = () => {
   useEffect(() => {
     if (transportCardData) {
       setTransportCardData(transportCardData.data);
-      setLoading(false);
     }
     // eslint-disable-next-line
   }, [transportCardData]);
@@ -75,7 +76,7 @@ const TransportCardsPage = () => {
           </div>
         </Grid>
         <Divider />
-        {isLoading ? (
+        {isLoading || isFetching ? (
           [1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
             <Grid item xs={12} key={item}>
               <SkeletonProductPlaceholder />

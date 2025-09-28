@@ -14,7 +14,6 @@ import { TUniversalDialogProps } from 'types/types.UniversalDialog';
 
 const VendorCardsPage = () => {
   const [query, setQuery] = useState<string>('');
-  const [isLoading, setLoading] = useState(true);
   const [vendorCards, setVendorCardData] = useState<VisitingCardProps[]>([]);
   // -------------- Add vendor card pop up --------------
   const [vendorCardFormPopup, setVendorCardFormPopup] = useState<TUniversalDialogProps>({
@@ -42,10 +41,13 @@ const VendorCardsPage = () => {
   };
 
   // -----------useQuery-----------
-  const { data: vendorCardData } = useQuery({
+  const {
+    data: vendorCardData,
+    isLoading,
+    isFetching
+  } = useQuery({
     queryKey: ['vendor_card_data', query],
     queryFn: async () => {
-      setLoading(true);
       const response = await VendorServiceInstance.getAllVendorCards(query);
       return response;
     }
@@ -54,7 +56,6 @@ const VendorCardsPage = () => {
   useEffect(() => {
     if (vendorCardData) {
       setVendorCardData(vendorCardData.data);
-      setLoading(false);
     }
     // eslint-disable-next-line
   }, [vendorCardData]);
@@ -75,7 +76,7 @@ const VendorCardsPage = () => {
             <Search setQuery={setQuery} />
           </div>
         </Grid>
-        {isLoading ? (
+        {isLoading || isFetching ? (
           [1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
             <Grid item xs={12} key={item}>
               <SkeletonProductPlaceholder />

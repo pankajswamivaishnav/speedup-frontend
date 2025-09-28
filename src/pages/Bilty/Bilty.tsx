@@ -18,7 +18,6 @@ import { exportToCsv } from 'utils/download';
 import TransporterServiceInstance from 'services/transporter.services';
 
 const Bilty = () => {
-  const [isLoading, setLoading] = useState(true);
   const [biltyData, setbiltyData] = useState();
   const [transportData, setTransportData] = useState<{ label: string; id: string }[]>([]);
   const [page, setPage] = useState<number>(0);
@@ -91,10 +90,14 @@ const Bilty = () => {
   };
 
   // -----------useQuery-----------
-  const { data: bilties, refetch: refetchBilties } = useQuery({
+  const {
+    data: bilties,
+    refetch: refetchBilties,
+    isLoading,
+    isFetching
+  } = useQuery({
     queryKey: ['bilties_data', page, limit, query],
     queryFn: async () => {
-      setLoading(true);
       const response = await biltyServiceInstance.getAllbilties(page, limit, query);
       return response;
     }
@@ -122,7 +125,6 @@ const Bilty = () => {
     if (bilties) {
       setbiltyData(bilties.data);
       setCount(bilties.total);
-      setLoading(false);
     }
     // eslint-disable-next-line
   }, [bilties]);
@@ -151,7 +153,7 @@ const Bilty = () => {
 
             <Grid item xs={12}>
               <Grid container spacing={3}>
-                {isLoading ? (
+                {isLoading || isFetching ? (
                   [1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
                     <Grid item xs={12} key={item}>
                       <SkeletonProductPlaceholder />

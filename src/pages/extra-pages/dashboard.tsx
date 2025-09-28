@@ -1,5 +1,5 @@
 // material-ui
-import { UsergroupAddOutlined, UserOutlined, FileExcelOutlined } from '@ant-design/icons';
+import { UsergroupAddOutlined, FilePdfOutlined, TruckOutlined, ShopOutlined } from '@ant-design/icons';
 import { Grid, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import BiltyTable from 'components/Bilty/BiltyTable';
@@ -118,7 +118,7 @@ const Dashboard = () => {
             <DetailCard
               primary="Total Drivers"
               secondary={`${driversData?.total} +`}
-              iconPrimary={UserOutlined}
+              iconPrimary={TruckOutlined}
               color={theme.palette.info.main}
             />
           </Grid>
@@ -141,7 +141,7 @@ const Dashboard = () => {
             <DetailCard
               primary="Total Vendors"
               secondary={`${vendorsData?.total} +`}
-              iconPrimary={UserOutlined}
+              iconPrimary={ShopOutlined}
               color={theme.palette.mode === ThemeMode.DARK ? theme.palette.secondary.lighter : theme.palette.secondary.dark}
             />
           </Grid>
@@ -164,7 +164,7 @@ const Dashboard = () => {
             <DetailCard
               primary="Total Bilties"
               secondary={`${biltiesData?.total} +`}
-              iconPrimary={FileExcelOutlined}
+              iconPrimary={FilePdfOutlined}
               color={theme.palette.error.main}
             />
           </Grid>

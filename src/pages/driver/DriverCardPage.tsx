@@ -13,7 +13,6 @@ import DriverServiceInstance from 'services/driver.services';
 import { TUniversalDialogProps } from 'types/types.UniversalDialog';
 
 const DriverCardPage = () => {
-  const [isLoading, setLoading] = useState(true);
   const [driverCards, setDriverCardData] = useState<VisitingCardProps[]>([]);
   const [query, setQuery] = useState<string>('');
   // -------------- Add transporter card pop up --------------
@@ -42,10 +41,13 @@ const DriverCardPage = () => {
   };
 
   // -----------useQuery-----------
-  const { data: driverCardsData } = useQuery({
+  const {
+    data: driverCardsData,
+    isLoading,
+    isFetching
+  } = useQuery({
     queryKey: ['drivers_data', query],
     queryFn: async () => {
-      setLoading(true);
       const response = await DriverServiceInstance.getAllDriverCards(query);
       return response;
     }
@@ -54,7 +56,6 @@ const DriverCardPage = () => {
   useEffect(() => {
     if (driverCardsData) {
       setDriverCardData(driverCardsData.data);
-      setLoading(false);
     }
     // eslint-disable-next-line
   }, [driverCardsData]);
@@ -74,7 +75,7 @@ const DriverCardPage = () => {
             <Search setQuery={setQuery} />
           </div>
         </Grid>
-        {isLoading ? (
+        {isLoading || isFetching ? (
           [1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
             <Grid item xs={12} key={item}>
               <SkeletonProductPlaceholder />
