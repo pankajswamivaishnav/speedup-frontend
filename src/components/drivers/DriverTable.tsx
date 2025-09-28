@@ -92,7 +92,7 @@ const DriverTable = ({
       ...prev,
       data: { isEditMode: false, existingData: { id } },
       action: { ...prev.action, open: !prev.action.open },
-      title: <FormattedMessage id="Delete Bilty Confirmation" defaultMessage="Delete Bilty Confirmation" />
+      title: <FormattedMessage id="Delete Driver Confirmation" defaultMessage="Delete Driver Confirmation" />
     }));
   };
 

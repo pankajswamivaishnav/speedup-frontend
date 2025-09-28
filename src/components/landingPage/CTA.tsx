@@ -1,8 +1,32 @@
 import { Card, CardContent, Button } from '@mui/material';
+import UniversalDialog from 'components/popup/UniversalDialog';
 import { ArrowRight, CheckCircle, Phone, Mail } from 'lucide-react';
+import { useState } from 'react';
+import { FormattedMessage } from 'react-intl';
+import { TUniversalDialogProps } from 'types/types.UniversalDialog';
+import Contact from 'pages/contact/Contact';
 
 const CTA = () => {
   const benefits = ['30-day free trial', 'No setup fees', '24/7 support', 'Easy migration', 'Training included'];
+  const [schdeDemoFormPopup, setScheduleFormPopup] = useState<TUniversalDialogProps>({
+    action: {
+      open: false,
+      maxWidth: 'md'
+    },
+    title: 'Fill Information',
+    data: { existingData: {}, isEditMode: false }
+  });
+
+  const handleTogglePopup = async () => {
+    setScheduleFormPopup((prev: any) => {
+      return {
+        ...prev,
+        data: { isEditMode: false, existingData: {} },
+        action: { ...prev.action, open: !prev.action.open },
+        title: <FormattedMessage id="Fill Information" defaultMessage="Fill Information" />
+      };
+    });
+  };
 
   return (
     <section
@@ -74,6 +98,7 @@ const CTA = () => {
                   backgroundColor: '#e5e7eb'
                 }
               }}
+              onClick={handleTogglePopup}
             >
               Schedule Demo
             </Button>
@@ -124,6 +149,15 @@ const CTA = () => {
           </div>
         </div>
       </div>
+      {/* ----------- Schedule a demo modal ----------  */}
+      <UniversalDialog
+        action={{ ...schdeDemoFormPopup.action }}
+        onClose={handleTogglePopup}
+        title={schdeDemoFormPopup.title}
+        hasPrimaryButton={false}
+      >
+        <Contact />
+      </UniversalDialog>
     </section>
   );
 };

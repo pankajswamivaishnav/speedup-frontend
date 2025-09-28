@@ -8,9 +8,8 @@ const Navigation = () => {
   const navigate = useNavigate();
   const navigation = [
     { name: 'Features', href: '#features' },
-    { name: 'How it Works', href: '#how-it-works' },
     { name: 'Testimonials', href: '#testimonials' },
-    { name: 'Pricing', href: '#pricing' },
+    { name: 'Pricing', href: '#contact' },
     { name: 'Contact', href: '#contact' }
   ];
 

@@ -68,7 +68,7 @@ const VendorTable = ({
       open: false,
       maxWidth: 'md'
     },
-    title: 'Delete Bilty Confirmation',
+    title: 'Delete Vendor Confirmation',
     data: { existingData: {}, isEditMode: false }
   });
 

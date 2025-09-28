@@ -8,12 +8,29 @@ import Testimonials from 'components/landingPage/Testimonials';
 const LandingPage = () => {
   return (
     <div className="min-h-screen">
-      <Navigation />
-      <Hero />
-      <Features />
-      <Testimonials />
-      <CTA />
-      <Footer />
+      <div className="min-h-screen">
+        <Navigation />
+
+        <section id="hero">
+          <Hero />
+        </section>
+
+        <section id="features">
+          <Features />
+        </section>
+
+        <section id="testimonials">
+          <Testimonials />
+        </section>
+
+        <section id="contact">
+          <CTA />
+        </section>
+
+        <section id="pricing">
+          <Footer />
+        </section>
+      </div>
     </div>
   );
 };

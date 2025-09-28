@@ -68,7 +68,7 @@ const TransportTable = ({
       open: false,
       maxWidth: 'md'
     },
-    title: 'Delete Bilty Confirmation',
+    title: 'Delete Transporter Confirmation',
     data: { existingData: {}, isEditMode: false }
   });
 
@@ -92,7 +92,7 @@ const TransportTable = ({
       ...prev,
       data: { isEditMode: false, existingData: { id } },
       action: { ...prev.action, open: !prev.action.open },
-      title: <FormattedMessage id="Delete Bilty Confirmation" defaultMessage="Delete Bilty Confirmation" />
+      title: <FormattedMessage id="Delete Transporter Confirmation" defaultMessage="Delete Transporter Confirmation" />
     }));
   };
 
