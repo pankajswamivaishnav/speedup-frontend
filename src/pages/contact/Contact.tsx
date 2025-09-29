@@ -11,6 +11,8 @@ import { openSnackbar } from 'store/reducers/snackbar';
 // third-party
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import LandingServiceInstance from 'services/landing.services';
+import { useState } from 'react';
 
 /**
  * 'Enter your email'
@@ -21,27 +23,39 @@ const validationSchema = yup.object({
     .string()
     .matches(/^\d{10}$/, 'Enter a valid 10-digit phone number')
     .required('Phone number is required'),
-  dateTime: yup.string().required('Date & Time is required')
+  dateTime: yup.string().required('Date & Time is required'),
+  name: yup.string().required('Full name is required')
 });
 
 // ==============================|| FORM VALIDATION - LOGIN FORMIK  ||============================== //
 
-const Contact = () => {
-  const dispatch = useDispatch();
+interface ContactProps {
+  handleTogglePopup: () => void;
+}
 
+const Contact: React.FC<ContactProps> = ({ handleTogglePopup }) => {
+  const dispatch = useDispatch();
+  const [isLoading, setLoading] = useState(false);
   const formik = useFormik({
     initialValues: {
       email: '',
       mobileNumber: '',
-      dateTime: ''
+      dateTime: '',
+      name: ''
     },
     validationSchema,
-    onSubmit: (values) => {
-      console.log('values-->', values);
+    onSubmit: async (values) => {
+      setLoading(true);
+      const response = await LandingServiceInstance.scheduleDemo(values);
+      if (response) {
+        setLoading(false);
+        formik.resetForm();
+        handleTogglePopup();
+      }
       dispatch(
         openSnackbar({
           open: true,
-          message: 'Submit Success',
+          message: 'Submit demo request Success',
           variant: 'alert',
           alert: {
             color: 'primary'
@@ -58,7 +72,26 @@ const Contact = () => {
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <Stack spacing={1}>
-              <InputLabel htmlFor="email">Email Address</InputLabel>
+              <InputLabel htmlFor="name">
+                Full Name <span style={{ color: 'red' }}>*</span>
+              </InputLabel>
+              <TextField
+                fullWidth
+                id="name"
+                name="name"
+                placeholder="Enter your name"
+                value={formik.values.name}
+                onChange={formik.handleChange}
+                error={formik.touched.name && Boolean(formik.errors.name)}
+                helperText={formik.touched.name && formik.errors.name}
+              />
+            </Stack>
+          </Grid>
+          <Grid item xs={12}>
+            <Stack spacing={1}>
+              <InputLabel htmlFor="email">
+                Email Address <span style={{ color: 'red' }}>*</span>
+              </InputLabel>
               <TextField
                 fullWidth
                 id="email"
@@ -73,7 +106,9 @@ const Contact = () => {
           </Grid>
           <Grid item xs={12}>
             <Stack spacing={1}>
-              <InputLabel htmlFor="mobileNumber">Phone Number</InputLabel>
+              <InputLabel htmlFor="mobileNumber">
+                Phone Number <span style={{ color: 'red' }}>*</span>
+              </InputLabel>
               <TextField
                 fullWidth
                 id="mobileNumber"
@@ -90,7 +125,9 @@ const Contact = () => {
           </Grid>
           <Grid item xs={12}>
             <Stack spacing={1}>
-              <InputLabel htmlFor="dateTime">Choose date & time</InputLabel>
+              <InputLabel htmlFor="dateTime">
+                Choose date & time <span style={{ color: 'red' }}>*</span>
+              </InputLabel>
               <TextField
                 type="datetime-local"
                 name="dateTime"
@@ -105,8 +142,8 @@ const Contact = () => {
           <Grid item xs={12}>
             <Stack direction="row" justifyContent="flex-end">
               <AnimateButton>
-                <Button variant="contained" type="submit">
-                  Scheduled Demo
+                <Button variant="contained" type="submit" disabled={isLoading}>
+                  {isLoading ? 'Scheduling Demo' : 'Scheduled Demo'}
                 </Button>
               </AnimateButton>
             </Stack>

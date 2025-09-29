@@ -156,7 +156,7 @@ const CTA = () => {
         title={schdeDemoFormPopup.title}
         hasPrimaryButton={false}
       >
-        <Contact />
+        <Contact handleTogglePopup={handleTogglePopup} />
       </UniversalDialog>
     </section>
   );
