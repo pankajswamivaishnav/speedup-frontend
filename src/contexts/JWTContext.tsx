@@ -128,8 +128,12 @@ export const JWTProvider = ({ children }: { children: React.ReactElement }) => {
     dispatch({ type: LOGOUT });
   };
 
-  const resetPassword = async (email: string) => {
+  const forgotPassword = async (email: string) => {
     await axios.post('api/v1/forgotPassword', { email: email });
+  };
+
+  const resetPassword = async (email: string, password: string, token: string) => {
+    await axios.post('api/v1/resetPassword', { email: email, password: password, token: token });
   };
 
   const updateProfile = () => {};
@@ -137,7 +141,11 @@ export const JWTProvider = ({ children }: { children: React.ReactElement }) => {
     return <Loader />;
   }
 
-  return <JWTContext.Provider value={{ ...state, login, logout, register, resetPassword, updateProfile }}>{children}</JWTContext.Provider>;
+  return (
+    <JWTContext.Provider value={{ ...state, login, logout, register, forgotPassword, resetPassword, updateProfile }}>
+      {children}
+    </JWTContext.Provider>
+  );
 };
 
 export default JWTContext;

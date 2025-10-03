@@ -74,7 +74,7 @@ const BiltyTable = ({
   });
 
   //-------------------handlers-------------------
-  const handleDriverDetailTogglePopup = async (transporterData?: any) => {
+  const handleBiltyDetailTogglePopup = async (transporterData?: any) => {
     if (biltiesDetailsPopup.action.open === true) {
       // refetchTransporterData();
     }
@@ -147,7 +147,7 @@ const BiltyTable = ({
                     {row.driverName}
                   </TableCell>
                   <TableCell align="center">{moment(row.date).format('YYYY-MM-DD, hh:mm A')}</TableCell>
-                  <TableCell align="right" onClick={() => handleDriverDetailTogglePopup(row)}>
+                  <TableCell align="right" onClick={() => handleBiltyDetailTogglePopup(row)}>
                     <Tooltip title="full-details">
                       <IconButton>
                         <EyeOutlined className="text-blue-500" />
@@ -181,12 +181,12 @@ const BiltyTable = ({
       {!!biltiesDetailsPopup && biltiesDetailsPopup.action.open && (
         <UniversalDialog
           action={{ ...biltiesDetailsPopup.action }}
-          onClose={handleDriverDetailTogglePopup}
+          onClose={handleBiltyDetailTogglePopup}
           title={biltiesDetailsPopup.title}
           hasPrimaryButton={false}
         >
           <AddBilty
-            onClose={() => handleDriverDetailTogglePopup()}
+            onClose={() => handleBiltyDetailTogglePopup()}
             isEditMode={true}
             existingData={biltiesDetailsPopup.data.existingData}
             isDisable={true}

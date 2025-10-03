@@ -13,7 +13,7 @@ export const superAdminMenuItems: { items: NavItemType[] } = {
 };
 
 export const transporterMenuItems: { items: NavItemType[] } = {
-  items: [drivers, bilty, vendors, transportCards, driverCards, vendorCards]
+  items: [transporters, drivers, bilty, vendors, transportCards, driverCards, vendorCards]
 };
 
 export const driverMenuItems: { items: NavItemType[] } = {

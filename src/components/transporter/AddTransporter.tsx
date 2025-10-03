@@ -6,6 +6,7 @@ import { RefObject, useEffect, useState } from 'react';
 import { useOutletContext } from 'react-router';
 import TransporterServiceInstance from 'services/transporter.services';
 import { transporterValidationSchema } from 'pages/validation/validation';
+import useAuth from 'hooks/useAuth';
 
 function useInputRef() {
   return useOutletContext<RefObject<HTMLInputElement>>();
@@ -23,6 +24,7 @@ const AddTransporter = ({
   isDisable?: boolean;
 }) => {
   const inputRef = useInputRef();
+  const { user } = useAuth();
   const [image, setImage] = useState<{ public_id: string; url: string } | null>(null);
   const [initialValues, setInitialValues] = useState({
     transportName: '',
@@ -42,6 +44,7 @@ const AddTransporter = ({
     email: '',
     password: '',
     role: 'transporter',
+    transporterId: user._id,
     avatar: { public_id: '', url: '' }
   });
 
@@ -75,7 +78,7 @@ const AddTransporter = ({
           }
           if (response) {
             onClose(true);
-            setSubmitting(false);
+            // setSubmitting(false);
           }
         }}
       >
@@ -282,7 +285,6 @@ const AddTransporter = ({
                       onChange={handleChange}
                       placeholder="Address"
                       disabled={isDisable}
-                      inputProps={{ maxLength: 10 }}
                     />
                     {(touched.transportAddress || submitCount > 0) && errors.transportAddress && (
                       <FormHelperText error id="transporter-address-helper">

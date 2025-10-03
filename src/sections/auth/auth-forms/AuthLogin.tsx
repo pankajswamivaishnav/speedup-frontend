@@ -29,6 +29,8 @@ import useScriptRef from 'hooks/useScriptRef';
 
 // assets
 import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
+import { store } from 'store';
+import { openSnackbar } from 'store/reducers/snackbar';
 
 // ============================|| JWT - LOGIN ||============================ //
 
@@ -61,14 +63,24 @@ const AuthLogin = () => {
         })}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
           try {
-            console.log('Enter here frontend Auth Login page..');
             await login(values.email, values.password);
             if (scriptedRef.current) {
               setStatus({ success: true });
               setSubmitting(false);
             }
           } catch (err: any) {
-            console.error(err);
+            store.dispatch(
+              openSnackbar({
+                open: true,
+                message: err.error,
+                variant: 'alert',
+                alert: {
+                  color: 'error'
+                },
+                close: true
+              })
+            );
+            console.error('error login time', err);
             if (scriptedRef.current) {
               setStatus({ success: false });
               setErrors({ submit: err.message });

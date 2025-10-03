@@ -183,6 +183,7 @@ const Drivers = () => {
             isEditMode={driverFormPopup?.data?.isEditMode}
             existingData={driverFormPopup?.data.existingData}
             data={transportData}
+            refetchDrivers={refetchDrivers}
           />
         </UniversalDialog>
       )}

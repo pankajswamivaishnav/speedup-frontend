@@ -26,7 +26,7 @@ const Dashboard = () => {
   const [transportersData, setTransportersData] = useState<any>();
   const [driversData, setDriversData] = useState<any>();
   const [vendorsData, setVendorsData] = useState<any>();
-  const [biltiesData, setBiltiesData] = useState<any>();
+  const [biltiesData, setBiltiesData] = useState<any>([]);
   const [limit, setLimit] = useState<number>(20);
   const [page, setPage] = useState<number>(0);
   const [transportersCount, setTransportersCount] = useState<number>(0);
@@ -45,7 +45,7 @@ const Dashboard = () => {
 
   // Here get transporter data
   const fetchData = async () => {
-    if (user?.role === 'super_admin') {
+    if (user?.role === 'super_admin' || user?.role === 'transporter') {
       try {
         const transporters = await TransporterServiceInstance.getAllTransporter(0, 0);
         const drivers = await DriverServiceInstance.getAllDrivers(0, 0);
@@ -70,9 +70,9 @@ const Dashboard = () => {
     fetchData();
     // eslint-disable-next-line
   }, []);
-  console.log('transportersData', transportersData);
+
   return (
-    <MainCard title="Super Admin Page">
+    <MainCard title="Dashboard">
       <Typography variant="body2">
         {/* Detaild Card where show transporters, drivers, bendors and bilties count */}
         <Grid container spacing={3}>

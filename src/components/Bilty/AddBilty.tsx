@@ -21,16 +21,17 @@ const AddBilty = ({
   isEditMode,
   existingData,
   isDisable,
-  data
+  data,
+  refetchBilties
 }: {
   onClose: (refetchData?: boolean) => void;
   isEditMode: Boolean;
   existingData: any;
   isDisable?: boolean;
   data?: any;
+  refetchBilties?: () => void;
 }) => {
   const inputRef = useInputRef();
-
   const [initialValues, setInitialValues] = useState({
     transporterNumber: '',
     truckNumber: '',
@@ -83,6 +84,7 @@ const AddBilty = ({
           if (response) {
             onClose(true);
             setSubmitting(false);
+            refetchBilties && refetchBilties();
           }
         }}
       >
@@ -98,6 +100,7 @@ const AddBilty = ({
                     <LocalizationProvider dateAdapter={AdapterMoment}>
                       <DatePicker
                         value={moment(values.date)}
+                        disabled={isDisable}
                         format="DD-MM-YYYY"
                         onChange={(newValue: any) => {
                           setFieldValue('date', newValue || moment());
@@ -175,7 +178,7 @@ const AddBilty = ({
                       autoFocus
                       inputRef={inputRef}
                       disabled={isDisable}
-                      inputProps={{ maxLength: 10 }}
+                      inputProps={{ maxLength: 15 }}
                     />
                     {touched.truckNumber && errors.truckNumber && (
                       <FormHelperText error id="truck-number-helper">
@@ -487,9 +490,11 @@ const AddBilty = ({
                       <Stack spacing={1.25}>
                         <Autocomplete
                           options={payment_type}
+                          disabled={isDisable}
+                          value={values.paymentType || ''}
                           renderInput={(params) => <TextField {...params} label="Payment Type" />}
                           onChange={(event, value) => {
-                            values.paymentType = value || 'cash';
+                            setFieldValue('paymentType', value || 'cash');
                           }}
                         ></Autocomplete>
                       </Stack>

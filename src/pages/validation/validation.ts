@@ -56,9 +56,6 @@ export const vendorValidationCardSchema = Yup.object({
 });
 
 export const biltiesValidationSchema = Yup.object({
-  transportId: Yup.string().required('Transporter is required'),
-  gstNumber: Yup.string().required('GST Number is required'),
-  registrationNumber: Yup.string().required('Registration Number is required'),
   transporterNumber: Yup.number().typeError('Transporter Number must be a number').required('Transporter Number is required'),
   truckNumber: Yup.string().required('Truck number is required'),
   driverName: Yup.string().required('Driver name is required'),

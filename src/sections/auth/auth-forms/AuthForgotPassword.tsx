@@ -21,7 +21,7 @@ const AuthForgotPassword = () => {
   const scriptedRef = useScriptRef();
   const navigate = useNavigate();
 
-  const { isLoggedIn, resetPassword } = useAuth();
+  const { isLoggedIn, forgotPassword } = useAuth();
 
   return (
     <>
@@ -35,7 +35,7 @@ const AuthForgotPassword = () => {
         })}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
           try {
-            await resetPassword(values.email).then(
+            await forgotPassword(values.email).then(
               () => {
                 setStatus({ success: true });
                 setSubmitting(false);
@@ -45,7 +45,7 @@ const AuthForgotPassword = () => {
                     message: 'Check mail for reset password link',
                     variant: 'alert',
                     alert: {
-                      color: 'success'
+                      color: 'primary'
                     },
                     close: false
                   })

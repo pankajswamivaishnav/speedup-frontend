@@ -202,6 +202,7 @@ const Bilty = () => {
             isEditMode={biltyFormPopup?.data?.isEditMode}
             existingData={biltyFormPopup?.data.existingData}
             data={transportData}
+            refetchBilties={refetchBilties}
           />
         </UniversalDialog>
       )}

@@ -14,7 +14,7 @@ class TransporterServices {
             message: 'Transporter created successfully.',
             variant: 'alert',
             alert: {
-              color: 'info'
+              color: 'primary'
             },
             close: true
           })

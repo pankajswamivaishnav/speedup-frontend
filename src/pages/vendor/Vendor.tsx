@@ -69,7 +69,7 @@ const Vendor = () => {
   // -----------useQuery-----------
   const {
     data: vendors,
-    refetch: refetchVendorAllData,
+    refetch: refetchVendors,
     isLoading,
     isFetching
   } = useQuery({
@@ -124,7 +124,7 @@ const Vendor = () => {
                   page={page}
                   setPage={setPage}
                   count={count}
-                  refetchVendorAllData={refetchVendorAllData}
+                  refetchVendorAllData={refetchVendors}
                 />
               )}
             </Grid>
@@ -143,6 +143,7 @@ const Vendor = () => {
             onClose={() => handleTogglePopup()}
             isEditMode={vendorFormPopup?.data?.isEditMode}
             existingData={vendorFormPopup?.data.existingData}
+            refetchVendors={refetchVendors}
           />
         </UniversalDialog>
       )}

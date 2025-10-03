@@ -1,6 +1,7 @@
 import { Autocomplete, Button, FormHelperText, TextField } from '@mui/material';
 import { Box, Grid, InputLabel, Stack } from '@mui/material';
 import { Formik } from 'formik';
+import useAuth from 'hooks/useAuth';
 import { driverValidationSchema } from 'pages/validation/validation';
 import { RefObject, useEffect, useState } from 'react';
 import { useOutletContext } from 'react-router';
@@ -15,16 +16,18 @@ const AddDriver = ({
   isEditMode,
   existingData,
   isDisable,
-  data
+  data,
+  refetchDrivers
 }: {
   onClose: (refetchData?: boolean) => void;
   isEditMode: Boolean;
   existingData: any;
   isDisable?: boolean;
   data?: any;
+  refetchDrivers?: () => void;
 }) => {
   const inputRef = useInputRef();
-
+  const { user } = useAuth();
   const [initialValues, setInitialValues] = useState({
     first_name: '',
     last_name: '',
@@ -33,7 +36,7 @@ const AddDriver = ({
     address: '',
     password: '',
     licenseNumber: '',
-    transportId: ''
+    transportId: user._id
   });
 
   // Pre-fill form when editing
@@ -46,13 +49,14 @@ const AddDriver = ({
     }
     // eslint-disable-next-line
   }, [isEditMode, existingData]);
+
   return (
     <>
       <Formik
         initialValues={initialValues}
         enableReinitialize={true}
         validationSchema={driverValidationSchema}
-        onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
+        onSubmit={async (values, { setErrors, setStatus, setSubmitting, setFieldValue }) => {
           setSubmitting(true);
           let response;
           if (isEditMode) {
@@ -63,6 +67,7 @@ const AddDriver = ({
           if (response) {
             onClose(true);
             setSubmitting(false);
+            refetchDrivers && refetchDrivers();
           }
         }}
       >
@@ -241,25 +246,27 @@ const AddDriver = ({
                     )}
                   </Stack>
                 </Grid>
-                {isDisable ? (
-                  ''
-                ) : (
+                {user.role === 'super_admin' ? (
                   <Grid item xs={12} sm={6}>
                     <InputLabel htmlFor="driver-last-name" className="mb-2">
-                      Choose Transport <span style={{ color: 'red' }}>*</span>
+                      Choose Transport
                     </InputLabel>
                     <Stack spacing={1.25}>
                       <Autocomplete
-                        options={data}
-                        getOptionLabel={(option: any) => option.label}
-                        renderInput={(params) => <TextField {...params} label="Select Transport" />}
+                        value={values.transportId || null}
+                        disabled={isDisable}
+                        options={data || []}
+                        getOptionLabel={(option: any) => option?.label || ''}
+                        renderInput={(params) => (
+                          <TextField {...params} label={isEditMode ? existingData.transporterData.transportId : 'Select Transport'} />
+                        )}
                         onChange={(event, value) => {
                           values.transportId = value.id;
                         }}
                       ></Autocomplete>
                     </Stack>
                   </Grid>
-                )}
+                ) : null}
 
                 {isDisable ? (
                   ''

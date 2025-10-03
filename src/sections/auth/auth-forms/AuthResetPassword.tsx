@@ -1,5 +1,5 @@
 import { useEffect, useState, SyntheticEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 // material-ui
 import {
@@ -41,10 +41,12 @@ const AuthResetPassword = () => {
   const scriptedRef = useScriptRef();
   const navigate = useNavigate();
 
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, resetPassword } = useAuth();
 
   const [level, setLevel] = useState<StringColorProps>();
   const [showPassword, setShowPassword] = useState(false);
+  const { id } = useParams();
+
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -65,11 +67,13 @@ const AuthResetPassword = () => {
   return (
     <Formik
       initialValues={{
+        email: '',
         password: '',
         confirmPassword: '',
         submit: null
       }}
       validationSchema={Yup.object().shape({
+        email: Yup.string().required('Email is required'),
         password: Yup.string().max(255).required('Password is required'),
         confirmPassword: Yup.string()
           .required('Confirm Password is required')
@@ -78,7 +82,7 @@ const AuthResetPassword = () => {
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
         try {
           // password reset
-          if (scriptedRef.current) {
+          await resetPassword(values.email, values.password, id ?? '').then(() => {
             setStatus({ success: true });
             setSubmitting(false);
 
@@ -88,7 +92,7 @@ const AuthResetPassword = () => {
                 message: 'Successfuly reset password.',
                 variant: 'alert',
                 alert: {
-                  color: 'success'
+                  color: 'primary'
                 },
                 close: false
               })
@@ -97,7 +101,7 @@ const AuthResetPassword = () => {
             setTimeout(() => {
               navigate(isLoggedIn ? '/auth/login' : '/login', { replace: true });
             }, 1500);
-          }
+          });
         } catch (err: any) {
           console.error(err);
           if (scriptedRef.current) {
@@ -111,6 +115,28 @@ const AuthResetPassword = () => {
       {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
         <form noValidate onSubmit={handleSubmit}>
           <Grid container spacing={3}>
+            <Grid item xs={12}>
+              <Stack spacing={1}>
+                <InputLabel htmlFor="reset-email">Email</InputLabel>
+                <OutlinedInput
+                  fullWidth
+                  error={Boolean(touched.email && errors.email)}
+                  id="reset-email"
+                  type="email"
+                  value={values.email}
+                  name="email"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  placeholder="Enter your email"
+                />
+                {touched.email && errors.email && (
+                  <FormHelperText error id="helper-text-reset-email">
+                    {errors.email}
+                  </FormHelperText>
+                )}
+              </Stack>
+            </Grid>
+
             <Grid item xs={12}>
               <Stack spacing={1}>
                 <InputLabel htmlFor="password-reset">Password</InputLabel>

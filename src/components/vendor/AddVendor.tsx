@@ -2,6 +2,7 @@ import { Button, FormHelperText, TextField } from '@mui/material';
 import { Box, Grid, InputLabel, Stack } from '@mui/material';
 import UploadImage from 'components/shared/UploadImage';
 import { Formik } from 'formik';
+import useAuth from 'hooks/useAuth';
 import { vendorValidationSchema } from 'pages/validation/validation';
 import { RefObject, useEffect, useState } from 'react';
 import { useOutletContext } from 'react-router';
@@ -15,16 +16,18 @@ const AddVendor = ({
   onClose,
   isEditMode,
   existingData,
-  isDisable
+  isDisable,
+  refetchVendors
 }: {
   onClose: (refetchData?: boolean) => void;
   isEditMode: Boolean;
   existingData: any;
   isDisable?: boolean;
+  refetchVendors?: () => void;
 }) => {
   const inputRef = useInputRef();
   const [image, setImage] = useState<{ public_id: string; url: string } | null>(null);
-
+  const { user } = useAuth();
   const [initialValues, setInitialValues] = useState({
     first_name: '',
     last_name: '',
@@ -40,6 +43,7 @@ const AddVendor = ({
     country: 'INDIA',
     password: '',
     role: 'vendor',
+    transportId: user._id,
     avatar: { public_id: '', url: '' }
   });
 
@@ -74,6 +78,7 @@ const AddVendor = ({
           if (response) {
             onClose(true);
             setSubmitting(false);
+            refetchVendors && refetchVendors();
           }
         }}
       >
@@ -185,6 +190,7 @@ const AddVendor = ({
                       autoFocus
                       inputRef={inputRef}
                       disabled={isDisable}
+                      inputProps={{ maxLength: 10 }}
                     />
                   </Stack>
                 </Grid>

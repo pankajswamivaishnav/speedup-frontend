@@ -12,6 +12,7 @@ const AuthForgotPassword = Loadable(lazy(() => import('pages/auth/forgot-passwor
 const AuthCheckMail = Loadable(lazy(() => import('pages/auth/check-mail')));
 const AuthResetPassword = Loadable(lazy(() => import('pages/auth/reset-password')));
 const AuthCodeVerification = Loadable(lazy(() => import('pages/auth/code-verification')));
+// const ForgotPassword = Loadable(lazy(() => import('pages/auth/forgot-password')));
 
 // ==============================|| AUTH ROUTING ||============================== //
 
@@ -51,6 +52,23 @@ const LoginRoutes = {
           element: <AuthCodeVerification />
         }
       ]
+    },
+
+    {
+      path: 'forgot-password',
+      element: <AuthForgotPassword />
+    },
+    {
+      path: 'code-verification',
+      element: <AuthCodeVerification />
+    },
+    {
+      path: 'check-mail',
+      element: <AuthCheckMail />
+    },
+    {
+      path: 'reset-password/:id',
+      element: <AuthResetPassword />
     }
   ]
 };
