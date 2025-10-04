@@ -45,11 +45,11 @@ class VendorServices {
         );
         return true;
       }
-    } catch (error) {
+    } catch (error: any) {
       store.dispatch(
         openSnackbar({
           open: true,
-          message: 'error occured when vendor is registered service instance !!',
+          message: error.message,
           variant: 'alert',
           alert: {
             color: 'error'
@@ -78,11 +78,11 @@ class VendorServices {
         );
         return response.data.data;
       }
-    } catch (error) {
+    } catch (error: any) {
       store.dispatch(
         openSnackbar({
           open: true,
-          message: 'Vendor not deleted',
+          message: error.message,
           variant: 'alert',
           alert: {
             color: 'error'
@@ -113,11 +113,11 @@ class VendorServices {
         );
         return true;
       }
-    } catch (error) {
+    } catch (error: any) {
       store.dispatch(
         openSnackbar({
           open: true,
-          message: 'error in vendor created card service instance.',
+          message: error.message,
           variant: 'alert',
           alert: {
             color: 'error'
@@ -134,11 +134,11 @@ class VendorServices {
       if (response.status) {
         return response.data;
       }
-    } catch (error) {
+    } catch (error: any) {
       store.dispatch(
         openSnackbar({
           open: true,
-          message: 'Something went wrong vendor card service !!',
+          message: error.message,
           variant: 'alert',
           alert: {
             color: 'error'

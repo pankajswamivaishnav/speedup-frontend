@@ -10,11 +10,11 @@ class BiltyServices {
       if (response.status) {
         return response.data;
       }
-    } catch (error) {
+    } catch (error: any) {
       store.dispatch(
         openSnackbar({
           open: true,
-          message: 'Something went wrong bilty services!',
+          message: error.message,
           variant: 'alert',
           alert: {
             color: 'error'
@@ -43,11 +43,11 @@ class BiltyServices {
         );
         return true;
       }
-    } catch (error) {
+    } catch (error: any) {
       store.dispatch(
         openSnackbar({
           open: true,
-          message: error,
+          message: error.message,
           variant: 'alert',
           alert: {
             color: 'error'
@@ -76,11 +76,11 @@ class BiltyServices {
         );
         return true;
       }
-    } catch (error) {
+    } catch (error: any) {
       store.dispatch(
         openSnackbar({
           open: true,
-          message: error,
+          message: error.message,
           variant: 'alert',
           alert: {
             color: 'error'

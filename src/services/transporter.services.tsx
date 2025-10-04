@@ -21,11 +21,11 @@ class TransporterServices {
         );
         return response.data.data;
       }
-    } catch (error) {
+    } catch (error: any) {
       store.dispatch(
         openSnackbar({
           open: true,
-          message: 'error occured when create transport service instance !!',
+          message: error.message,
           variant: 'alert',
           alert: {
             color: 'error'
@@ -43,11 +43,11 @@ class TransporterServices {
       if (response.status) {
         return response.data;
       }
-    } catch (error) {
+    } catch (error: any) {
       store.dispatch(
         openSnackbar({
           open: true,
-          message: 'Something went wrong!',
+          message: error.message,
           variant: 'alert',
           alert: {
             color: 'error'
@@ -77,11 +77,11 @@ class TransporterServices {
         );
         return response.data.data;
       }
-    } catch (error) {
+    } catch (error: any) {
       store.dispatch(
         openSnackbar({
           open: true,
-          message: 'Transporter not deleted',
+          message: error.message,
           variant: 'alert',
           alert: {
             color: 'error'
@@ -112,11 +112,11 @@ class TransporterServices {
         );
         return response.data;
       }
-    } catch (error) {
+    } catch (error: any) {
       store.dispatch(
         openSnackbar({
           open: true,
-          message: 'error occured in transport card service instance !!',
+          message: error.message,
           variant: 'alert',
           alert: {
             color: 'error'
@@ -135,11 +135,11 @@ class TransporterServices {
       if (response.status) {
         return response.data;
       }
-    } catch (error) {
+    } catch (error: any) {
       store.dispatch(
         openSnackbar({
           open: true,
-          message: 'Something went wrong transport card service !!',
+          message: error.message,
           variant: 'alert',
           alert: {
             color: 'error'

@@ -45,11 +45,11 @@ class DriverServices {
         );
         return true;
       }
-    } catch (error) {
+    } catch (error: any) {
       store.dispatch(
         openSnackbar({
           open: true,
-          message: 'error occured when create driver service instance !!',
+          message: error.message,
           variant: 'alert',
           alert: {
             color: 'error'
@@ -80,11 +80,11 @@ class DriverServices {
         );
         return true;
       }
-    } catch (error) {
+    } catch (error: any) {
       store.dispatch(
         openSnackbar({
           open: true,
-          message: 'Something went wrong on when create driver card service instance.',
+          message: error.message,
           variant: 'alert',
           alert: {
             color: 'error'
@@ -102,11 +102,11 @@ class DriverServices {
       if (response.status) {
         return response.data;
       }
-    } catch (error) {
+    } catch (error: any) {
       store.dispatch(
         openSnackbar({
           open: true,
-          message: 'Something went wrong driverServices!!',
+          message: error.message,
           variant: 'alert',
           alert: {
             color: 'error'
@@ -136,11 +136,11 @@ class DriverServices {
         );
         return true;
       }
-    } catch (error) {
+    } catch (error: any) {
       store.dispatch(
         openSnackbar({
           open: true,
-          message: 'Driver not deleted successfully.',
+          message: error.message,
           variant: 'alert',
           alert: {
             color: 'error'

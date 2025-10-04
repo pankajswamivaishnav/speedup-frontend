@@ -65,6 +65,14 @@ const other: NavItemType = {
   ]
 };
 
+export const dashboard: NavItemType = {
+  id: 'dashboard',
+  title: <FormattedMessage id="Dashboard" defaultMessage="Dashboard" />,
+  type: 'item',
+  url: '/dashboard',
+  icon: icons.ChromeOutlined
+};
+
 export const drivers: NavItemType = {
   id: 'drivers',
   title: <FormattedMessage id="Drivers" />,

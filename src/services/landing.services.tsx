@@ -22,11 +22,11 @@ class LandingServices {
         );
         return true;
       }
-    } catch (error) {
+    } catch (error: any) {
       store.dispatch(
         openSnackbar({
           open: true,
-          message: 'error occured when send demo request!!',
+          message: error.message,
           variant: 'alert',
           alert: {
             color: 'error'
