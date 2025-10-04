@@ -82,8 +82,17 @@ export const JWTProvider = ({ children }: { children: React.ReactElement }) => {
     init();
   }, []);
 
-  const login = async (email: string, password: string) => {
-    const response = await axios.post('/api/v1/auth/login', { email, password });
+  /**
+   * Login function that supports both email and mobile number authentication
+   * @param emailOrMobile - Either an email address or mobile number
+   * @param password - User password
+   */
+  const login = async (emailOrMobile: string, password: string) => {
+    // Determine if input is email or mobile number
+    const isEmail = emailOrMobile.includes('@');
+    const loginData = isEmail ? { email: emailOrMobile, password } : { mobileNumber: emailOrMobile, password };
+
+    const response = await axios.post('/api/v1/auth/login', loginData);
     const { serviceToken, user } = response.data.data;
     setSession(serviceToken);
     dispatch({

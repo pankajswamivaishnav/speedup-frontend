@@ -33,6 +33,8 @@ import { store } from 'store';
 import { openSnackbar } from 'store/reducers/snackbar';
 
 // ============================|| JWT - LOGIN ||============================ //
+// This component supports both email and mobile number login
+// The system automatically detects the input type and sends the appropriate data to the backend
 
 const AuthLogin = () => {
   const [checked, setChecked] = React.useState(false);
@@ -53,17 +55,32 @@ const AuthLogin = () => {
     <>
       <Formik
         initialValues={{
-          email: 'pankajswamisharma@gmail.com',
+          emailOrMobile: 'pankajswamisharma@gmail.com',
           password: 'StrongPassword123',
           submit: null
         }}
         validationSchema={Yup.object().shape({
-          email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
+          emailOrMobile: Yup.string()
+            .test('email-or-mobile', 'Must be a valid email or mobile number', function (value) {
+              if (!value) return false;
+
+              // Check if it's an email
+              const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+              if (emailRegex.test(value)) return true;
+
+              // Check if it's a mobile number (10 digits, optionally with country code)
+              const mobileRegex = /^(\+?91|0)?[6-9]\d{9}$/;
+              if (mobileRegex.test(value)) return true;
+
+              return false;
+            })
+            .max(255)
+            .required('Email or mobile number is required'),
           password: Yup.string().max(255).required('Password is required')
         })}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
           try {
-            await login(values.email, values.password);
+            await login(values.emailOrMobile, values.password);
             if (scriptedRef.current) {
               setStatus({ success: true });
               setSubmitting(false);
@@ -94,21 +111,21 @@ const AuthLogin = () => {
             <Grid container spacing={3}>
               <Grid item xs={12}>
                 <Stack spacing={1}>
-                  <InputLabel htmlFor="email-login">Email Address</InputLabel>
+                  <InputLabel htmlFor="emailOrMobile-login">Email or Mobile Number</InputLabel>
                   <OutlinedInput
-                    id="email-login"
-                    type="email"
-                    value={values.email}
-                    name="email"
+                    id="emailOrMobile-login"
+                    type="text"
+                    value={values.emailOrMobile}
+                    name="emailOrMobile"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    placeholder="Enter email address"
+                    placeholder="Enter email address or mobile number"
                     fullWidth
-                    error={Boolean(touched.email && errors.email)}
+                    error={Boolean(touched.emailOrMobile && errors.emailOrMobile)}
                   />
-                  {touched.email && errors.email && (
-                    <FormHelperText error id="standard-weight-helper-text-email-login">
-                      {errors.email}
+                  {touched.emailOrMobile && errors.emailOrMobile && (
+                    <FormHelperText error id="standard-weight-helper-text-emailOrMobile-login">
+                      {errors.emailOrMobile}
                     </FormHelperText>
                   )}
                 </Stack>

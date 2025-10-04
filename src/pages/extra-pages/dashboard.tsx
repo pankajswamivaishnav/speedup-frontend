@@ -1,6 +1,6 @@
 // material-ui
 import { UsergroupAddOutlined, FilePdfOutlined, TruckOutlined, ShopOutlined } from '@ant-design/icons';
-import { Grid, Typography } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import BiltyTable from 'components/Bilty/BiltyTable';
 
@@ -63,6 +63,16 @@ const Dashboard = () => {
       } catch (error) {
         console.error('Error fetching transporters, drivers, vendors :', error);
       }
+    } else if (user?.role === 'vendor') {
+      const transporters = await TransporterServiceInstance.getAllTransporter(0, 0);
+      const bilties = await biltyServiceInstance.getAllbilties(0, 0);
+      setTransportersData(transporters);
+      setBiltiesData(bilties);
+    } else if (user?.role === 'driver') {
+      const transporters = await TransporterServiceInstance.getAllTransporter(0, 0);
+      const bilties = await biltyServiceInstance.getAllbilties(0, 0);
+      setTransportersData(transporters);
+      setBiltiesData(bilties);
     }
   };
 
@@ -71,10 +81,11 @@ const Dashboard = () => {
     // eslint-disable-next-line
   }, []);
 
-  return (
-    <MainCard title="Dashboard">
-      <Typography variant="body2">
-        {/* Detaild Card where show transporters, drivers, bendors and bilties count */}
+  // --------- Super Admin ----------
+  const renderSuperAdmin = () => {
+    return (
+      <MainCard title="Dashboard">
+        {/* Detaild Card where show transporters, drivers, vendors and bilties count */}
         <Grid container spacing={3}>
           <Grid
             item
@@ -169,58 +180,400 @@ const Dashboard = () => {
             />
           </Grid>
         </Grid>
-      </Typography>
-      <Typography variant="body2" className="mt-5">
+
         {/* All users table (Transporters, drivers, vendors, bilties) */}
-        <Grid container>
-          {/* transporters table */}
-          {modalVisible.transportTableVisible && (
-            <TransportTable
-              data={transportersData?.data || []}
-              limit={limit}
-              setLimit={setLimit}
-              page={page}
-              setPage={setPage}
-              count={transportersCount}
+        <Box mt={5}>
+          <Grid container>
+            {/* transporters table */}
+            {modalVisible.transportTableVisible && (
+              <TransportTable
+                data={transportersData?.data || []}
+                limit={limit}
+                setLimit={setLimit}
+                page={page}
+                setPage={setPage}
+                count={transportersCount}
+              />
+            )}
+            {/* drivers table */}
+            {modalVisible.driverTableVisible && (
+              <DriverTable
+                data={driversData?.data || []}
+                limit={limit}
+                setLimit={setLimit}
+                page={page}
+                setPage={setPage}
+                count={driversCount}
+              />
+            )}
+            {/* vendors table */}
+            {modalVisible.vendorTableVisible && (
+              <VendorTable
+                data={vendorsData?.data || []}
+                limit={limit}
+                setLimit={setLimit}
+                page={page}
+                setPage={setPage}
+                count={vendorsCount}
+              />
+            )}
+            {/* bilties table */}
+            {modalVisible.biltiesTableVisible && (
+              <BiltyTable
+                data={biltiesData?.data || []}
+                limit={limit}
+                setLimit={setLimit}
+                page={page}
+                setPage={setPage}
+                count={biltiesCount}
+              />
+            )}
+          </Grid>
+        </Box>
+      </MainCard>
+    );
+  };
+
+  // --------- Transporter ----------
+  const renderTransporter = () => {
+    return (
+      <MainCard title="Dashboard">
+        {/* Detaild Card where show transporters, drivers, vendors and bilties count */}
+        <Grid container spacing={3}>
+          <Grid
+            item
+            xs={12}
+            lg={3}
+            sm={6}
+            className="cursor-pointer"
+            onClick={() => {
+              setModalVisible((prev: any) => ({
+                ...prev,
+                transportTableVisible: true,
+                driverTableVisible: false,
+                vendorTableVisible: false,
+                biltiesTableVisible: false
+              }));
+            }}
+          >
+            <DetailCard
+              primary="Total Transporters"
+              secondary={`${transportersData?.total} +`}
+              iconPrimary={UsergroupAddOutlined}
+              color={theme.palette.primary.main}
             />
-          )}
-          {/* drivers table */}
-          {modalVisible.driverTableVisible && (
-            <DriverTable
-              data={driversData?.data || []}
-              limit={limit}
-              setLimit={setLimit}
-              page={page}
-              setPage={setPage}
-              count={driversCount}
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            lg={3}
+            sm={6}
+            className="cursor-pointer"
+            onClick={() => {
+              setModalVisible((prev: any) => ({
+                ...prev,
+                driverTableVisible: true,
+                transportTableVisible: false,
+                vendorTableVisible: false,
+                biltiesTableVisible: false
+              }));
+            }}
+          >
+            <DetailCard
+              primary="Total Drivers"
+              secondary={`${driversData?.total} +`}
+              iconPrimary={TruckOutlined}
+              color={theme.palette.info.main}
             />
-          )}
-          {/* vendors table */}
-          {modalVisible.vendorTableVisible && (
-            <VendorTable
-              data={vendorsData?.data || []}
-              limit={limit}
-              setLimit={setLimit}
-              page={page}
-              setPage={setPage}
-              count={vendorsCount}
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            lg={3}
+            sm={6}
+            className="cursor-pointer"
+            onClick={() => {
+              setModalVisible((prev: any) => ({
+                ...prev,
+                vendorTableVisible: true,
+                driverTableVisible: false,
+                transportTableVisible: false,
+                biltiesTableVisible: false
+              }));
+            }}
+          >
+            <DetailCard
+              primary="Total Vendors"
+              secondary={`${vendorsData?.total} +`}
+              iconPrimary={ShopOutlined}
+              color={theme.palette.mode === ThemeMode.DARK ? theme.palette.secondary.lighter : theme.palette.secondary.dark}
             />
-          )}
-          {/* bilties table */}
-          {modalVisible.biltiesTableVisible && (
-            <BiltyTable
-              data={biltiesData?.data || []}
-              limit={limit}
-              setLimit={setLimit}
-              page={page}
-              setPage={setPage}
-              count={biltiesCount}
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            lg={3}
+            sm={6}
+            className="cursor-pointer"
+            onClick={() => {
+              setModalVisible((prev: any) => ({
+                ...prev,
+                biltiesTableVisible: true,
+                driverTableVisible: false,
+                transportTableVisible: false,
+                vendorTableVisible: false
+              }));
+            }}
+          >
+            <DetailCard
+              primary="Total Bilties"
+              secondary={`${biltiesData?.total} +`}
+              iconPrimary={FilePdfOutlined}
+              color={theme.palette.error.main}
             />
-          )}
+          </Grid>
         </Grid>
-      </Typography>
-    </MainCard>
-  );
+
+        {/* All users table (Transporters, drivers, vendors, bilties) */}
+        <Box mt={5}>
+          <Grid container>
+            {/* transporters table */}
+            {modalVisible.transportTableVisible && (
+              <TransportTable
+                data={transportersData?.data || []}
+                limit={limit}
+                setLimit={setLimit}
+                page={page}
+                setPage={setPage}
+                count={transportersCount}
+              />
+            )}
+            {/* drivers table */}
+            {modalVisible.driverTableVisible && (
+              <DriverTable
+                data={driversData?.data || []}
+                limit={limit}
+                setLimit={setLimit}
+                page={page}
+                setPage={setPage}
+                count={driversCount}
+              />
+            )}
+            {/* vendors table */}
+            {modalVisible.vendorTableVisible && (
+              <VendorTable
+                data={vendorsData?.data || []}
+                limit={limit}
+                setLimit={setLimit}
+                page={page}
+                setPage={setPage}
+                count={vendorsCount}
+              />
+            )}
+            {/* bilties table */}
+            {modalVisible.biltiesTableVisible && (
+              <BiltyTable
+                data={biltiesData?.data || []}
+                limit={limit}
+                setLimit={setLimit}
+                page={page}
+                setPage={setPage}
+                count={biltiesCount}
+              />
+            )}
+          </Grid>
+        </Box>
+      </MainCard>
+    );
+  };
+
+  // ----------- Driver --------------
+  const renderDriver = () => {
+    return (
+      <MainCard title="Dashboard">
+        {/* Detaild Card where show transporters, drivers, vendors and bilties count */}
+        <Grid container spacing={3}>
+          <Grid
+            item
+            xs={12}
+            lg={3}
+            sm={6}
+            className="cursor-pointer"
+            onClick={() => {
+              setModalVisible((prev: any) => ({
+                ...prev,
+                transportTableVisible: true,
+                driverTableVisible: false,
+                vendorTableVisible: false,
+                biltiesTableVisible: false
+              }));
+            }}
+          >
+            <DetailCard
+              primary="Total Transporters"
+              secondary={`${transportersData?.total} +`}
+              iconPrimary={UsergroupAddOutlined}
+              color={theme.palette.primary.main}
+            />
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            lg={3}
+            sm={6}
+            className="cursor-pointer"
+            onClick={() => {
+              setModalVisible((prev: any) => ({
+                ...prev,
+                biltiesTableVisible: true,
+                driverTableVisible: false,
+                transportTableVisible: false,
+                vendorTableVisible: false
+              }));
+            }}
+          >
+            <DetailCard
+              primary="Total Bilties"
+              secondary={`${biltiesData?.total} +`}
+              iconPrimary={FilePdfOutlined}
+              color={theme.palette.error.main}
+            />
+          </Grid>
+        </Grid>
+
+        {/* All users table (Transporters, drivers, vendors, bilties) */}
+        <Box mt={5}>
+          <Grid container>
+            {/* transporters table */}
+            {modalVisible.transportTableVisible && (
+              <TransportTable
+                data={transportersData?.data || []}
+                limit={limit}
+                setLimit={setLimit}
+                page={page}
+                setPage={setPage}
+                count={transportersCount}
+              />
+            )}
+            {/* bilties table */}
+            {modalVisible.biltiesTableVisible && (
+              <BiltyTable
+                data={biltiesData?.data || []}
+                limit={limit}
+                setLimit={setLimit}
+                page={page}
+                setPage={setPage}
+                count={biltiesCount}
+              />
+            )}
+          </Grid>
+        </Box>
+      </MainCard>
+    );
+  };
+
+  // ---------- Vendor ------------
+  const renderVendor = () => {
+    return (
+      <MainCard title="Dashboard">
+        {/* Detaild Card where show transporters, drivers, vendors and bilties count */}
+        <Grid container spacing={3}>
+          <Grid
+            item
+            xs={12}
+            lg={3}
+            sm={6}
+            className="cursor-pointer"
+            onClick={() => {
+              setModalVisible((prev: any) => ({
+                ...prev,
+                transportTableVisible: true,
+                driverTableVisible: false,
+                vendorTableVisible: false,
+                biltiesTableVisible: false
+              }));
+            }}
+          >
+            <DetailCard
+              primary="Total Transporters"
+              secondary={`${transportersData?.total} +`}
+              iconPrimary={UsergroupAddOutlined}
+              color={theme.palette.primary.main}
+            />
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            lg={3}
+            sm={6}
+            className="cursor-pointer"
+            onClick={() => {
+              setModalVisible((prev: any) => ({
+                ...prev,
+                biltiesTableVisible: true,
+                driverTableVisible: false,
+                transportTableVisible: false,
+                vendorTableVisible: false
+              }));
+            }}
+          >
+            <DetailCard
+              primary="Total Bilties"
+              secondary={`${biltiesData?.total} +`}
+              iconPrimary={FilePdfOutlined}
+              color={theme.palette.error.main}
+            />
+          </Grid>
+        </Grid>
+
+        {/* All users table (Transporters, drivers, vendors, bilties) */}
+        <Box mt={5}>
+          <Grid container>
+            {/* transporters table */}
+            {modalVisible.transportTableVisible && (
+              <TransportTable
+                data={transportersData?.data || []}
+                limit={limit}
+                setLimit={setLimit}
+                page={page}
+                setPage={setPage}
+                count={transportersCount}
+              />
+            )}
+            {/* bilties table */}
+            {modalVisible.biltiesTableVisible && (
+              <BiltyTable
+                data={biltiesData?.data || []}
+                limit={limit}
+                setLimit={setLimit}
+                page={page}
+                setPage={setPage}
+                count={biltiesCount}
+              />
+            )}
+          </Grid>
+        </Box>
+      </MainCard>
+    );
+  };
+
+  // ---------- Role-based Render ----------
+  switch (user?.role) {
+    case 'super_admin':
+      return renderSuperAdmin();
+    case 'transporter':
+      return renderTransporter();
+    case 'vendor':
+      return renderVendor();
+    case 'driver':
+      return renderDriver();
+    default:
+      return (
+        <MainCard title="Dashboard">
+          <p>Role not recognized</p>
+        </MainCard>
+      );
+  }
 };
 
 export default Dashboard;
