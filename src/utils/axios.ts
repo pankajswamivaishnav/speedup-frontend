@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const axiosServices = axios.create({ baseURL: 'http://localhost:8000/' });
+// const axiosServices = axios.create({ baseURL: 'http://localhost:8000/' });
+const axiosServices = axios.create({ baseURL: 'https://speedup-backend.onrender.com' });
 
 // ==============================|| AXIOS - FOR MOCK SERVICES ||============================== //
 
