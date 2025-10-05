@@ -536,7 +536,13 @@ const AddBilty = ({
                 ) : (
                   <Grid item xs={12}>
                     <Stack direction="row" justifyContent="flex-end" alignItems="center" spacing={2} sx={{ mt: 2.5 }}>
-                      <Button variant="outlined" color="secondary" onClick={() => onClose()}>
+                      <Button
+                        variant="outlined"
+                        type="button"
+                        onMouseDown={(e) => e.preventDefault()}
+                        color="secondary"
+                        onClick={() => onClose()}
+                      >
                         Cancel
                       </Button>
                       <Button type="submit" variant="outlined">

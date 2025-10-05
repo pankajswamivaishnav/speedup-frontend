@@ -27,6 +27,7 @@ const AddVendor = ({
 }) => {
   const inputRef = useInputRef();
   const [image, setImage] = useState<{ public_id: string; url: string } | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
   const { user } = useAuth();
   const [initialValues, setInitialValues] = useState({
     first_name: '',
@@ -336,18 +337,24 @@ const AddVendor = ({
                   </Stack>
                 </Grid>
                 <Grid item xs={12} sm={6} display={isDisable ? 'none' : 'block'}>
-                  <UploadImage setImage={setImage} />
+                  <UploadImage setImage={setImage} setIsUploading={setIsUploading} />
                 </Grid>
                 {isDisable ? (
                   ''
                 ) : (
                   <Grid item xs={12}>
                     <Stack direction="row" justifyContent="flex-end" alignItems="center" spacing={2} sx={{ mt: 2.5 }}>
-                      <Button variant="outlined" color="secondary" onClick={() => onClose()}>
+                      <Button
+                        variant="outlined"
+                        type="button"
+                        onMouseDown={(e) => e.preventDefault()}
+                        color="secondary"
+                        onClick={() => onClose()}
+                      >
                         Cancel
                       </Button>
                       <Button type="submit" variant="outlined">
-                        Save
+                        <UploadImage setImage={setImage} setIsUploading={setIsUploading} />
                       </Button>
                     </Stack>
                   </Grid>

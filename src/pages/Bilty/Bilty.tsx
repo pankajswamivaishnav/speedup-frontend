@@ -146,7 +146,7 @@ const Bilty = () => {
               </div>
 
               {/* Right side - Search */}
-              <div className="w-full xl:w-auto sm:align-middle">
+              <div className="w-full xl:w-auto">
                 <Search setQuery={setQuery} />
               </div>
             </Grid>

@@ -26,6 +26,7 @@ const AddTransporter = ({
   const inputRef = useInputRef();
   const { user } = useAuth();
   const [image, setImage] = useState<{ public_id: string; url: string } | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
   const [initialValues, setInitialValues] = useState({
     transportName: '',
     transporter_first_name: '',
@@ -452,18 +453,18 @@ const AddTransporter = ({
                   </Stack>
                 </Grid>
                 <Grid item xs={12} sm={6} display={isDisable ? 'none' : 'block'}>
-                  <UploadImage setImage={setImage} />
+                  <UploadImage setImage={setImage} setIsUploading={setIsUploading} />
                 </Grid>
                 {isDisable ? (
                   ''
                 ) : (
                   <Grid item xs={12}>
                     <Stack direction="row" justifyContent="flex-end" alignItems="center" spacing={2} sx={{ mt: 2.5 }}>
-                      <Button variant="outlined" color="secondary" onClick={() => onClose()}>
+                      <Button variant="outlined" type="button" color="secondary" onClick={() => onClose()}>
                         Cancel
                       </Button>
-                      <Button type="submit" variant="outlined">
-                        Save
+                      <Button type="submit" variant="outlined" disabled={isUploading || isSubmitting}>
+                        {isUploading ? 'Uploading...' : 'Save'}
                       </Button>
                     </Stack>
                   </Grid>

@@ -49,19 +49,24 @@ const VisitingCard: React.FC<VisitingCardProps> = ({
     >
       {/* Professional gradient header */}
       <Box
-        className="absolute top-0 left-0 right-0 h-20 bg-gradient-professional opacity-90"
-        sx={{ backgroundColor: theme.palette.primary.main }}
+        className="absolute top-0 left-0 right-0 bg-gradient-professional opacity-90 transition-all duration-300"
+        sx={{
+          backgroundColor: theme.palette.primary.main,
+          height: (business?.length ?? 0) > 15 || (transportName?.length ?? 0) > 15 ? '5.5rem' : '5rem',
+          [theme.breakpoints.down('sm')]: {
+            height: (business?.length ?? 0) > 15 || (transportName?.length ?? 0) > 15 ? '6rem' : '4.5rem'
+          }
+        }}
       />
-
-      <div className="relative z-10 flex flex-col h-fulls">
+      <div className="relative z-10 flex flex-col h-fulls pb-3">
         {/* Profile Section */}
         <Box className={`flex items-start gap-4 mb-4`}>
           <Avatar
             src={avatar?.url || 'https://avatar.iran.liara.run/public/boy'}
             alt={`${first_name} ${last_name}`}
             sx={{
-              width: 80,
-              height: 80,
+              width: { xs: 40, sm: 70, md: 80 },
+              height: { xs: 40, sm: 70, md: 80 },
               border: '3px solid white',
               boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
               bgcolor: 'hsl(var(--primary))',
@@ -82,22 +87,32 @@ const VisitingCard: React.FC<VisitingCardProps> = ({
           </Avatar>
 
           <div className="flex-1 pt-1">
-            <h3 className="text-xl font-bold text-white mb-1 leading-tight">{`${first_name} ${last_name}`}</h3>
+            <h3
+              className=" text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl 
+    font-bold text-white mb-1 leading-tight 
+    whitespace-nowrap overflow-hidden text-ellipsis"
+            >{`${first_name} ${last_name}`}</h3>
             {(business || role || transportName) && (
-              <div className="flex items-center gap-1 text-white/80 text-sm">
+              <div className="flex items-center gap-1 text-white/80 text-lg">
                 {transportName || business ? (
-                  <Building size={14} className="text-white/80" />
+                  <Building size={14} className="text-white/80 " />
                 ) : (
                   <Truck size={14} className="text-white/80" />
                 )}
-                <span className="text-white/80">{business?.toUpperCase() || role?.toUpperCase() || transportName?.toUpperCase()}</span>
+                <span
+                  className=" text-[8px] sm:text-xs md:text-xs lg:text-base xl:text-base 
+    text-white/80 font-medium tracking-wide 
+    break-words text-center leading-snug"
+                >
+                  {business?.toUpperCase() || role?.toUpperCase() || transportName?.toUpperCase()}
+                </span>
               </div>
             )}
           </div>
         </Box>
 
         {/* Contact Information */}
-        <div className="space-y-3 flex-1">
+        <div className="sm:space-y-0 xl:space-y-3 flex-1">
           {email && (
             <div className="flex items-center gap-3 text-text-body">
               <div className="flex items-center justify-center w-8 h-8 rounded-full bg-primary/10">

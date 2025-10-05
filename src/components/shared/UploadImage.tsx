@@ -5,9 +5,10 @@ import { useRef, useState } from 'react';
 
 interface UploadImageProps {
   setImage: (data: { public_id: string; url: string }) => void;
+  setIsUploading?: (value: boolean) => void;
 }
 
-const UploadImage = ({ setImage }: UploadImageProps) => {
+const UploadImage = ({ setImage, setIsUploading }: UploadImageProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [chooseFile, setChooseFile] = useState<string>();
 
@@ -20,6 +21,7 @@ const UploadImage = ({ setImage }: UploadImageProps) => {
     const file = event.target.files?.[0];
     if (file) {
       setChooseFile(file?.name);
+      setIsUploading?.(true);
       // ------ Cloudinary upload image ---------
       const formData = new FormData();
       formData.append('file', file!);
@@ -33,6 +35,8 @@ const UploadImage = ({ setImage }: UploadImageProps) => {
         });
       } catch (error) {
         console.error('Upload failed:', error);
+      } finally {
+        setIsUploading?.(false);
       }
     }
   };

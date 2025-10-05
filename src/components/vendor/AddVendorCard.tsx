@@ -247,7 +247,7 @@ const AddVendorCard = ({
                 ) : (
                   <Grid item xs={12}>
                     <Stack direction="row" justifyContent="flex-end" alignItems="center" spacing={2} sx={{ mt: 2.5 }}>
-                      <Button variant="outlined" color="secondary">
+                      <Button variant="outlined" type="button" color="secondary" onClick={() => onClose()}>
                         Cancel
                       </Button>
                       <Button type="submit" variant="outlined">

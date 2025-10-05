@@ -129,7 +129,7 @@ const Drivers = () => {
   return (
     <>
       <Box sx={{ display: 'flex' }}>
-        <Grid container spacing={2.5}>
+        <Grid container spacing={2.5} className="ps-6">
           <Grid item xs={12} className="flex flex-col xl:flex-row justify-between items-center gap-2 mb-5">
             {/* Left side - Buttons */}
             <div className="flex gap-2">
