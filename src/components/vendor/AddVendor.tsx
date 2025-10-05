@@ -354,7 +354,7 @@ const AddVendor = ({
                         Cancel
                       </Button>
                       <Button type="submit" variant="outlined">
-                        <UploadImage setImage={setImage} setIsUploading={setIsUploading} />
+                        {isUploading ? 'Uploading...' : 'Save'}
                       </Button>
                     </Stack>
                   </Grid>
