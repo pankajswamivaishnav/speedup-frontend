@@ -428,7 +428,7 @@ const AddTransporter = ({
                     )}
                   </Stack>
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12} sm={6} display={isDisable ? 'none' : 'block'}>
                   <Stack spacing={1.25}>
                     <InputLabel htmlFor="transporter-password">
                       Password <span style={{ color: 'red' }}>*</span>
@@ -451,7 +451,7 @@ const AddTransporter = ({
                     )}
                   </Stack>
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12} sm={6} display={isDisable ? 'none' : 'block'}>
                   <UploadImage setImage={setImage} />
                 </Grid>
                 {isDisable ? (
@@ -459,7 +459,7 @@ const AddTransporter = ({
                 ) : (
                   <Grid item xs={12}>
                     <Stack direction="row" justifyContent="flex-end" alignItems="center" spacing={2} sx={{ mt: 2.5 }}>
-                      <Button variant="outlined" color="secondary">
+                      <Button variant="outlined" color="secondary" onClick={() => onClose()}>
                         Cancel
                       </Button>
                       <Button type="submit" variant="outlined">

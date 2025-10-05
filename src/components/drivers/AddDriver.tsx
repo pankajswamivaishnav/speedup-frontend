@@ -222,7 +222,7 @@ const AddDriver = ({
                     )}
                   </Stack>
                 </Grid>
-                <Grid item xs={12} sm={6} spacing={3}>
+                <Grid item xs={12} sm={6} spacing={3} display={isDisable ? 'none' : 'block'}>
                   <Stack spacing={1.25}>
                     <InputLabel htmlFor="driver-name">
                       Password <span style={{ color: 'red' }}>*</span>
@@ -273,7 +273,7 @@ const AddDriver = ({
                 ) : (
                   <Grid item xs={12}>
                     <Stack direction="row" justifyContent="flex-end" alignItems="center" spacing={2} sx={{ mt: 2.5 }}>
-                      <Button variant="outlined" color="secondary">
+                      <Button variant="outlined" color="secondary" onClick={() => onClose()}>
                         Cancel
                       </Button>
                       <Button type="submit" variant="outlined">

@@ -133,7 +133,7 @@ const Bilty = () => {
     <>
       <Grid className="space-y-5">
         <Box sx={{ display: 'flex' }} className="px-6">
-          <Grid container spacing={2.5} className="flex flex-col xl:flex-row">
+          <Grid container spacing={2.5}>
             <Grid item xs={12} className="flex flex-col xl:flex-row justify-between items-center gap-2 mb-5">
               {/* Left side - Button */}
               <div className="flex gap-2">
@@ -146,7 +146,7 @@ const Bilty = () => {
               </div>
 
               {/* Right side - Search */}
-              <div className="w-full xl:w-auto">
+              <div className="w-full xl:w-auto sm:align-middle">
                 <Search setQuery={setQuery} />
               </div>
             </Grid>
