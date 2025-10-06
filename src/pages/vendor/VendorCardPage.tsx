@@ -82,8 +82,14 @@ const VendorCardsPage = () => {
               <SkeletonProductPlaceholder />
             </Grid>
           ))
-        ) : (
+        ) : vendorCards && vendorCards.length > 0 ? (
           <VisitingCardGrid cards={vendorCards} title="Our Speed Up Vendors" />
+        ) : (
+          <Grid item xs={12}>
+            <MainCard>
+              <div className="text-center py-10 text-gray-500 font-medium">🚫 No vendor cards available right now.</div>
+            </MainCard>
+          </Grid>
         )}
       </MainCard>
       {/* -----------Universal dialog for open add transport card----------------*/}

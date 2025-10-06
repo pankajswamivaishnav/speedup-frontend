@@ -82,8 +82,14 @@ const TransportCardsPage = () => {
               <SkeletonProductPlaceholder />
             </Grid>
           ))
-        ) : (
+        ) : transportCards && transportCards.length > 0 ? (
           <VisitingCardGrid cards={transportCards} title="Our Speed Up Transporters" />
+        ) : (
+          <Grid item xs={12}>
+            <MainCard>
+              <div className="text-center py-10 text-gray-500 font-medium">🚫 No transport cards available right now.</div>
+            </MainCard>
+          </Grid>
         )}
       </MainCard>
 

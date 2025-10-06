@@ -112,7 +112,7 @@ const VisitingCard: React.FC<VisitingCardProps> = ({
         </Box>
 
         {/* Contact Information */}
-        <div className="sm:space-y-0 xl:space-y-3 flex-1">
+        <div className="pt-6 sm:pt-0 sm:space-y-1 xl:space-y-3 flex-1">
           {email && (
             <div className="flex items-center gap-3 text-text-body">
               <div className="flex items-center justify-center w-8 h-8 rounded-full bg-primary/10">

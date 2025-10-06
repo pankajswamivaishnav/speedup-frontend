@@ -76,13 +76,22 @@ const DriverCardPage = () => {
           </div>
         </Grid>
         {isLoading || isFetching ? (
+          // 🔹 Show loading skeletons while fetching data
           [1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
             <Grid item xs={12} key={item}>
               <SkeletonProductPlaceholder />
             </Grid>
           ))
+        ) : driverCards && driverCards.length > 0 ? (
+          // 🔹 Show cards when data is available
+          <VisitingCardGrid cards={driverCards} title="Speed Up Professional Drivers" />
         ) : (
-          <VisitingCardGrid cards={driverCards ?? []} title="Speed Up Professional Drivers" />
+          // 🔹 Show fallback message when no data found
+          <Grid item xs={12}>
+            <MainCard>
+              <div className="text-center py-10 text-gray-500 font-medium">🚫 No driver cards available right now.</div>
+            </MainCard>
+          </Grid>
         )}
       </MainCard>
       {/* -----------Universal dialog for open add driver card----------------*/}
