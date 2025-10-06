@@ -74,6 +74,11 @@ const DriverCardPage = () => {
           <div className="w-full xl:w-auto">
             <Search setQuery={setQuery} />
           </div>
+        </Grid>{' '}
+        <Grid item xs={12}>
+          <MainCard>
+            <div className="text-center py-10 text-gray-500 font-medium">🚫 No driver cards available right now.</div>
+          </MainCard>
         </Grid>
         {isLoading || isFetching ? (
           // 🔹 Show loading skeletons while fetching data

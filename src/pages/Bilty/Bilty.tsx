@@ -150,7 +150,6 @@ const Bilty = () => {
                 <Search setQuery={setQuery} />
               </div>
             </Grid>
-
             <Grid item xs={12}>
               <Grid container spacing={3}>
                 {isLoading || isFetching ? (
