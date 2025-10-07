@@ -9,7 +9,6 @@ interface BiltyDocumentProps {
 
 const BiltyDocument: React.FC<BiltyDocumentProps> = ({ data, className = '' }) => {
   const theme = useTheme();
-  console.log('theme', theme);
   return (
     <div className={`${className} max-w-4xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden`}>
       {/* Header Section */}

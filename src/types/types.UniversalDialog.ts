@@ -1,9 +1,9 @@
-import { DialogProps } from "@mui/material";
+import { DialogProps, SxProps, Theme } from '@mui/material';
 
 export type TUniversalDialogProps = {
   action: {
     open: boolean;
-    maxWidth?: DialogProps["maxWidth"];
+    maxWidth?: DialogProps['maxWidth'];
     fullScreen?: boolean;
     fullWidth?: boolean;
   };
@@ -17,6 +17,7 @@ export type TUniversalDialogProps = {
   disablePrimaryButton?: boolean;
   isPrimaryButtonLoading?: boolean;
   disableSecondaryButton?: boolean;
+  sx?: SxProps<Theme>;
 };
 
 export type TUniversalDialogPropsWActions = TUniversalDialogProps & {
