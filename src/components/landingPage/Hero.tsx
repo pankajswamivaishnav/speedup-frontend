@@ -16,7 +16,7 @@ const Hero = () => {
     data: { existingData: {}, isEditMode: false }
   });
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden mt-16 xl:mt-0 ">
       {/* Background */}
       <div className="absolute inset-0">
         <img src={heroImage} alt="Transport Management System" className="w-full h-full object-cover" />
@@ -24,14 +24,14 @@ const Hero = () => {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 container mx-auto px-4 text-center text-white">
+      <div className="relative z-10 container mx-auto px-4 text-center text-white ">
         <div className="max-w-5xl mx-auto">
-          <h1 className="text-6xl md:text-8xl font-bold mb-8 leading-tight">
-            <span className="block text-white">Streamline Your</span>
+          <h1 className="text-2xl sm:text-2xl xl:text-6xl font-bold mb-3 md:mb-8 mt-5 xl:mt-0  leading-tight">
+            <span className="block text-white ">Streamline Your</span>
             <span className="block text-accent-500">Transport Operations</span>
           </h1>
 
-          <p className="text-xl md:text-2xl mb-10 text-white/90 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-sm md:text-2xl mb-5 md:mb-10 text-white/90 max-w-3xl mx-auto leading-relaxed">
             Complete bilty management system for modern transport companies. Track shipments, manage routes, and optimize deliveries in one
             powerful platform.
           </p>
@@ -92,21 +92,37 @@ const Hero = () => {
               Watch Demo
             </Button>
           </div>
+          <div>
+            {/* Floating cards - for small screens (below buttons, above statistics) */}
+            <div className="md:hidden w-full mt-6 mb-6 flex flex-col gap-4 justify-center items-center">
+              <div className="bg-white/20 backdrop-blur-sm rounded-xl p-4 text-white border border-white/20 w-[90%]">
+                <div className="text-sm text-white/80 mb-1">Live Tracking</div>
+                <div className="text-lg font-bold mb-1">Delhi → Mumbai</div>
+                <div className="text-sm text-accent-400 font-medium">In Transit</div>
+              </div>
+
+              <div className="bg-white/20 backdrop-blur-sm rounded-xl p-4 text-white border border-white/20 w-[90%]">
+                <div className="text-sm text-white/80 mb-1">Route Optimization</div>
+                <div className="text-lg font-bold mb-1">25% Faster</div>
+                <div className="text-sm text-accent-400 font-medium">Delivery Time</div>
+              </div>
+            </div>
+          </div>
 
           {/* Statistics */}
-          <div className="flex items-center justify-center gap-12 text-white/90">
+          <div className="flex items-center justify-center xl:gap-12 gap-3 text-white/90 mb-5 md:mb-0">
             <div className="text-center">
-              <div className="text-3xl font-bold text-white">500+</div>
+              <div className="xl:text-3xl font-bold text-white">500+</div>
               <div className="text-sm text-white/80">Transport Companies</div>
             </div>
             <div className="w-px h-16 bg-white/30"></div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-white">1M+</div>
+              <div className="xl:text-3xl font-bold text-white">1M+</div>
               <div className="text-sm text-white/80">Shipments Tracked</div>
             </div>
             <div className="w-px h-16 bg-white/30"></div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-white">99.9%</div>
+              <div className="xl:text-3xl font-bold text-white">99.9%</div>
               <div className="text-sm text-white/80">Uptime</div>
             </div>
           </div>
@@ -114,16 +130,19 @@ const Hero = () => {
       </div>
 
       {/* Floating cards */}
-      <div className="absolute bottom-16 left-16 bg-white/20 backdrop-blur-sm rounded-xl p-6 text-white hidden lg:block border border-white/20">
-        <div className="text-sm text-white/80 mb-1">Live Tracking</div>
-        <div className="text-xl font-bold mb-1">Delhi → Mumbai</div>
-        <div className="text-sm text-accent-400 font-medium">In Transit</div>
-      </div>
+      {/* Floating cards - for large & medium screens (absolute) */}
+      <div className="hidden md:block">
+        <div className="absolute bottom-16 left-16 bg-white/20 backdrop-blur-sm rounded-xl p-6 text-white border border-white/20">
+          <div className="text-sm text-white/80 mb-1">Live Tracking</div>
+          <div className="text-xl font-bold mb-1">Delhi → Mumbai</div>
+          <div className="text-sm text-accent-400 font-medium">In Transit</div>
+        </div>
 
-      <div className="absolute bottom-24 right-16 bg-white/20 backdrop-blur-sm rounded-xl p-6 text-white hidden lg:block border border-white/20">
-        <div className="text-sm text-white/80 mb-1">Route Optimization</div>
-        <div className="text-xl font-bold mb-1">25% Faster</div>
-        <div className="text-sm text-accent-400 font-medium">Delivery Time</div>
+        <div className="absolute bottom-24 right-16 bg-white/20 backdrop-blur-sm rounded-xl p-6 text-white border border-white/20">
+          <div className="text-sm text-white/80 mb-1">Route Optimization</div>
+          <div className="text-xl font-bold mb-1">25% Faster</div>
+          <div className="text-sm text-accent-400 font-medium">Delivery Time</div>
+        </div>
       </div>
 
       {demoModal && (

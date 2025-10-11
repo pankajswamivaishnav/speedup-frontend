@@ -153,14 +153,87 @@ const BiltyTable = ({
   });
 
   //-------------------handlers-------------------
-  const handleBiltyDetailTogglePopup = async (transporterData?: any) => {
+  const handleBiltyDetailTogglePopup = async (biltyData?: any) => {
+    const formattedBiltyData = {
+      company: {
+        name: biltyData.transportId.transportName,
+        branchCode: biltyData.transportId.registrationNumber || '', // not provided directly
+        gstNo: biltyData.gstNumber,
+        panNo: biltyData.transportId.panCardNumber,
+        address: `${biltyData.transportId.transportAddress}, ${biltyData.transportId.city}, ${biltyData.transportId.state} - ${biltyData.transportId.pinCode}`,
+        email: biltyData.transportId.email,
+        website: 'pankajswamivaishnav.vercel.app',
+        phone: biltyData.transporterNumber
+      },
+      lrDate: moment(biltyData.date).format('DD-MM-YYYY'),
+      lrNo: biltyData.biltyNumber,
+      truckVehicleNo: biltyData.truckNumber,
+      transportMode: 'By Road',
+      from: biltyData.from,
+      to: biltyData.to,
+      deliveryType: '', // not present
+      paymentStatus: biltyData.paymentType ? 'Paid' : 'Unpaid', // simple assumption
+      consignor: {
+        name: biltyData.senderInformation.name,
+        gstNo: '', // not available
+        mobile: biltyData.senderInformation.number,
+        address: '' // not sender-specific address, but for display
+      },
+      consignee: {
+        name: biltyData.receiverInformation.name,
+        gstNo: '', // not available
+        mobile: biltyData.receiverInformation.number,
+        address: `` // not exact consignee address
+      },
+      insuranceDetails: 'Insurance details not available or not insured.',
+      items: [
+        {
+          srNo: 1,
+          productMaterial: biltyData.goodsCategory,
+          packagingType: 'Box', // not present
+          hsnCode: '-', // not present
+          articles: `${biltyData.weight} TON`,
+          actualWeight: `${biltyData.weight} TON`,
+          chargeRate: `₹ ${biltyData.truckCharge}`,
+          freightRate: '',
+          packingUnpackingCharge: ''
+        }
+      ],
+      charges: {
+        serviceCharge: 0, // not available
+        loadingUnloadingCharge: 0, // not available
+        codDodCharge: 0, // not available
+        otherCharges: biltyData.brokingCharge || 0,
+        subtotal: biltyData.truckCharge || 0,
+        sgstRate: 0.0, // not available
+        sgstAmount: 0,
+        cgstRate: 0.0,
+        cgstAmount: 0,
+        totalFreight: biltyData.truckCharge,
+        advancePaid: biltyData.advancePayment,
+        remainingPayableAmount: biltyData.remainingPayment,
+        gstPayableBy: 'Consignee', // not present
+        total: biltyData.truckCharge,
+        remainingAmountToBePaidBy: 'Consignor' // assumption
+      },
+      weightGuarantee: `${biltyData.weight} MTS`, // assumed mapping
+      serviceArea: 'All India', // not available
+      otherRemarks: biltyData.transportId.faithLine || '',
+      receiverComments: '', // not present
+      bankDetails: {
+        bankName: '', // not available
+        accountNo: '', // not available
+        ifsc: '' // not available
+      }
+    };
+
     if (biltiesDetailsPopup.action.open === true) {
       // refetchTransporterData();
     }
     setBiltyDetailsPopup((prev: any) => {
       return {
         ...prev,
-        data: { isEditMode: false, existingData: { transporterData } },
+        data: { isEditMode: false, existingData: formattedBiltyData },
         action: { ...prev.action, open: !prev.action.open },
         title: <FormattedMessage id="Bilty Detail" />
       };
@@ -253,7 +326,7 @@ const BiltyTable = ({
 
     generatePdf();
   }, [biltyForDownload]);
-
+  console.log('biltiesDetailsPopup--->', biltiesDetailsPopup.data.existingData);
   return (
     <>
       {/* Bilty for download but it is hidden from the screen*/}
@@ -352,7 +425,7 @@ const BiltyTable = ({
         >
           <>
             <div ref={documentRef}>
-              <BiltyDocument data={sampleBiltyData} />
+              <BiltyDocument data={biltiesDetailsPopup.data.existingData} />
             </div>
             <Button variant="contained" color="primary" sx={{ mt: 2 }} onClick={() => handleDownloadBilty(sampleBiltyData)}>
               Download PDF
