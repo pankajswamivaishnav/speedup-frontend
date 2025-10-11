@@ -32,79 +32,6 @@ import jsPDF from 'jspdf';
 
 // ===========================|| DATA WIDGET - PROJECT TABLE CARD ||=========================== //
 
-const sampleBiltyData: any = {
-  company: {
-    name: 'Shree Krishna Transport',
-    branchCode: '3435',
-    gstNo: 'PSV1310',
-    panNo: 'CQHPV51671',
-    address: 'New Bypass Road, Devnagar, Ganheda Road, Pushkar, Pushkar, Rajasthan - 305022',
-    email: 'pankajvaishnav128@gmail.com',
-    website: 'pankaj-swami-vaishnav.onrender.com',
-    phone: '707327213'
-  },
-  lrDate: '31-08-2025',
-  lrNo: '1',
-  truckVehicleNo: 'RJ-01GB-1737',
-  transportMode: 'By Road',
-  from: 'Pushkar',
-  to: 'Tamilnadu',
-  deliveryType: 'Door',
-  paymentStatus: 'Paid',
-  consignor: {
-    name: 'Deepak Swami Vaishnav',
-    gstNo: 'CQHPV516712',
-    mobile: '9352673924',
-    address: 'Maali Mohalla Banseli, Ajmer, Rajasthan, India - 35012'
-  },
-  consignee: {
-    name: 'Sugan Singh',
-    gstNo: '78444458545',
-    mobile: '0145277308',
-    address: 'jaipur, A.Thirumuruganpoondi, Tamil Nadu, India - 85442'
-  },
-  insuranceDetails: 'Insurance details is not available or not insured.',
-  items: [
-    {
-      srNo: 1,
-      productMaterial: 'Vegetables',
-      packagingType: 'Box',
-      hsnCode: '-',
-      articles: '0.00 KG',
-      actualWeight: '0.00 KG',
-      chargeRate: '₹ 100,000.00/KG',
-      freightRate: '',
-      packingUnpackingCharge: ''
-    }
-  ],
-  charges: {
-    serviceCharge: 0,
-    loadingUnloadingCharge: 0,
-    codDodCharge: 0,
-    otherCharges: 0,
-    subtotal: 0,
-    sgstRate: 0.0,
-    sgstAmount: 0,
-    cgstRate: 0.0,
-    cgstAmount: 0,
-    totalFreight: 0,
-    advancePaid: 0,
-    remainingPayableAmount: 0,
-    gstPayableBy: 'Consignee',
-    total: 0,
-    remainingAmountToBePaidBy: 'Consignor'
-  },
-  weightGuarantee: '100.00 MTS',
-  serviceArea: 'All India',
-  otherRemarks: '',
-  receiverComments: '3,300,064',
-  bankDetails: {
-    bankName: '',
-    accountNo: '',
-    ifsc: ''
-  }
-};
-
 const BiltyTable = ({
   data,
   limit,
@@ -240,6 +167,13 @@ const BiltyTable = ({
     });
   };
 
+  const closeBiltyDetailsPopup = () => {
+    setBiltyDetailsPopup((prev) => ({
+      ...prev,
+      action: { ...prev.action, open: false } // close modal
+    }));
+  };
+
   const handleDeleteBiltyToggle = async (id: string) => {
     setDeleteConfirmModal((prev) => ({
       ...prev,
@@ -291,6 +225,81 @@ const BiltyTable = ({
     pdf.save(`bilty_${biltyData.truckVehicleNo || 'document'}.pdf`);
   };
 
+  const handleDownloadIcon = async (biltyData: any) => {
+    const formattedBiltyData = {
+      company: {
+        name: biltyData.transportId.transportName,
+        branchCode: biltyData.transportId.registrationNumber || '', // not provided directly
+        gstNo: biltyData.gstNumber,
+        panNo: biltyData.transportId.panCardNumber,
+        address: `${biltyData.transportId.transportAddress}, ${biltyData.transportId.city}, ${biltyData.transportId.state} - ${biltyData.transportId.pinCode}`,
+        email: biltyData.transportId.email,
+        website: 'pankajswamivaishnav.vercel.app',
+        phone: biltyData.transporterNumber
+      },
+      lrDate: moment(biltyData.date).format('DD-MM-YYYY'),
+      lrNo: biltyData.biltyNumber,
+      truckVehicleNo: biltyData.truckNumber,
+      transportMode: 'By Road',
+      from: biltyData.from,
+      to: biltyData.to,
+      deliveryType: '', // not present
+      paymentStatus: biltyData.paymentType ? 'Paid' : 'Unpaid', // simple assumption
+      consignor: {
+        name: biltyData.senderInformation.name,
+        gstNo: '', // not available
+        mobile: biltyData.senderInformation.number,
+        address: '' // not sender-specific address, but for display
+      },
+      consignee: {
+        name: biltyData.receiverInformation.name,
+        gstNo: '', // not available
+        mobile: biltyData.receiverInformation.number,
+        address: `` // not exact consignee address
+      },
+      insuranceDetails: 'Insurance details not available or not insured.',
+      items: [
+        {
+          srNo: 1,
+          productMaterial: biltyData.goodsCategory,
+          packagingType: 'Box', // not present
+          hsnCode: '-', // not present
+          articles: `${biltyData.weight} TON`,
+          actualWeight: `${biltyData.weight} TON`,
+          chargeRate: `₹ ${biltyData.truckCharge}`,
+          freightRate: '',
+          packingUnpackingCharge: ''
+        }
+      ],
+      charges: {
+        serviceCharge: 0, // not available
+        loadingUnloadingCharge: 0, // not available
+        codDodCharge: 0, // not available
+        otherCharges: biltyData.brokingCharge || 0,
+        subtotal: biltyData.truckCharge || 0,
+        sgstRate: 0.0, // not available
+        sgstAmount: 0,
+        cgstRate: 0.0,
+        cgstAmount: 0,
+        totalFreight: biltyData.truckCharge,
+        advancePaid: biltyData.advancePayment,
+        remainingPayableAmount: biltyData.remainingPayment,
+        gstPayableBy: 'Consignee', // not present
+        total: biltyData.truckCharge,
+        remainingAmountToBePaidBy: 'Consignor' // assumption
+      },
+      weightGuarantee: `${biltyData.weight} MTS`, // assumed mapping
+      serviceArea: 'All India', // not available
+      otherRemarks: biltyData.transportId.faithLine || '',
+      receiverComments: '', // not present
+      bankDetails: {
+        bankName: '', // not available
+        accountNo: '', // not available
+        ifsc: '' // not available
+      }
+    };
+    setBiltyForDownload(formattedBiltyData);
+  };
   // -------------- Download bilty pdf useEffect --------------
   useEffect(() => {
     // This function runs whenever biltyForDownload changes
@@ -326,7 +335,6 @@ const BiltyTable = ({
 
     generatePdf();
   }, [biltyForDownload]);
-  console.log('biltiesDetailsPopup--->', biltiesDetailsPopup.data.existingData);
   return (
     <>
       {/* Bilty for download but it is hidden from the screen*/}
@@ -383,7 +391,7 @@ const BiltyTable = ({
                   <TableCell
                     align="right"
                     onClick={() => {
-                      setBiltyForDownload(sampleBiltyData);
+                      handleDownloadIcon(row);
                     }}
                   >
                     <Tooltip title="download bilty">
@@ -419,7 +427,7 @@ const BiltyTable = ({
       {!!biltiesDetailsPopup && biltiesDetailsPopup.action.open && (
         <UniversalDialog
           action={{ ...biltiesDetailsPopup.action }}
-          onClose={handleBiltyDetailTogglePopup}
+          onClose={closeBiltyDetailsPopup}
           title={biltiesDetailsPopup.title}
           hasPrimaryButton={false}
         >
@@ -427,7 +435,12 @@ const BiltyTable = ({
             <div ref={documentRef}>
               <BiltyDocument data={biltiesDetailsPopup.data.existingData} />
             </div>
-            <Button variant="contained" color="primary" sx={{ mt: 2 }} onClick={() => handleDownloadBilty(sampleBiltyData)}>
+            <Button
+              variant="contained"
+              color="primary"
+              sx={{ mt: 2 }}
+              onClick={() => handleDownloadBilty(biltiesDetailsPopup.data.existingData)}
+            >
               Download PDF
             </Button>
           </>
