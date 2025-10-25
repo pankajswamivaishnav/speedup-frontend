@@ -7,6 +7,7 @@ import Loadable from 'components/Loadable';
 import AuthGuard from 'utils/route-guard/AuthGuard';
 import Vendor from 'pages/vendor/Vendor';
 import ProfilePage from 'pages/Profile/ProfilePage';
+import LiveLocationMap from 'components/location/LiveLocationMap';
 // import LandingPage from 'pages/extra-pages/LandingPage';
 
 // pages routing
@@ -76,6 +77,10 @@ const MainRoutes = {
         {
           path: 'bilty-document',
           element: <BiltyDocumentPage />
+        },
+        {
+          path: 'location',
+          element: <LiveLocationMap />
         }
       ]
     },

@@ -55,8 +55,8 @@ const AuthLogin = () => {
     <>
       <Formik
         initialValues={{
-          emailOrMobile: 'pankajswamisharma@gmail.com',
-          password: 'StrongPassword123',
+          emailOrMobile: '',
+          password: '',
           submit: null
         }}
         validationSchema={Yup.object().shape({
