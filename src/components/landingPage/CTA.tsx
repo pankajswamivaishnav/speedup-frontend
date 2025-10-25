@@ -5,8 +5,10 @@ import { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { TUniversalDialogProps } from 'types/types.UniversalDialog';
 import Contact from 'pages/contact/Contact';
+import { useNavigate } from 'react-router';
 
 const CTA = () => {
+  const navigate = useNavigate();
   const benefits = ['30-day free trial', 'No setup fees', '24/7 support', 'Easy migration', 'Training included'];
   const [schdeDemoFormPopup, setScheduleFormPopup] = useState<TUniversalDialogProps>({
     action: {
@@ -80,6 +82,7 @@ const CTA = () => {
                 }
               }}
               className="group"
+              onClick={() => navigate('/login')}
             >
               Start Your Free Trial
               <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
