@@ -4,9 +4,11 @@ import UniversalDialog from 'components/popup/UniversalDialog';
 import { useState } from 'react';
 import { TUniversalDialogProps } from 'types/types.UniversalDialog';
 import { FormattedMessage } from 'react-intl';
+import { useNavigate } from 'react-router';
 
 const Hero = () => {
   // -------------- Show transporter details page pop up --------------
+  const navigate = useNavigate();
   const [demoModal, setDemoModal] = useState<TUniversalDialogProps>({
     action: {
       open: false,
@@ -51,16 +53,7 @@ const Hero = () => {
                   backgroundColor: '#ea580c'
                 }
               }}
-              onClick={() =>
-                setDemoModal((prev: any) => {
-                  return {
-                    ...prev,
-                    data: { isEditMode: false, existingData: {} },
-                    action: { ...prev.action, open: !prev.action.open },
-                    title: <FormattedMessage id="Driver Detail" />
-                  };
-                })
-              }
+              onClick={() => navigate('/login')}
             >
               Start Free Trial
             </Button>
