@@ -27,10 +27,108 @@
 
     <!-- this is to resolve issue in old safari browser in tablet -->
     <script src="https://cdn.jsdelivr.net/npm/resize-observer-polyfill@1.5.1/dist/ResizeObserver.min.js"></script>
+
+    <!-- ✅ Hide Google Translate Banner -->
+    <style>
+      /* Hide Google Translate banner/bar */
+      .goog-te-banner-frame,
+      .goog-te-balloon-frame,
+      .goog-te-menu-frame,
+      .skiptranslate,
+      #google_translate_element {
+        display: none !important;
+      }
+
+      /* Hide the top bar that shows "Translated to: Hindi" */
+      body {
+        top: 0 !important;
+      }
+
+      /* Remove the space that Google Translate adds */
+      .goog-te-banner-frame.skiptranslate {
+        display: none !important;
+      }
+
+      /* Hide the translate bar completely */
+      iframe.goog-te-banner-frame,
+      iframe.goog-te-menu-frame {
+        display: none !important;
+        visibility: hidden !important;
+        height: 0 !important;
+        width: 0 !important;
+      }
+    </style>
+
+    <!-- ✅ Google Translate Initialization Script -->
+    <script type="text/javascript">
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement(
+          {
+            pageLanguage: 'en',
+            includedLanguages: 'en,hi', // you can add more languages here
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+            autoDisplay: false // Don't show the banner automatically
+          },
+          'google_translate_element'
+        );
+      }
+    </script>
+
+    <!-- ✅ Load the Google Translate library -->
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <!-- ✅ Additional script to hide banner after load -->
+    <script type="text/javascript">
+      window.addEventListener('load', function () {
+        // Hide Google Translate banner
+        setTimeout(function () {
+          var banner = document.querySelector('.goog-te-banner-frame');
+          if (banner) {
+            banner.style.display = 'none';
+            banner.style.visibility = 'hidden';
+            banner.style.height = '0';
+          }
+
+          var skipTranslate = document.querySelector('.skiptranslate');
+          if (skipTranslate) {
+            skipTranslate.style.display = 'none';
+          }
+
+          // Fix body top position
+          document.body.style.top = '0';
+        }, 100);
+      });
+
+      // Also hide on DOMContentLoaded
+      document.addEventListener('DOMContentLoaded', function () {
+        var observer = new MutationObserver(function (mutations) {
+          var banner = document.querySelector('.goog-te-banner-frame');
+          if (banner) {
+            banner.style.display = 'none';
+            banner.style.visibility = 'hidden';
+            banner.style.height = '0';
+          }
+
+          var skipTranslate = document.querySelector('.skiptranslate');
+          if (skipTranslate) {
+            skipTranslate.style.display = 'none';
+          }
+
+          document.body.style.top = '0';
+        });
+
+        observer.observe(document.body, {
+          childList: true,
+          subtree: true
+        });
+      });
+    </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="google_translate_element" style="display: none"></div>
     <div id="root"></div>
+
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
@@ -41,5 +139,6 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
