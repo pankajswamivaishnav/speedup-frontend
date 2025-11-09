@@ -4,7 +4,13 @@ import { Truck, Mail, Phone, MapPin, Facebook, Twitter, Linkedin, Instagram } fr
 const Footer = () => {
   const solutions = ['Bilty Management', 'Fleet Tracking', 'Route Optimization', 'Driver Management', 'Compliance Tools'];
 
-  const company = ['About Us', 'Careers', 'Press', 'Partners', 'Contact'];
+  const company = [
+    { title: 'About Us', link: 'about-us' },
+    { title: 'Careers', link: 'careers' },
+    { title: 'Press', link: 'press' },
+    { title: 'Partners', link: 'partners' },
+    { title: 'Contact', link: '#contact' }
+  ];
 
   const resources = ['Documentation', 'Help Center', 'API Reference', 'System Status', 'Blog'];
 
@@ -48,7 +54,7 @@ const Footer = () => {
             <ul className="space-y-2">
               {solutions.map((item) => (
                 <li key={item}>
-                  <a href="#" className="text-white/80 hover:text-accent-500 transition-colors duration-300">
+                  <a href="#features" className="text-white/80 hover:text-accent-500 transition-colors duration-300">
                     {item}
                   </a>
                 </li>
@@ -60,10 +66,10 @@ const Footer = () => {
           <div>
             <h3 className="font-semibold text-lg mb-4">Company</h3>
             <ul className="space-y-2">
-              {company.map((item) => (
-                <li key={item}>
-                  <a href="#" className="text-white/80 hover:text-accent-500 transition-colors duration-300">
-                    {item}
+              {company.map((item, index) => (
+                <li key={index}>
+                  <a href={item.link} className="text-white/80 hover:text-accent-500 transition-colors duration-300">
+                    {item.title}
                   </a>
                 </li>
               ))}
@@ -76,9 +82,9 @@ const Footer = () => {
             <ul className="space-y-2">
               {resources.map((item) => (
                 <li key={item}>
-                  <a href="#" className="text-white/80 hover:text-accent-500 transition-colors duration-300">
-                    {item}
-                  </a>
+                  {/* <a href="#" className="text-white/80 hover:text-accent-500 transition-colors duration-300"> */}
+                  {item}
+                  {/* </a> */}
                 </li>
               ))}
             </ul>
@@ -93,16 +99,19 @@ const Footer = () => {
 
           {/* Social Links */}
           <div className="flex gap-4">
-            <a href="#" className="text-white/60 hover:text-accent-500 transition-colors duration-300">
+            <a href="https://pankajvaishnav.vercel.app/" className="text-white/60 hover:text-accent-500 transition-colors duration-300">
               <Facebook className="w-5 h-5" />
             </a>
-            <a href="#" className="text-white/60 hover:text-accent-500 transition-colors duration-300">
+            <a href="https://x.com/Pankaj_Schemer" className="text-white/60 hover:text-accent-500 transition-colors duration-300">
               <Twitter className="w-5 h-5" />
             </a>
-            <a href="#" className="text-white/60 hover:text-accent-500 transition-colors duration-300">
+            <a
+              href="https://www.linkedin.com/in/pankaj-swami-vaishnav"
+              className="text-white/60 hover:text-accent-500 transition-colors duration-300"
+            >
               <Linkedin className="w-5 h-5" />
             </a>
-            <a href="#" className="text-white/60 hover:text-accent-500 transition-colors duration-300">
+            <a href="https://instagram.com/pankajvaishnav" className="text-white/60 hover:text-accent-500 transition-colors duration-300">
               <Instagram className="w-5 h-5" />
             </a>
           </div>
@@ -110,7 +119,11 @@ const Footer = () => {
           {/* Legal Links */}
           <div className="flex gap-6 text-sm">
             {legal.map((item) => (
-              <a key={item} href="#" className="text-white/60 hover:text-accent-500 transition-colors duration-300">
+              <a
+                key={item}
+                href="https://speedup-frontend.vercel.app/"
+                className="text-white/60 hover:text-accent-500 transition-colors duration-300"
+              >
                 {item}
               </a>
             ))}

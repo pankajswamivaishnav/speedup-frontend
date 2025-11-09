@@ -17,15 +17,18 @@ const AddDriverCard = ({
   isEditMode,
   existingData,
   isDisable,
-  data
+  data,
+  refetchDriverCard
 }: {
   onClose: (refetchData?: boolean) => void;
   isEditMode: Boolean;
   existingData: any;
   isDisable?: boolean;
   data?: any;
+  refetchDriverCard?: () => void;
 }) => {
   const inputRef = useInputRef();
+  const [isUploading, setIsUploading] = useState(false);
   const [image, setImage] = useState<{ public_id: string; url: string } | null>(null);
 
   const [initialValues, setInitialValues] = useState({
@@ -71,6 +74,7 @@ const AddDriverCard = ({
           if (response) {
             onClose(true);
             setSubmitting(false);
+            refetchDriverCard && refetchDriverCard();
           }
         }}
       >
@@ -264,7 +268,7 @@ const AddDriverCard = ({
                 </Grid>
 
                 <Grid item xs={12} sm={6}>
-                  <UploadImage setImage={setImage} />
+                  <UploadImage setImage={setImage} setIsUploading={setIsUploading} />
                 </Grid>
 
                 {isDisable ? (
@@ -275,8 +279,8 @@ const AddDriverCard = ({
                       <Button variant="outlined" type="button" color="secondary" onClick={() => onClose()}>
                         Cancel
                       </Button>
-                      <Button type="submit" variant="outlined">
-                        Save
+                      <Button type="submit" variant="outlined" disabled={isUploading || isSubmitting}>
+                        {isUploading ? 'Uploading...' : 'Save'}
                       </Button>
                     </Stack>
                   </Grid>

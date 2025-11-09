@@ -9,6 +9,7 @@ import Search from './Search';
 import Message from './Message';
 import Profile from './Profile';
 import Notification from './Notification';
+import Translation from './Translation';
 import MobileSection from './MobileSection';
 import MegaMenuSection from './MegaMenuSection';
 
@@ -37,6 +38,7 @@ const HeaderContent = () => {
 
       <Notification />
       <Message />
+      <Translation />
       {!downLG && <Profile />}
       {downLG && <MobileSection />}
     </>

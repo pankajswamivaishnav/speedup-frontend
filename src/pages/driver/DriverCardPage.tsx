@@ -43,6 +43,7 @@ const DriverCardPage = () => {
   // -----------useQuery-----------
   const {
     data: driverCardsData,
+    refetch: refetchDriverCard,
     isLoading,
     isFetching
   } = useQuery({
@@ -75,11 +76,11 @@ const DriverCardPage = () => {
             <Search setQuery={setQuery} />
           </div>
         </Grid>{' '}
-        <Grid item xs={12}>
+        {/* <Grid item xs={12}>
           <MainCard>
             <div className="text-center py-10 text-gray-500 font-medium">🚫 No driver cards available right now.</div>
           </MainCard>
-        </Grid>
+        </Grid> */}
         {isLoading || isFetching ? (
           // 🔹 Show loading skeletons while fetching data
           [1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
@@ -111,6 +112,7 @@ const DriverCardPage = () => {
             onClose={() => handleTogglePopup()}
             isEditMode={driverCardFormPopup?.data?.isEditMode}
             existingData={driverCardFormPopup?.data.existingData}
+            refetchDriverCard={refetchDriverCard}
           />
         </UniversalDialog>
       )}
