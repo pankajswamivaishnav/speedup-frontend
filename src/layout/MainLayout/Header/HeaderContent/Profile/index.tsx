@@ -170,7 +170,7 @@ const Profile = () => {
                             }}
                           />
                           <Stack>
-                            <Typography variant="h6">{`${user?.transporter_first_name} ${user?.transporter_last_name}`}</Typography>
+                            <Typography variant="h6">{`${user?.first_name} ${user?.last_name}`}</Typography>
                             <Typography variant="body2" color="textSecondary">
                               {user?.role === 'super_admin'
                                 ? 'SUPER ADMIN'

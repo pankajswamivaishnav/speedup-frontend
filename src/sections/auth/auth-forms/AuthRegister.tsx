@@ -13,7 +13,8 @@ import {
   InputLabel,
   OutlinedInput,
   Stack,
-  Typography
+  Typography,
+  Autocomplete
 } from '@mui/material';
 
 // third party
@@ -35,6 +36,7 @@ import { StringColorProps } from 'types/password';
 
 // assets
 import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
+import { TextField } from '@mui/material';
 
 // ============================|| JWT - REGISTER ||============================ //
 
@@ -48,6 +50,8 @@ const AuthRegister = () => {
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
+
+  const role = ['transporter', 'driver', 'vendor'];
 
   const handleMouseDownPassword = (event: SyntheticEvent) => {
     event.preventDefault();
@@ -69,19 +73,21 @@ const AuthRegister = () => {
           firstname: '',
           lastname: '',
           email: '',
-          company: '',
+          mobileNumber: '',
           password: '',
+          role: 'transporter',
           submit: null
         }}
         validationSchema={Yup.object().shape({
           firstname: Yup.string().max(255).required('First Name is required'),
           lastname: Yup.string().max(255).required('Last Name is required'),
-          email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
+          // email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
+          mobileNumber: Yup.string().required('Required mobile number').max(10),
           password: Yup.string().max(255).required('Password is required')
         })}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
           try {
-            await register(values.email, values.password, values.firstname, values.lastname);
+            await register(values.email, values.mobileNumber, values.password, values.firstname, values.lastname, values.role);
             if (scriptedRef.current) {
               setStatus({ success: true });
               setSubmitting(false);
@@ -91,7 +97,7 @@ const AuthRegister = () => {
                   message: 'Your registration has been successfully completed.',
                   variant: 'alert',
                   alert: {
-                    color: 'success'
+                    color: 'primary'
                   },
                   close: false
                 })
@@ -111,12 +117,14 @@ const AuthRegister = () => {
           }
         }}
       >
-        {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
+        {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values, setFieldValue }) => (
           <form noValidate onSubmit={handleSubmit}>
             <Grid container spacing={3}>
               <Grid item xs={12} md={6}>
                 <Stack spacing={1}>
-                  <InputLabel htmlFor="firstname-signup">First Name*</InputLabel>
+                  <InputLabel htmlFor="firstname-signup">
+                    First Name <span style={{ color: 'red' }}>*</span>
+                  </InputLabel>
                   <OutlinedInput
                     id="firstname-login"
                     type="firstname"
@@ -137,7 +145,9 @@ const AuthRegister = () => {
               </Grid>
               <Grid item xs={12} md={6}>
                 <Stack spacing={1}>
-                  <InputLabel htmlFor="lastname-signup">Last Name*</InputLabel>
+                  <InputLabel htmlFor="lastname-signup">
+                    Last Name<span style={{ color: 'red' }}>*</span>
+                  </InputLabel>
                   <OutlinedInput
                     fullWidth
                     error={Boolean(touched.lastname && errors.lastname)}
@@ -159,28 +169,30 @@ const AuthRegister = () => {
               </Grid>
               <Grid item xs={12}>
                 <Stack spacing={1}>
-                  <InputLabel htmlFor="company-signup">Company</InputLabel>
+                  <InputLabel htmlFor="mobileNumber">
+                    Mobile Number <span style={{ color: 'red' }}>*</span>
+                  </InputLabel>
                   <OutlinedInput
                     fullWidth
-                    error={Boolean(touched.company && errors.company)}
-                    id="company-signup"
-                    value={values.company}
-                    name="company"
+                    error={Boolean(touched.mobileNumber && errors.mobileNumber)}
+                    id="mobileNumber"
+                    value={values.mobileNumber}
+                    name="mobileNumber"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    placeholder="Demo Inc."
-                    inputProps={{}}
+                    placeholder="94601234560"
+                    inputProps={{ maxLength: 10 }}
                   />
-                  {touched.company && errors.company && (
+                  {touched.mobileNumber && errors.mobileNumber && (
                     <FormHelperText error id="helper-text-company-signup">
-                      {errors.company}
+                      {errors.mobileNumber}
                     </FormHelperText>
                   )}
                 </Stack>
               </Grid>
               <Grid item xs={12}>
                 <Stack spacing={1}>
-                  <InputLabel htmlFor="email-signup">Email Address*</InputLabel>
+                  <InputLabel htmlFor="email-signup">Email Address</InputLabel>
                   <OutlinedInput
                     fullWidth
                     error={Boolean(touched.email && errors.email)}
@@ -202,7 +214,30 @@ const AuthRegister = () => {
               </Grid>
               <Grid item xs={12}>
                 <Stack spacing={1}>
-                  <InputLabel htmlFor="password-signup">Password</InputLabel>
+                  <InputLabel htmlFor="role">
+                    Role <span style={{ color: 'red' }}>*</span>
+                  </InputLabel>
+                  <Autocomplete
+                    options={role}
+                    value={values.role}
+                    renderInput={(params) => <TextField {...params} label="Choose Role" fullWidth />}
+                    onChange={(event, value) => {
+                      setFieldValue('role', value);
+                    }}
+                  />
+                  {touched.role && errors.role && (
+                    <FormHelperText error id="remaining-payment-helper">
+                      {errors.role}
+                    </FormHelperText>
+                  )}
+                </Stack>
+              </Grid>
+
+              <Grid item xs={12}>
+                <Stack spacing={1}>
+                  <InputLabel htmlFor="password-signup">
+                    Password <span style={{ color: 'red' }}>*</span>
+                  </InputLabel>
                   <OutlinedInput
                     fullWidth
                     error={Boolean(touched.password && errors.password)}

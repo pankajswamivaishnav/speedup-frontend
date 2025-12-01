@@ -11,11 +11,11 @@ class DriverServices {
       if (response.status) {
         return response.data;
       }
-    } catch (error) {
+    } catch (error: any) {
       store.dispatch(
         openSnackbar({
           open: true,
-          message: 'Something went wrong driverServices!!',
+          message: `${error.message} || Something went wrong driverServices!!`,
           variant: 'alert',
           alert: {
             color: 'error'
@@ -73,7 +73,7 @@ class DriverServices {
             message: 'Driver created successfully',
             variant: 'alert',
             alert: {
-              color: 'info'
+              color: 'primary'
             },
             close: true
           })
@@ -87,7 +87,7 @@ class DriverServices {
           message: error.message,
           variant: 'alert',
           alert: {
-            color: 'error'
+            color: 'primary'
           },
           close: true
         })
@@ -129,7 +129,7 @@ class DriverServices {
             message: 'Driver deleted successfully.',
             variant: 'alert',
             alert: {
-              color: 'info'
+              color: 'primary'
             },
             close: true
           })

@@ -20,7 +20,7 @@ const LoginRoutes = {
   path: '/',
   children: [
     {
-      path: 'login',
+      path: '',
       element: (
         <GuestGuard>
           <CommonLayout />
@@ -28,7 +28,7 @@ const LoginRoutes = {
       ),
       children: [
         {
-          path: '',
+          path: 'login',
           element: <AuthLogin />
         },
         {

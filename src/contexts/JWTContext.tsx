@@ -87,10 +87,10 @@ export const JWTProvider = ({ children }: { children: React.ReactElement }) => {
    * @param emailOrMobile - Either an email address or mobile number
    * @param password - User password
    */
-  const login = async (emailOrMobile: string, password: string) => {
+  const login = async (emailOrMobile: string, password: string, keepSignedIn: boolean) => {
     // Determine if input is email or mobile number
     const isEmail = emailOrMobile.includes('@');
-    const loginData = isEmail ? { email: emailOrMobile, password } : { mobileNumber: emailOrMobile, password };
+    const loginData = isEmail ? { email: emailOrMobile, password, keepSignedIn } : { mobileNumber: emailOrMobile, password, keepSignedIn };
 
     const response = await axios.post('/api/v1/auth/login', loginData);
     const { serviceToken, user } = response.data.data;
@@ -104,32 +104,34 @@ export const JWTProvider = ({ children }: { children: React.ReactElement }) => {
     });
   };
 
-  const register = async (email: string, password: string, firstName: string, lastName: string) => {
+  const register = async (email: string, mobileNumber: string, password: string, firstName: string, lastName: string, role: string) => {
     // todo: this flow need to be recode as it not verified
     const id = chance.bb_pin();
-    const response = await axios.post('/api/account/register', {
+    await axios.post('/api/v1/auth/register', {
       id,
       email,
+      mobileNumber,
       password,
       firstName,
-      lastName
+      lastName,
+      role
     });
-    let users = response.data;
+    // let users = response.data;
 
-    if (window.localStorage.getItem('users') !== undefined && window.localStorage.getItem('users') !== null) {
-      const localUsers = window.localStorage.getItem('users');
-      users = [
-        ...JSON.parse(localUsers!),
-        {
-          id,
-          email,
-          password,
-          name: `${firstName} ${lastName}`
-        }
-      ];
-    }
+    // if (window.localStorage.getItem('users') !== undefined && window.localStorage.getItem('users') !== null) {
+    //   const localUsers = window.localStorage.getItem('users');
+    //   users = [
+    //     ...JSON.parse(localUsers!),
+    //     {
+    //       id,
+    //       email,
+    //       password,
+    //       name: `${firstName} ${lastName}`
+    //     }
+    //   ];
+    // }
 
-    window.localStorage.setItem('users', JSON.stringify(users));
+    // window.localStorage.setItem('users', JSON.stringify(users));
   };
 
   const logout = () => {

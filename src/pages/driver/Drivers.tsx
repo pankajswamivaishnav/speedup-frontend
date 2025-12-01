@@ -6,23 +6,23 @@ import { useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { TUniversalDialogProps } from 'types/types.UniversalDialog';
 import { useQuery } from '@tanstack/react-query';
-import TransporterServiceInstance from 'services/transporter.services';
+// import TransporterServiceInstance from 'services/transporter.services';
 import DriverTable from 'components/drivers/DriverTable';
 import AddDriver from 'components/drivers/AddDriver';
-import useAuth from 'hooks/useAuth';
+// import useAuth from 'hooks/useAuth';
 import DriverServiceInstance from 'services/driver.services';
 import Search from 'layout/MainLayout/Header/HeaderContent/Search';
 import { exportToCsv } from 'utils/download';
 
 const Drivers = () => {
   const [driversData, setDriversData] = useState();
-  const [transportData, setTransportData] = useState<{ label: string; id: string }[]>([]);
+  // const [transportData, setTransportData] = useState<{ label: string; id: string }[]>([]);
   const [page, setPage] = useState<number>(0);
   const [limit, setLimit] = useState<number>(20);
   const [count, setCount] = useState<number>(0);
-  const { user } = useAuth();
+  // const { user } = useAuth();
   const [query, setQuery] = useState<string>('');
-  // -------------- Add transporter page pop up --------------
+  // -------------- Add driver page pop up --------------
   const [driverFormPopup, setDriverFormPopup] = useState<TUniversalDialogProps>({
     action: {
       open: false,
@@ -101,24 +101,24 @@ const Drivers = () => {
   });
 
   // Here get transporter data
-  const fetchData = async () => {
-    if (user?.role === 'super_admin') {
-      try {
-        const response = await TransporterServiceInstance.getAllTransporter(0, 0);
-        const formattedData = response.data.map((transporter: any) => ({
-          label: transporter.transportName,
-          id: transporter._id
-        }));
-        setTransportData(formattedData);
-      } catch (error) {
-        console.error('Error fetching transporters:', error);
-      }
-    }
-  };
+  // const fetchData = async () => {
+  //   if (user?.role === 'super_admin') {
+  //     try {
+  //       const response = await TransporterServiceInstance.getAllTransporter(0, 0);
+  //       const formattedData = response.data.map((transporter: any) => ({
+  //         label: transporter.transportName,
+  //         id: transporter._id
+  //       }));
+  //       setTransportData(formattedData);
+  //     } catch (error) {
+  //       console.error('Error fetching transporters:', error);
+  //     }
+  //   }
+  // };
 
-  //---------------useeffect--------------
+  //---------------useeffect------------------
   useEffect(() => {
-    fetchData();
+    // fetchData();
     if (drivers) {
       setDriversData(drivers.data);
       setCount(drivers.total);
@@ -182,7 +182,7 @@ const Drivers = () => {
             onClose={() => handleTogglePopup()}
             isEditMode={driverFormPopup?.data?.isEditMode}
             existingData={driverFormPopup?.data.existingData}
-            data={transportData}
+            data={driversData}
             refetchDrivers={refetchDrivers}
           />
         </UniversalDialog>

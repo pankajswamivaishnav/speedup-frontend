@@ -93,6 +93,29 @@ class TransporterServices {
     }
   }
 
+  // Get User
+  async getUser() {
+    try {
+      const response = await axiosServices.get(`api/v1/getUser`);
+      if (response.status) {
+        return response.data;
+      }
+    } catch (error: any) {
+      store.dispatch(
+        openSnackbar({
+          open: true,
+          message: error.message,
+          variant: 'alert',
+          alert: {
+            color: 'error'
+          },
+          close: true
+        })
+      );
+      throw error;
+    }
+  }
+
   // -------------- Transport Cards Services ----------------
   // Create Transport Card
   async createTransportCard(data: any) {

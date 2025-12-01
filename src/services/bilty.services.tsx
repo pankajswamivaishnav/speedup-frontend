@@ -36,7 +36,7 @@ class BiltyServices {
             message: 'Bilty created successfully.',
             variant: 'alert',
             alert: {
-              color: 'info'
+              color: 'primary'
             },
             close: true
           })
@@ -69,7 +69,7 @@ class BiltyServices {
             message: 'Deleted bilty successfully.',
             variant: 'alert',
             alert: {
-              color: 'info'
+              color: 'primary'
             },
             close: true
           })

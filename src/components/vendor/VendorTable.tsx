@@ -107,72 +107,77 @@ const VendorTable = ({
       console.log('Error occured while delete transporter', error);
     }
   };
+
   return (
     <>
-      <MainCard content={false} sx={{ width: '90vw', overflowX: 'hidden' }}>
-        <TableContainer sx={{ width: '100%', maxHeight: 550, overflowX: 'auto' }}>
-          <Table sx={{ width: '100%', tableLayout: 'auto' }}>
-            <TableHead>
-              <TableRow>
-                <TableCell>Vendor Name</TableCell>
-                <TableCell>Vendor Address</TableCell>
-                <TableCell>Vendor Number</TableCell>
-                <TableCell align="right">Vendor Bussiness</TableCell>
-                <TableCell align="center" colSpan={2}>
-                  Action
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {data.map((row: any, index: any) => (
-                <TableRow hover key={index}>
-                  <TableCell>
-                    <Grid container spacing={2} alignItems="center" sx={{ flexWrap: 'nowrap' }}>
-                      <Grid item xs zeroMinWidth>
-                        <Typography align="left" variant="subtitle1">
-                          {`${row.first_name} ${row.last_name}`}
-                        </Typography>
-                        <Typography align="left" variant="caption" color="secondary">
-                          {row?.email}
-                        </Typography>
-                      </Grid>
-                    </Grid>
-                  </TableCell>
-                  <TableCell>{row.address}</TableCell>
-                  <TableCell>{row.mobileNumber}</TableCell>
-                  <TableCell align="right" sx={{ pr: 3 }}>
-                    {row.business}
-                  </TableCell>
-                  <TableCell align="right" onClick={() => handleVendorDetailTogglePopup(row)}>
-                    <Tooltip title="full-details">
-                      <IconButton>
-                        <EyeOutlined className="text-blue-500" />
-                      </IconButton>
-                    </Tooltip>
-                  </TableCell>
-                  <TableCell>
-                    <Tooltip title="delete" onClick={() => handleDeleteVendorToggle(row._id)}>
-                      <IconButton>
-                        <DeleteOutlined className="text-red-600" />
-                      </IconButton>
-                    </Tooltip>
+      {data && data.length > 0 ? (
+        <MainCard content={false} sx={{ width: '90vw', overflowX: 'hidden' }}>
+          <TableContainer sx={{ width: '100%', maxHeight: 550, overflowX: 'auto' }}>
+            <Table sx={{ width: '100%', tableLayout: 'auto' }}>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Vendor Name</TableCell>
+                  <TableCell>Vendor Address</TableCell>
+                  <TableCell>Vendor Number</TableCell>
+                  <TableCell align="right">Vendor Bussiness</TableCell>
+                  <TableCell align="center" colSpan={2}>
+                    Action
                   </TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <Divider />
-        <TablePagination
-          rowsPerPageOptions={[20, 50, 100]}
-          component="div"
-          count={count}
-          rowsPerPage={limit}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
-      </MainCard>
+              </TableHead>
+              <TableBody>
+                {data.map((row: any, index: any) => (
+                  <TableRow hover key={index}>
+                    <TableCell>
+                      <Grid container spacing={2} alignItems="center" sx={{ flexWrap: 'nowrap' }}>
+                        <Grid item xs zeroMinWidth>
+                          <Typography align="left" variant="subtitle1">
+                            {`${row.first_name} ${row.last_name}`}
+                          </Typography>
+                          <Typography align="left" variant="caption" color="secondary">
+                            {row?.email}
+                          </Typography>
+                        </Grid>
+                      </Grid>
+                    </TableCell>
+                    <TableCell>{row.address}</TableCell>
+                    <TableCell>{row.mobileNumber}</TableCell>
+                    <TableCell align="right" sx={{ pr: 3 }}>
+                      {row.business}
+                    </TableCell>
+                    <TableCell align="right" onClick={() => handleVendorDetailTogglePopup(row)}>
+                      <Tooltip title="full-details">
+                        <IconButton>
+                          <EyeOutlined className="text-blue-500" />
+                        </IconButton>
+                      </Tooltip>
+                    </TableCell>
+                    <TableCell>
+                      <Tooltip title="delete" onClick={() => handleDeleteVendorToggle(row._id)}>
+                        <IconButton>
+                          <DeleteOutlined className="text-red-600" />
+                        </IconButton>
+                      </Tooltip>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <Divider />
+          <TablePagination
+            rowsPerPageOptions={[20, 50, 100]}
+            component="div"
+            count={count}
+            rowsPerPage={limit}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        </MainCard>
+      ) : (
+        <p className="flex justify-center w-full m-5">No vendors available</p>
+      )}
       {/* -----------Universal dialog for open transport details page---------------- */}
       {!!vendorDetailsPopup && vendorDetailsPopup.action.open && (
         <UniversalDialog

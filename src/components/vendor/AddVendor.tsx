@@ -58,6 +58,8 @@ const AddVendor = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isEditMode, existingData]);
+
+  console.log('is edit mode-->', isEditMode);
   return (
     <>
       <Formik
@@ -313,7 +315,7 @@ const AddVendor = ({
                   </Stack>
                 </Grid>
 
-                <Grid item xs={12} sm={6} display={isDisable ? 'none' : 'block'}>
+                <Grid item xs={12} sm={6} display={isDisable || isEditMode ? 'none' : 'block'}>
                   <Stack spacing={1.25}>
                     <InputLabel htmlFor="password">
                       Password <span style={{ color: 'red' }}>*</span>
@@ -336,6 +338,7 @@ const AddVendor = ({
                     )}
                   </Stack>
                 </Grid>
+
                 <Grid item xs={12} sm={6} display={isDisable ? 'none' : 'block'}>
                   <UploadImage setImage={setImage} setIsUploading={setIsUploading} />
                 </Grid>

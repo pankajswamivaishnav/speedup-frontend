@@ -29,8 +29,8 @@ const AddTransporter = ({
   const [isUploading, setIsUploading] = useState(false);
   const [initialValues, setInitialValues] = useState({
     transportName: '',
-    transporter_first_name: '',
-    transporter_last_name: '',
+    first_name: '',
+    last_name: '',
     mobileNumber: '',
     officeNumber: '',
     registrationNumber: '',
@@ -59,6 +59,7 @@ const AddTransporter = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isEditMode, existingData]);
+
   return (
     <>
       <Formik
@@ -143,8 +144,8 @@ const AddTransporter = ({
                     <TextField
                       fullWidth
                       id="transporter-first-name"
-                      value={values.transporter_first_name}
-                      name="transporter_first_name"
+                      value={values.first_name}
+                      name="first_name"
                       onBlur={handleBlur}
                       onChange={handleChange}
                       placeholder="First Name"
@@ -152,9 +153,9 @@ const AddTransporter = ({
                       inputRef={inputRef}
                       disabled={isDisable}
                     />
-                    {(touched.transporter_first_name || submitCount > 0) && errors.transporter_first_name && (
+                    {(touched.first_name || submitCount > 0) && errors.first_name && (
                       <FormHelperText error id="transporter-first-name-helper">
-                        {errors.transporter_first_name}
+                        {errors.first_name}
                       </FormHelperText>
                     )}
                   </Stack>
@@ -167,8 +168,8 @@ const AddTransporter = ({
                     <TextField
                       fullWidth
                       id="transporter-first-name"
-                      value={values.transporter_last_name}
-                      name="transporter_last_name"
+                      value={values.last_name}
+                      name="last_name"
                       onBlur={handleBlur}
                       onChange={handleChange}
                       placeholder="Last Name"
@@ -176,9 +177,9 @@ const AddTransporter = ({
                       inputRef={inputRef}
                       disabled={isDisable}
                     />
-                    {(touched.transporter_last_name || submitCount > 0) && errors.transporter_last_name && (
+                    {(touched.last_name || submitCount > 0) && errors.last_name && (
                       <FormHelperText error id="transporter-last-name-helper">
-                        {errors.transporter_last_name}
+                        {errors.last_name}
                       </FormHelperText>
                     )}
                   </Stack>

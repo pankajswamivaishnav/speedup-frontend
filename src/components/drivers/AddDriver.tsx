@@ -44,11 +44,13 @@ const AddDriver = ({
     if (isEditMode && existingData) {
       setInitialValues({
         ...initialValues,
-        ...existingData.transporterData
+        ...existingData.driverData
       });
     }
     // eslint-disable-next-line
   }, [isEditMode, existingData]);
+
+  console.log('is edit mode-->', isEditMode);
 
   return (
     <>
