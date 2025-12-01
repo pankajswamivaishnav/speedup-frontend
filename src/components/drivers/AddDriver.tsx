@@ -6,6 +6,7 @@ import { driverValidationSchema } from 'pages/validation/validation';
 import { RefObject, useEffect, useState } from 'react';
 import { useOutletContext } from 'react-router';
 import DriverServiceInstance from 'services/driver.services';
+import TransporterServiceInstance from 'services/transporter.services';
 
 function useInputRef() {
   return useOutletContext<RefObject<HTMLInputElement>>();
@@ -49,9 +50,6 @@ const AddDriver = ({
     }
     // eslint-disable-next-line
   }, [isEditMode, existingData]);
-
-  console.log('is edit mode-->', isEditMode);
-
   return (
     <>
       <Formik
@@ -62,7 +60,7 @@ const AddDriver = ({
           setSubmitting(true);
           let response;
           if (isEditMode) {
-            response = await DriverServiceInstance.createDriver(values);
+            response = await TransporterServiceInstance.updateUser(values);
           } else {
             response = await DriverServiceInstance.createDriver(values);
           }
@@ -224,7 +222,7 @@ const AddDriver = ({
                     )}
                   </Stack>
                 </Grid>
-                <Grid item xs={12} sm={6} spacing={3} display={isDisable ? 'none' : 'block'}>
+                <Grid item xs={12} sm={6} spacing={3} display={isDisable || isEditMode ? 'none' : 'block'}>
                   <Stack spacing={1.25}>
                     <InputLabel htmlFor="driver-name">
                       Password <span style={{ color: 'red' }}>*</span>

@@ -116,6 +116,40 @@ class TransporterServices {
     }
   }
 
+  // Update User
+  async updateUser(data: any) {
+    try {
+      const response = await axiosServices.put(`api/v1/update/user`, data);
+      if (response.status) {
+        store.dispatch(
+          openSnackbar({
+            open: true,
+            message: 'Profile updated successfully.',
+            variant: 'alert',
+            alert: {
+              color: 'primary'
+            },
+            close: true
+          })
+        );
+        return response;
+      }
+    } catch (error: any) {
+      store.dispatch(
+        openSnackbar({
+          open: true,
+          message: error.message,
+          variant: 'alert',
+          alert: {
+            color: 'error'
+          },
+          close: true
+        })
+      );
+      throw error;
+    }
+  }
+
   // -------------- Transport Cards Services ----------------
   // Create Transport Card
   async createTransportCard(data: any) {

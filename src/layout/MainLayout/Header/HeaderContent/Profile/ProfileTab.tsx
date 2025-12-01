@@ -32,7 +32,7 @@ const ProfileTab = ({ handleLogout }: Props) => {
   const [transporterFormPopup, setTransporterFormPopup] = useState<TUniversalDialogProps>({
     action: {
       open: false,
-      fullScreen: true
+      maxWidth: 'lg'
     },
     title: 'Update Profile',
     data: { existingData: {}, isEditMode: false }

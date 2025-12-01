@@ -6,6 +6,7 @@ import useAuth from 'hooks/useAuth';
 import { vendorValidationSchema } from 'pages/validation/validation';
 import { RefObject, useEffect, useState } from 'react';
 import { useOutletContext } from 'react-router';
+import TransporterServiceInstance from 'services/transporter.services';
 import VendorServiceInstance from 'services/vendor.services';
 
 function useInputRef() {
@@ -59,7 +60,6 @@ const AddVendor = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isEditMode, existingData]);
 
-  console.log('is edit mode-->', isEditMode);
   return (
     <>
       <Formik
@@ -74,7 +74,7 @@ const AddVendor = ({
             values.avatar.url = image.url;
           }
           if (isEditMode) {
-            response = await VendorServiceInstance.createVendor(values);
+            response = await TransporterServiceInstance.updateUser(values);
           } else {
             response = await VendorServiceInstance.createVendor(values);
           }

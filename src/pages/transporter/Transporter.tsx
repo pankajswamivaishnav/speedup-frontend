@@ -156,6 +156,7 @@ const Transporter = () => {
             onClose={() => handleTogglePopup()}
             isEditMode={transporterFormPopup?.data?.isEditMode}
             existingData={transporterFormPopup?.data.existingData}
+            refetchTransporterAllData={refetchTransporterAllData}
           />
         </UniversalDialog>
       )}

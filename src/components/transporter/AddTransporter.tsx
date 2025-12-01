@@ -16,12 +16,14 @@ const AddTransporter = ({
   onClose,
   isEditMode,
   existingData,
-  isDisable
+  isDisable,
+  refetchTransporterAllData
 }: {
   onClose: (refetchData?: boolean) => void;
   isEditMode: Boolean;
   existingData: any;
   isDisable?: boolean;
+  refetchTransporterAllData?: () => void;
 }) => {
   const inputRef = useInputRef();
   const { user } = useAuth();
@@ -74,12 +76,13 @@ const AddTransporter = ({
           }
           let response;
           if (isEditMode) {
-            response = await await TransporterServiceInstance.createTransporter(values);
+            response = await TransporterServiceInstance.updateUser(values);
           } else {
             response = await TransporterServiceInstance.createTransporter(values);
           }
           if (response) {
             onClose(true);
+            refetchTransporterAllData && refetchTransporterAllData();
             // setSubmitting(false);
           }
         }}
@@ -430,7 +433,7 @@ const AddTransporter = ({
                     )}
                   </Stack>
                 </Grid>
-                <Grid item xs={12} sm={6} display={isDisable ? 'none' : 'block'}>
+                <Grid item xs={12} sm={6} display={isDisable || isEditMode ? 'none' : 'block'}>
                   <Stack spacing={1.25}>
                     <InputLabel htmlFor="transporter-password">
                       Password <span style={{ color: 'red' }}>*</span>

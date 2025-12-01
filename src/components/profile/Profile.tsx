@@ -641,7 +641,7 @@ const Profile = () => {
                           <Chip label="Pro" size="small" color="primary" />
                         </Stack>
                         <Stack spacing={2.5} alignItems="center">
-                          <Avatar alt="Avatar 1" size="xl" src={avatarImage} />
+                          <Avatar alt={profileData?.first_name} size="xl" src={profileData.avatar.url} />
                           <Stack spacing={0.5} alignItems="center">
                             <Typography variant="h5">{profileData?.transportName}</Typography>
                             <Typography color="secondary">{`${profileData?.first_name} ${profileData?.last_name}`}</Typography>
