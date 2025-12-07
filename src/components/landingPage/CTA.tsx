@@ -122,8 +122,8 @@ const CTA = () => {
                 <Phone className="w-8 h-8 text-accent-500 mx-auto mb-3" />
                 <h3 className="text-lg font-semibold text-white mb-2">Call Us</h3>
                 <p className="text-white/80 mb-3">Speak with our transport experts</p>
-                <a href="tel:+91-9876543210" className="text-accent-500 hover:text-accent-400 transition-colors duration-300 font-semibold">
-                  +91-9876543210
+                <a href="tel:+91-7073272134" className="text-accent-500 hover:text-accent-400 transition-colors duration-300 font-semibold">
+                  +91-7073272134
                 </a>
               </CardContent>
             </Card>
@@ -142,10 +142,10 @@ const CTA = () => {
                 <h3 className="text-lg font-semibold text-white mb-2">Email Us</h3>
                 <p className="text-white/80 mb-3">Get detailed information</p>
                 <a
-                  href="mailto:info@biltymanagement.com"
+                  href="mailto:pankajvaishnav128@gmail.com"
                   className="text-accent-500 hover:text-accent-400 transition-colors duration-300 font-semibold"
                 >
-                  info@biltymanagement.com
+                  pankajvaishnav128@gmail.com
                 </a>
               </CardContent>
             </Card>

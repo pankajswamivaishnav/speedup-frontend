@@ -35,15 +35,15 @@ const Footer = () => {
             <div className="space-y-3">
               <div className="flex items-center gap-3 text-white/80">
                 <Phone className="w-4 h-4 text-accent-500" />
-                <span>+91-9876543210</span>
+                <span>+91-7073272134</span>
               </div>
               <div className="flex items-center gap-3 text-white/80">
                 <Mail className="w-4 h-4 text-accent-500" />
-                <span>info@SpeedUp.com</span>
+                <span>pankajvaishnav128@gmail.com</span>
               </div>
               <div className="flex items-center gap-3 text-white/80">
                 <MapPin className="w-4 h-4 text-accent-500" />
-                <span>Mumbai, Maharashtra, India</span>
+                <span>Jaipur, Rajasthan, India</span>
               </div>
             </div>
           </div>
