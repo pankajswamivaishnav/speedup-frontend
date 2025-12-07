@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 // const axiosServices = axios.create({ baseURL: 'http://localhost:8000/' });
-const axiosServices = axios.create({ baseURL: 'https://speedup-backend.onrender.com' });
+// const axiosServices = axios.create({ baseURL: 'https://speedup-backend.onrender.com' });
+const axiosServices = axios.create({ baseURL: 'https://speedup-backend-production.up.railway.app' });
 
 // ==============================|| AXIOS - FOR MOCK SERVICES ||============================== //
 
