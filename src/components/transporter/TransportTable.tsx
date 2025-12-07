@@ -63,6 +63,7 @@ const TransportTable = ({
     title: 'Transporter Details',
     data: { existingData: {}, isEditMode: false }
   });
+
   const [deleteConfirmModal, setDeleteConfirmModal] = useState<TUniversalDialogProps>({
     action: {
       open: false,
@@ -107,6 +108,7 @@ const TransportTable = ({
       console.log('Error occured while delete transporter', error);
     }
   };
+
   return (
     <>
       {data && data.length > 0 ? (

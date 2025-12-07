@@ -6,9 +6,8 @@ export async function registerServiceWorker() {
     console.log('Service workers are not supported');
     return null;
   }
-  console.log('insert registraion');
+
   const registration = await navigator.serviceWorker.register('/sw.js');
-  console.log('Service Worker registered:', registration);
   return registration;
 }
 

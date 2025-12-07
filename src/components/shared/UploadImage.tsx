@@ -4,11 +4,12 @@ import axios from 'axios';
 import { useRef, useState } from 'react';
 
 interface UploadImageProps {
+  image?: { public_id: string; url: string };
   setImage: (data: { public_id: string; url: string }) => void;
   setIsUploading?: (value: boolean) => void;
 }
 
-const UploadImage = ({ setImage, setIsUploading }: UploadImageProps) => {
+const UploadImage = ({ image, setImage, setIsUploading }: UploadImageProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [chooseFile, setChooseFile] = useState<string>();
 
@@ -16,6 +17,8 @@ const UploadImage = ({ setImage, setIsUploading }: UploadImageProps) => {
   const handleClick = () => {
     fileInputRef.current?.click();
   };
+
+  console.log('set image-->', setImage);
 
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -58,7 +61,7 @@ const UploadImage = ({ setImage, setIsUploading }: UploadImageProps) => {
           sx={{ mt: 1, textTransform: 'none' }}
           onClick={handleClick}
         >
-          {chooseFile ? chooseFile : 'Click to Upload'}
+          {chooseFile ? chooseFile : image?.url ? `Existing: ...${image.url.slice(-15)}` : 'Click to Upload'}
         </Button>
       </Grid>
     </div>

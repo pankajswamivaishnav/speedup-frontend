@@ -133,6 +133,10 @@ const ProfileTab = ({ handleLogout }: Props) => {
             handleVendorTogglePopup();
             break;
           }
+          default: {
+            handleTogglePopup();
+            break;
+          }
         }
         break;
       }

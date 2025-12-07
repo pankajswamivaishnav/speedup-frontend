@@ -340,7 +340,7 @@ const AddVendor = ({
                 </Grid>
 
                 <Grid item xs={12} sm={6} display={isDisable ? 'none' : 'block'}>
-                  <UploadImage setImage={setImage} setIsUploading={setIsUploading} />
+                  <UploadImage image={initialValues.avatar} setImage={setImage} setIsUploading={setIsUploading} />
                 </Grid>
                 {isDisable ? (
                   ''

@@ -29,14 +29,12 @@ const App = () => {
         }
 
         const registration = await registerServiceWorker();
-        console.log('registration', registration);
         if (!registration) {
           console.error('Service Worker registration failed');
           return;
         }
 
         const subscription = await createSubscription(registration);
-        console.log('Subscription:', subscription);
         if (!subscription) {
           console.error('Failed to create subscription');
           return;

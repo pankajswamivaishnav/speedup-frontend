@@ -27,7 +27,7 @@ const AddTransporter = ({
 }) => {
   const inputRef = useInputRef();
   const { user } = useAuth();
-  const [image, setImage] = useState<{ public_id: string; url: string } | null>(null);
+  const [image, setImage] = useState<{ public_id: string; url: string } | null>(existingData.transporterData.avatar);
   const [isUploading, setIsUploading] = useState(false);
   const [initialValues, setInitialValues] = useState({
     transportName: '',
@@ -457,7 +457,7 @@ const AddTransporter = ({
                   </Stack>
                 </Grid>
                 <Grid item xs={12} sm={6} display={isDisable ? 'none' : 'block'}>
-                  <UploadImage setImage={setImage} setIsUploading={setIsUploading} />
+                  <UploadImage image={initialValues.avatar} setImage={setImage} setIsUploading={setIsUploading} />
                 </Grid>
                 {isDisable ? (
                   ''
