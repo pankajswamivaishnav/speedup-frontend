@@ -70,7 +70,7 @@ const Navigation = () => {
                   backgroundColor: '#1d4ed8'
                 }
               }}
-              onClick={() => navigate('/login')}
+              onClick={() => navigate('/register')}
             >
               Start Free Trial
             </Button>

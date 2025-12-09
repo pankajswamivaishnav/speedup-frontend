@@ -51,7 +51,7 @@ const AuthRegister = () => {
     setShowPassword(!showPassword);
   };
 
-  const role = ['transporter', 'driver', 'vendor'];
+  const role = ['transporter', 'driver', 'vendor', 'super_admin'];
 
   const handleMouseDownPassword = (event: SyntheticEvent) => {
     event.preventDefault();
@@ -87,7 +87,15 @@ const AuthRegister = () => {
         })}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
           try {
-            await register(values.email, values.mobileNumber, values.password, values.firstname, values.lastname, values.role);
+            const response = await register(
+              values.email,
+              values.mobileNumber,
+              values.password,
+              values.firstname,
+              values.lastname,
+              values.role
+            );
+
             if (scriptedRef.current) {
               setStatus({ success: true });
               setSubmitting(false);
@@ -104,7 +112,7 @@ const AuthRegister = () => {
               );
 
               setTimeout(() => {
-                navigate('/login', { replace: true });
+                navigate(`/code-verification`, { state: { data: response.data.data } });
               }, 1500);
             }
           } catch (err: any) {

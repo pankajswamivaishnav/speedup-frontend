@@ -107,7 +107,7 @@ export const JWTProvider = ({ children }: { children: React.ReactElement }) => {
   const register = async (email: string, mobileNumber: string, password: string, firstName: string, lastName: string, role: string) => {
     // todo: this flow need to be recode as it not verified
     const id = chance.bb_pin();
-    await axios.post('/api/v1/auth/register', {
+    const response = await axios.post('/api/v1/auth/register', {
       id,
       email,
       mobileNumber,
@@ -116,6 +116,9 @@ export const JWTProvider = ({ children }: { children: React.ReactElement }) => {
       lastName,
       role
     });
+
+    return response;
+
     // let users = response.data;
 
     // if (window.localStorage.getItem('users') !== undefined && window.localStorage.getItem('users') !== null) {
@@ -147,13 +150,18 @@ export const JWTProvider = ({ children }: { children: React.ReactElement }) => {
     await axios.post('api/v1/resetPassword', { email: email, password: password, token: token });
   };
 
+  const verifyOtp = async (email: string, otp: any) => {
+    const response = await axios.post('api/v1/account-verification', { email: email, otp: otp });
+    return response;
+  };
+
   const updateProfile = () => {};
   if (state.isInitialized !== undefined && !state.isInitialized) {
     return <Loader />;
   }
 
   return (
-    <JWTContext.Provider value={{ ...state, login, logout, register, forgotPassword, resetPassword, updateProfile }}>
+    <JWTContext.Provider value={{ ...state, login, logout, register, forgotPassword, resetPassword, updateProfile, verifyOtp }}>
       {children}
     </JWTContext.Provider>
   );
