@@ -12,7 +12,7 @@ import { useLocation } from 'react-router-dom';
 
 const CodeVerification = () => {
   const location = useLocation();
-  const { data } = location?.state || {};
+  const { email, expiresAt } = location?.state || {};
 
   return (
     <AuthWrapper>
@@ -24,10 +24,10 @@ const CodeVerification = () => {
           </Stack>
         </Grid>
         <Grid item xs={12}>
-          <Typography>We`ve send you code on {data?.[0].email}</Typography>
+          <Typography>We`ve send you code on {email} </Typography>
         </Grid>
         <Grid item xs={12}>
-          <AuthCodeVerification data={data} />
+          <AuthCodeVerification data={{ email, expiresAt }} />
         </Grid>
       </Grid>
     </AuthWrapper>

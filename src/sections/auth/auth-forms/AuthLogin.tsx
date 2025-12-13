@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 
 // material-ui
 import {
@@ -38,7 +38,7 @@ import { openSnackbar } from 'store/reducers/snackbar';
 
 const AuthLogin = () => {
   const [checked, setChecked] = React.useState(false);
-
+  const navigate = useNavigate();
   const { login } = useAuth();
   const scriptedRef = useScriptRef();
 
@@ -81,6 +81,7 @@ const AuthLogin = () => {
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
           try {
             await login(values.emailOrMobile, values.password, checked);
+
             if (scriptedRef.current) {
               setStatus({ success: true });
               setSubmitting(false);
@@ -89,7 +90,7 @@ const AuthLogin = () => {
             store.dispatch(
               openSnackbar({
                 open: true,
-                message: err.error,
+                message: err.message || err.error,
                 variant: 'alert',
                 alert: {
                   color: 'error'
@@ -97,11 +98,13 @@ const AuthLogin = () => {
                 close: true
               })
             );
-            console.error('error login time', err);
             if (scriptedRef.current) {
               setStatus({ success: false });
               setErrors({ submit: err.message });
               setSubmitting(false);
+            }
+            if (err.isVerified === false) {
+              navigate(`/code-verification`, { state: { email: values.emailOrMobile, expiresAt: err.expiresAt } });
             }
           }
         }}

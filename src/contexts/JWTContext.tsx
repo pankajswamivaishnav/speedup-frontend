@@ -143,15 +143,20 @@ export const JWTProvider = ({ children }: { children: React.ReactElement }) => {
   };
 
   const forgotPassword = async (email: string) => {
-    await axios.post('api/v1/forgotPassword', { email: email });
+    await axios.post('api/v1/auth/forgotPassword', { email: email });
   };
 
   const resetPassword = async (email: string, password: string, token: string) => {
-    await axios.post('api/v1/resetPassword', { email: email, password: password, token: token });
+    await axios.post('api/v1/auth/resetPassword', { email: email, password: password, token: token });
   };
 
   const verifyOtp = async (email: string, otp: any) => {
-    const response = await axios.post('api/v1/account-verification', { email: email, otp: otp });
+    const response = await axios.post('api/v1/auth/account-verification', { email: email, otp: otp });
+    return response;
+  };
+
+  const resendOtp = async (email: string) => {
+    const response = await axios.post('api/v1/auth/resend-otp', { email: email });
     return response;
   };
 
@@ -161,7 +166,7 @@ export const JWTProvider = ({ children }: { children: React.ReactElement }) => {
   }
 
   return (
-    <JWTContext.Provider value={{ ...state, login, logout, register, forgotPassword, resetPassword, updateProfile, verifyOtp }}>
+    <JWTContext.Provider value={{ ...state, login, logout, register, forgotPassword, resetPassword, updateProfile, verifyOtp, resendOtp }}>
       {children}
     </JWTContext.Provider>
   );

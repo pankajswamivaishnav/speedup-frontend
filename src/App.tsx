@@ -70,8 +70,8 @@ const App = () => {
           <ScrollTop>
             <AuthProvider>
               <>
+                <Routes />
                 <Notistack>
-                  <Routes />
                   <Snackbar />
                 </Notistack>
               </>

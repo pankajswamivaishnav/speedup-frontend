@@ -112,11 +112,10 @@ const AuthRegister = () => {
               );
 
               setTimeout(() => {
-                navigate(`/code-verification`, { state: { data: response.data.data } });
+                navigate(`/code-verification`, { state: { email: values.email, expiresAt: response.data.expiresAt } });
               }, 1500);
             }
           } catch (err: any) {
-            console.error(err);
             if (scriptedRef.current) {
               setStatus({ success: false });
               setErrors({ submit: err.message });

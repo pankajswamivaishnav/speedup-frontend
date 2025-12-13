@@ -48,5 +48,6 @@ export type JWTContextType = {
   resetPassword: (email: string, password: string, token: string) => Promise<void>;
   forgotPassword: (email: string) => Promise<void>;
   verifyOtp: (email: string, otp: any) => Promise<any>;
+  resendOtp: (email: string) => Promise<any>;
   updateProfile: VoidFunction;
 };
