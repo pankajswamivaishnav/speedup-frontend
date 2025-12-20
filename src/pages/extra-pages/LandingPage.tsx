@@ -4,19 +4,18 @@ import Footer from 'components/landingPage/Footer';
 import Hero from 'components/landingPage/Hero';
 import Navigation from 'components/landingPage/Navigation';
 import Testimonials from 'components/landingPage/Testimonials';
-import { Helmet } from 'react-helmet-async';
+import SEO from 'components/SEO';
 
 const LandingPage = () => {
   return (
     <>
-      <Helmet>
-        <title>Speedupora TMS | Transport Management System for Logistics</title>
-        <meta
-          name="description"
-          content="Speedupora TMS helps transporters manage vehicles, trips, drivers, billing and tracking in one platform."
-        />
-        <link rel="canonical" href="https://www.speedup.com/" />
-      </Helmet>
+      <SEO
+        title="Speedupora TMS | Transport Management System for Logistics"
+        description="Speedupora TMS helps transporters manage vehicles, trips, drivers, billing and tracking in one platform."
+        canonicalUrl="https://www.speedupora.com"
+        noIndex
+      />
+
       <div className="min-h-screen">
         <div className="min-h-screen">
           <Navigation />

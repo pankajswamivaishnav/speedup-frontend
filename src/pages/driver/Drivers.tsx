@@ -13,6 +13,7 @@ import AddDriver from 'components/drivers/AddDriver';
 import DriverServiceInstance from 'services/driver.services';
 import Search from 'layout/MainLayout/Header/HeaderContent/Search';
 import { exportToCsv } from 'utils/download';
+import SEO from 'components/SEO';
 
 const Drivers = () => {
   const [driversData, setDriversData] = useState();
@@ -128,6 +129,13 @@ const Drivers = () => {
 
   return (
     <>
+      <SEO
+        title="Drivers Management | Speedupora TMS"
+        description="Manage driver profiles, licenses, trip assignments, and performance tracking using Speedupora Transport Management System."
+        canonicalUrl="https://www.speedupora.com/drivers"
+        noIndex
+      />
+
       <Box sx={{ display: 'flex' }}>
         <Grid container spacing={2.5} className="ps-6">
           <Grid item xs={12} className="flex flex-col xl:flex-row justify-between items-center gap-2 mb-5">

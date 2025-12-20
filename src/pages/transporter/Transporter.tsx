@@ -12,6 +12,7 @@ import { useQuery } from '@tanstack/react-query';
 import TransporterServiceInstance from 'services/transporter.services';
 import Search from 'layout/MainLayout/Header/HeaderContent/Search';
 import { exportToCsv } from 'utils/download';
+import SEO from 'components/SEO';
 
 const Transporter = () => {
   // const [isLoading, setLoading] = useState(true);
@@ -102,6 +103,12 @@ const Transporter = () => {
 
   return (
     <>
+      <SEO
+        title="Transporters Management | Speedupora TMS"
+        description="Manage transporter profiles, assign trips, track performance, and maintain transport records efficiently with Speedupora TMS."
+        canonicalUrl="https://www.speedupora.com/transporters"
+        noIndex
+      />
       <Box sx={{ display: 'flex' }} className="ps-6">
         <Grid container spacing={2.5}>
           <Grid item xs={12} className="flex flex-col xl:flex-row justify-between items-center gap-2 mb-5">

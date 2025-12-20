@@ -6,6 +6,7 @@ import BiltyTable from 'components/Bilty/BiltyTable';
 
 // project import
 import MainCard from 'components/MainCard';
+import SEO from 'components/SEO';
 import DetailCard from 'components/cards/DetailCard';
 import DriverTable from 'components/drivers/DriverTable';
 import TransportTable from 'components/transporter/TransportTable';
@@ -569,9 +570,18 @@ const Dashboard = () => {
       return renderDriver();
     default:
       return (
-        <MainCard title="Dashboard">
-          <p>Role not recognized</p>
-        </MainCard>
+        <>
+          <SEO
+            title="Dashboard | Speedupora TMS"
+            description="Speedupora TMS dashboard provides a centralized view of trips, vehicles, drivers, billing status, and daily transport operations."
+            canonicalUrl="https://www.speedupora.com/dashboard"
+            noIndex
+          />
+
+          <MainCard title="Dashboard">
+            <p>Role not recognized</p>
+          </MainCard>
+        </>
       );
   }
 };

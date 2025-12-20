@@ -12,6 +12,7 @@ import VendorServiceInstance from 'services/vendor.services';
 import AddVendor from 'components/vendor/AddVendor';
 import Search from 'layout/MainLayout/Header/HeaderContent/Search';
 import { exportToCsv } from 'utils/download';
+import SEO from 'components/SEO';
 const Vendor = () => {
   const [vendorData, setVendorData] = useState();
   const [page, setPage] = useState<number>(0);
@@ -89,6 +90,13 @@ const Vendor = () => {
   }, [vendors]);
   return (
     <>
+      <SEO
+        title="Vendors Management | Speedupora TMS"
+        description="Manage vendors, contracts, payments, and service records seamlessly with Speedupora TMS vendor management module."
+        canonicalUrl="https://www.speedupora.com/vendors"
+        noIndex
+      />
+
       <Box sx={{ display: 'flex' }} className="ps-6">
         <Grid container spacing={2.5}>
           <Grid item xs={12} className="flex flex-col xl:flex-row justify-between items-center gap-2 mb-5">

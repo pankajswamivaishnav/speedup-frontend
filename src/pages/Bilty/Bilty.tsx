@@ -16,6 +16,7 @@ import BarChart from 'components/shared/BarChart';
 import Search from 'layout/MainLayout/Header/HeaderContent/Search';
 import { exportToCsv } from 'utils/download';
 import TransporterServiceInstance from 'services/transporter.services';
+import SEO from 'components/SEO';
 
 const Bilty = () => {
   const [biltyData, setbiltyData] = useState();
@@ -131,6 +132,13 @@ const Bilty = () => {
 
   return (
     <>
+      <SEO
+        title="Bilty Management | Speedupora TMS"
+        description="Create, manage, and track bilty (LR) records with vehicle, driver, consignee, and freight details in Speedupora TMS."
+        canonicalUrl="https://www.speedupora.com/bilties"
+        noIndex
+      />
+
       <Grid className="space-y-5">
         <Box sx={{ display: 'flex' }} className="px-6">
           <Grid container spacing={2.5}>
