@@ -4,7 +4,7 @@ import './index.css';
 
 // third-party
 import { Provider as ReduxProvider } from 'react-redux';
-
+import { HelmetProvider } from 'react-helmet-async';
 // scroll bar
 import 'simplebar/dist/simplebar.css';
 
@@ -23,8 +23,10 @@ const root = createRoot(container!);
 
 root.render(
   <ReduxProvider store={store}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <HelmetProvider>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </HelmetProvider>
   </ReduxProvider>
 );

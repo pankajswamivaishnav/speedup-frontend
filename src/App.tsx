@@ -9,7 +9,6 @@ import Notistack from 'components/third-party/Notistack';
 
 // auth-provider
 import { JWTProvider as AuthProvider } from 'contexts/JWTContext';
-
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { registerServiceWorker, askNotificationPermission, createSubscription } from 'notification/pushNotification';
 import { useEffect } from 'react';
