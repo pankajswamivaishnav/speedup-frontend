@@ -577,7 +577,6 @@ const Dashboard = () => {
             canonicalUrl="https://www.speedupora.com/dashboard"
             noIndex
           />
-
           <MainCard title="Dashboard">
             <p>Role not recognized</p>
           </MainCard>
