@@ -25,6 +25,7 @@ import { FormattedMessage } from 'react-intl';
 import TransporterServiceInstance from 'services/transporter.services';
 import { TUniversalDialogProps } from 'types/types.UniversalDialog';
 import AddTransporter from './AddTransporter';
+import useAuth from 'hooks/useAuth';
 
 // ===========================|| DATA WIDGET - PROJECT TABLE CARD ||=========================== //
 
@@ -53,6 +54,9 @@ const TransportTable = ({
     setLimit(parseInt(event?.target.value!, 10));
     setPage(0);
   };
+
+  // -------------- Constants --------------
+  const { user } = useAuth();
 
   // -------------- Show transporter details page pop up --------------
   const [transporterDetailsPopup, setTransporterDetailsPopup] = useState<TUniversalDialogProps>({
@@ -153,13 +157,15 @@ const TransportTable = ({
                         </IconButton>
                       </Tooltip>
                     </TableCell>
-                    <TableCell>
-                      <Tooltip title="delete" onClick={() => handleDeleteTransporterToggle(row._id)}>
-                        <IconButton>
-                          <DeleteOutlined className="text-red-600" />
-                        </IconButton>
-                      </Tooltip>
-                    </TableCell>
+                    {user.role === 'super_admin' && (
+                      <TableCell>
+                        <Tooltip title="delete" onClick={() => handleDeleteTransporterToggle(row._id)}>
+                          <IconButton>
+                            <DeleteOutlined className="text-red-600" />
+                          </IconButton>
+                        </Tooltip>
+                      </TableCell>
+                    )}
                   </TableRow>
                 ))}
               </TableBody>

@@ -14,6 +14,7 @@ import DriverServiceInstance from 'services/driver.services';
 import Search from 'layout/MainLayout/Header/HeaderContent/Search';
 import { exportToCsv } from 'utils/download';
 import SEO from 'components/SEO';
+import useAuth from 'hooks/useAuth';
 
 const Drivers = () => {
   const [driversData, setDriversData] = useState();
@@ -21,7 +22,7 @@ const Drivers = () => {
   const [page, setPage] = useState<number>(0);
   const [limit, setLimit] = useState<number>(20);
   const [count, setCount] = useState<number>(0);
-  // const { user } = useAuth();
+  const { user } = useAuth();
   const [query, setQuery] = useState<string>('');
   // -------------- Add driver page pop up --------------
   const [driverFormPopup, setDriverFormPopup] = useState<TUniversalDialogProps>({
@@ -144,9 +145,11 @@ const Drivers = () => {
               <Button onClick={() => handleTogglePopup()} variant="outlined">
                 Add Driver
               </Button>
-              <Button onClick={() => handleDownload()} variant="outlined">
-                Download Drivers
-              </Button>
+              {user.isPremium === true && (
+                <Button onClick={() => handleDownload()} variant="outlined">
+                  Download Drivers
+                </Button>
+              )}
             </div>
 
             {/* Right side - Search */}

@@ -142,10 +142,10 @@ const CTA = () => {
                 <h3 className="text-lg font-semibold text-white mb-2">Email Us</h3>
                 <p className="text-white/80 mb-3">Get detailed information</p>
                 <a
-                  href="mailto:pankajvaishnav128@gmail.com"
+                  href="mailto:pankajvaishnav@speedupora.com"
                   className="text-accent-500 hover:text-accent-400 transition-colors duration-300 font-semibold"
                 >
-                  pankajvaishnav128@gmail.com
+                  support@speedupora.com
                 </a>
               </CardContent>
             </Card>

@@ -37,7 +37,7 @@ const AddDriver = ({
     address: '',
     password: '',
     licenseNumber: '',
-    transportId: user._id
+    transportId: user?._id
   });
 
   // Pre-fill form when editing
@@ -50,6 +50,9 @@ const AddDriver = ({
     }
     // eslint-disable-next-line
   }, [isEditMode, existingData]);
+
+  console.log('user--->', user);
+
   return (
     <>
       <Formik
@@ -253,15 +256,15 @@ const AddDriver = ({
                     </InputLabel>
                     <Stack spacing={1.25}>
                       <Autocomplete
-                        value={values.transportId || null}
+                        value={values?.transportId || null}
                         disabled={isDisable}
                         options={data || []}
                         getOptionLabel={(option: any) => option?.label || ''}
                         renderInput={(params) => (
-                          <TextField {...params} label={isEditMode ? existingData.transporterData.transportId : 'Select Transport'} />
+                          <TextField {...params} label={isEditMode ? existingData?.transporterData?.transportId : 'Select Transport'} />
                         )}
                         onChange={(event, value) => {
-                          values.transportId = value.id;
+                          values.transportId = value?.id;
                         }}
                       ></Autocomplete>
                     </Stack>

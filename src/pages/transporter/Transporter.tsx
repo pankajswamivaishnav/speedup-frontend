@@ -13,6 +13,7 @@ import TransporterServiceInstance from 'services/transporter.services';
 import Search from 'layout/MainLayout/Header/HeaderContent/Search';
 import { exportToCsv } from 'utils/download';
 import SEO from 'components/SEO';
+import useAuth from 'hooks/useAuth';
 
 const Transporter = () => {
   // const [isLoading, setLoading] = useState(true);
@@ -21,6 +22,7 @@ const Transporter = () => {
   const [limit, setLimit] = useState<number>(20);
   const [count, setCount] = useState<number>(0);
   const [query, setQuery] = useState<string>('');
+  const { user } = useAuth();
   // -------------- Add transporter page pop up --------------
   const [transporterFormPopup, setTransporterFormPopup] = useState<TUniversalDialogProps>({
     action: {
@@ -114,12 +116,17 @@ const Transporter = () => {
           <Grid item xs={12} className="flex flex-col xl:flex-row justify-between items-center gap-2 mb-5">
             {/* Left side - Buttons */}
             <div className="flex gap-2">
-              <Button onClick={() => handleTogglePopup()} variant="outlined">
-                Add Transport
-              </Button>
-              <Button onClick={() => handleDownload()} variant="outlined">
-                Download Transporters
-              </Button>
+              {user.role === 'super_admin' && (
+                <Button onClick={() => handleTogglePopup()} variant="outlined">
+                  Add Transport
+                </Button>
+              )}
+
+              {user.isPremium === true && (
+                <Button onClick={() => handleDownload()} variant="outlined">
+                  Download Transporters
+                </Button>
+              )}
             </div>
 
             {/* Right side - Search */}

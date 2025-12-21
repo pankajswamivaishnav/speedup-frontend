@@ -27,7 +27,7 @@ const AddTransporter = ({
 }) => {
   const inputRef = useInputRef();
   const { user } = useAuth();
-  const [image, setImage] = useState<{ public_id: string; url: string } | null>(existingData.transporterData.avatar);
+  const [image, setImage] = useState<{ public_id: string; url: string } | null>(existingData?.transporterData?.avatar);
   const [isUploading, setIsUploading] = useState(false);
   const [initialValues, setInitialValues] = useState({
     transportName: '',

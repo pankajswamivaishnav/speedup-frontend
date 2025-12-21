@@ -18,8 +18,6 @@ const UploadImage = ({ image, setImage, setIsUploading }: UploadImageProps) => {
     fileInputRef.current?.click();
   };
 
-  console.log('set image-->', setImage);
-
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {

@@ -148,9 +148,11 @@ const Bilty = () => {
                 <Button onClick={() => handleTogglePopup()} variant="outlined">
                   Make Bilty
                 </Button>
-                <Button onClick={() => handleDownload()} variant="outlined">
-                  Download Bilties
-                </Button>
+                {user.isPremium === true && (
+                  <Button onClick={() => handleDownload()} variant="outlined">
+                    Download Bilties
+                  </Button>
+                )}
               </div>
 
               {/* Right side - Search */}

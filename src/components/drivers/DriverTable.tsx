@@ -25,6 +25,7 @@ import { FormattedMessage } from 'react-intl';
 import { TUniversalDialogProps } from 'types/types.UniversalDialog';
 import AddDriver from './AddDriver';
 import DriverServiceInstance from 'services/driver.services';
+import useAuth from 'hooks/useAuth';
 
 // ===========================|| DATA WIDGET - PROJECT TABLE CARD ||=========================== //
 
@@ -53,6 +54,10 @@ const DriverTable = ({
     setLimit(parseInt(event?.target.value!, 10));
     setPage(0);
   };
+
+  // -------------- Constants ----------------
+  const { user } = useAuth();
+
   // -------------- Show transporter details page pop up --------------
   const [driversDetailsPopup, setDriversDetailsPopup] = useState<TUniversalDialogProps>({
     action: {
@@ -142,20 +147,22 @@ const DriverTable = ({
                     <TableCell align="right" sx={{ pr: 3 }}>
                       {row.licenseNumber}
                     </TableCell>
-                    <TableCell align="right" onClick={() => handleDriverDetailTogglePopup(row)}>
+                    <TableCell align="center" onClick={() => handleDriverDetailTogglePopup(row)}>
                       <Tooltip title="full-details">
                         <IconButton>
                           <EyeOutlined className="text-blue-500" />
                         </IconButton>
                       </Tooltip>
                     </TableCell>
-                    <TableCell>
-                      <Tooltip title="delete" onClick={() => handleDeleteDriverToggle(row._id)}>
-                        <IconButton>
-                          <DeleteOutlined className="text-red-600" />
-                        </IconButton>
-                      </Tooltip>
-                    </TableCell>
+                    {user.role === 'super_admin' && (
+                      <TableCell>
+                        <Tooltip title="delete" onClick={() => handleDeleteDriverToggle(row._id)}>
+                          <IconButton>
+                            <DeleteOutlined className="text-red-600" />
+                          </IconButton>
+                        </Tooltip>
+                      </TableCell>
+                    )}
                   </TableRow>
                 ))}
               </TableBody>

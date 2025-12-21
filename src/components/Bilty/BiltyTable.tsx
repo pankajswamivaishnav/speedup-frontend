@@ -29,6 +29,7 @@ import biltyServiceInstance from 'services/bilty.services';
 import BiltyDocument from './BiltyDocument';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
+import useAuth from 'hooks/useAuth';
 
 // ===========================|| DATA WIDGET - PROJECT TABLE CARD ||=========================== //
 
@@ -60,6 +61,10 @@ const BiltyTable = ({
     setLimit(parseInt(event?.target.value!, 10));
     setPage(0);
   };
+
+  // -------------- Constants --------------
+  const { user } = useAuth();
+
   // -------------- Show bilty details page pop up --------------
   const [biltiesDetailsPopup, setBiltyDetailsPopup] = useState<TUniversalDialogProps>({
     action: {
@@ -388,25 +393,29 @@ const BiltyTable = ({
                       </IconButton>
                     </Tooltip>
                   </TableCell>
-                  <TableCell
-                    align="right"
-                    onClick={() => {
-                      handleDownloadIcon(row);
-                    }}
-                  >
-                    <Tooltip title="download bilty">
-                      <IconButton>
-                        <DownloadOutlined className="text-blue-500" />
-                      </IconButton>
-                    </Tooltip>
-                  </TableCell>
-                  <TableCell>
-                    <Tooltip title="delete" onClick={() => handleDeleteBiltyToggle(row._id)}>
-                      <IconButton>
-                        <DeleteOutlined className="text-red-600" />
-                      </IconButton>
-                    </Tooltip>
-                  </TableCell>
+                  {user.isPremium === true && (
+                    <>
+                      <TableCell
+                        align="right"
+                        onClick={() => {
+                          handleDownloadIcon(row);
+                        }}
+                      >
+                        <Tooltip title="download bilty">
+                          <IconButton>
+                            <DownloadOutlined className="text-blue-500" />
+                          </IconButton>
+                        </Tooltip>
+                      </TableCell>
+                      <TableCell>
+                        <Tooltip title="delete" onClick={() => handleDeleteBiltyToggle(row._id)}>
+                          <IconButton>
+                            <DeleteOutlined className="text-red-600" />
+                          </IconButton>
+                        </Tooltip>
+                      </TableCell>
+                    </>
+                  )}
                 </TableRow>
               ))}
             </TableBody>
