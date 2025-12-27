@@ -25,6 +25,9 @@ const TransportCardPage = Loadable(lazy(() => import('pages/transporter/Transpor
 const DriverCardPage = Loadable(lazy(() => import('pages/driver/DriverCardPage')));
 const VendorCardPage = Loadable(lazy(() => import('pages/vendor/VendorCardPage')));
 const BiltyDocumentPage = Loadable(lazy(() => import('pages/Bilty/BiltyDocumentPage')));
+const ManagedTransporterPage = Loadable(lazy(() => import('pages/transporter/ManagedTransporter')));
+const ManagedDriverPage = Loadable(lazy(() => import('pages/driver/ManagedDriver')));
+const ManagedVendorPage = Loadable(lazy(() => import('pages/vendor/ManagedVendor')));
 // ==============================|| MAIN ROUTING ||============================== //
 
 const MainRoutes = {
@@ -81,6 +84,18 @@ const MainRoutes = {
         {
           path: 'location',
           element: <LiveLocationMap />
+        },
+        {
+          path: 'managed-transporters',
+          element: <ManagedTransporterPage />
+        },
+        {
+          path: 'managed-drivers',
+          element: <ManagedDriverPage />
+        },
+        {
+          path: 'managed-vendors',
+          element: <ManagedVendorPage />
         }
       ]
     },

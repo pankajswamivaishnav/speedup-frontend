@@ -14,6 +14,7 @@ import Search from 'layout/MainLayout/Header/HeaderContent/Search';
 import { exportToCsv } from 'utils/download';
 import SEO from 'components/SEO';
 import useAuth from 'hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
 
 const Transporter = () => {
   // const [isLoading, setLoading] = useState(true);
@@ -23,6 +24,7 @@ const Transporter = () => {
   const [count, setCount] = useState<number>(0);
   const [query, setQuery] = useState<string>('');
   const { user } = useAuth();
+  const navigate = useNavigate();
   // -------------- Add transporter page pop up --------------
   const [transporterFormPopup, setTransporterFormPopup] = useState<TUniversalDialogProps>({
     action: {
@@ -119,6 +121,12 @@ const Transporter = () => {
               {user.role === 'super_admin' && (
                 <Button onClick={() => handleTogglePopup()} variant="outlined">
                   Add Transport
+                </Button>
+              )}
+
+              {user.role === 'super_admin' && (
+                <Button onClick={() => navigate('/managed-transporters')} variant="outlined">
+                  Manage Transporter
                 </Button>
               )}
 

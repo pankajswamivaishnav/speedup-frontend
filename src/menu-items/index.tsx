@@ -1,6 +1,18 @@
 // types
 import { NavItemType } from 'types/menu';
-import other, { transporters, drivers, bilty, vendors, transportCards, driverCards, vendorCards, dashboard } from './other';
+import other, {
+  transporters,
+  drivers,
+  bilty,
+  vendors,
+  transportCards,
+  driverCards,
+  vendorCards,
+  dashboard,
+  managedTransporters,
+  managedDrivers,
+  managedVendors
+} from './other';
 
 // ==============================|| MENU ITEMS ||============================== //
 
@@ -9,19 +21,31 @@ const menuItems: { items: NavItemType[] } = {
 };
 
 export const superAdminMenuItems: { items: NavItemType[] } = {
-  items: [dashboard, transporters, drivers, bilty, vendors, transportCards, driverCards, vendorCards]
+  items: [
+    dashboard,
+    transporters,
+    managedTransporters,
+    drivers,
+    managedDrivers,
+    bilty,
+    vendors,
+    managedVendors,
+    transportCards,
+    driverCards,
+    vendorCards
+  ]
 };
 
 export const transporterMenuItems: { items: NavItemType[] } = {
-  items: [dashboard, transporters, drivers, bilty, vendors, transportCards, driverCards, vendorCards]
+  items: [dashboard, managedTransporters, managedDrivers, managedVendors, bilty, transportCards, driverCards, vendorCards]
 };
 
 export const driverMenuItems: { items: NavItemType[] } = {
-  items: [dashboard, transportCards]
+  items: [dashboard, managedTransporters, managedDrivers, managedVendors, transportCards]
 };
 
 export const vendorMenuItems: { items: NavItemType[] } = {
-  items: [dashboard, transporters, transportCards]
+  items: [dashboard, managedTransporters, managedDrivers, managedVendors, transportCards]
 };
 
 export default menuItems;

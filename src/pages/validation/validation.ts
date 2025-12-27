@@ -79,3 +79,33 @@ export const biltiesValidationSchema = Yup.object({
     .oneOf(['cash', 'upi', 'banktransfer', 'netbanking'], 'Invalid payment type')
     .required('Payment type is required')
 });
+
+export const managedTransporterValidationSchema = Yup.object({
+  transportName: Yup.string().required('Transport name is required'),
+  first_name: Yup.string().required('First name is required'),
+  last_name: Yup.string().required('Last name is required'),
+  mobileNumber: Yup.string()
+    .matches(/^\d{10}$/, 'Mobile number must be 10 digits')
+    .required('Mobile number is required'),
+  officeNumber: Yup.string(),
+  address: Yup.string().required('Address is required'),
+  email: Yup.string().email('Must be a valid email')
+});
+
+export const managedDriverValidationSchema = Yup.object({
+  first_name: Yup.string().required('First name is required'),
+  last_name: Yup.string().required('Last name is required'),
+  mobileNumber: Yup.number().typeError('Mobile number must be a number').required('Mobile number is required'),
+  truckNumber: Yup.string(),
+  address: Yup.string()
+});
+
+export const managedVendorValidationSchema = Yup.object({
+  first_name: Yup.string().required('First name is required'),
+  last_name: Yup.string().required('Last name is required'),
+  mobileNumber: Yup.number().typeError('Mobile number must be a number').required('Mobile number is required'),
+  email: Yup.string().email('Must be a valid email'),
+  secondaryMobileNumber: Yup.number().typeError('Secondary mobile number must be a number'),
+  business: Yup.string().required('Business is required'),
+  address: Yup.string().required('Address is required')
+});

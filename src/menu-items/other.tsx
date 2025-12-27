@@ -129,4 +129,28 @@ export const vendorCards: NavItemType = {
   icon: icons.ShopOutlined
 };
 
+export const managedTransporters: NavItemType = {
+  id: 'managedTransporters',
+  title: <FormattedMessage id="Manage Transporter" defaultMessage="Manage Transporter" />,
+  type: 'item',
+  url: '/managed-transporters',
+  icon: icons.TruckOutlined
+};
+
+export const managedDrivers: NavItemType = {
+  id: 'managedDrivers',
+  title: <FormattedMessage id="Manage Driver" defaultMessage="Manage Driver" />,
+  type: 'item',
+  url: '/managed-drivers',
+  icon: icons.StockOutlined
+};
+
+export const managedVendors: NavItemType = {
+  id: 'managedVendors',
+  title: <FormattedMessage id="Manage Vendor" defaultMessage="Manage Vendor" />,
+  type: 'item',
+  url: '/managed-vendors',
+  icon: icons.UserOutlined
+};
+
 export default other;
