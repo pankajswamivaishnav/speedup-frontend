@@ -24,12 +24,12 @@ export const superAdminMenuItems: { items: NavItemType[] } = {
   items: [
     dashboard,
     transporters,
-    managedTransporters,
     drivers,
-    managedDrivers,
-    bilty,
     vendors,
+    managedTransporters,
+    managedDrivers,
     managedVendors,
+    bilty,
     transportCards,
     driverCards,
     vendorCards

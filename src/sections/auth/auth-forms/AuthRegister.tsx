@@ -93,7 +93,7 @@ const AuthRegister = () => {
               values.password,
               values.firstname,
               values.lastname,
-              values.role
+              values?.role
             );
 
             if (scriptedRef.current) {
@@ -226,15 +226,15 @@ const AuthRegister = () => {
                   </InputLabel>
                   <Autocomplete
                     options={role}
-                    value={values.role}
+                    value={values?.role}
                     renderInput={(params) => <TextField {...params} label="Choose Role" fullWidth />}
                     onChange={(event, value) => {
                       setFieldValue('role', value);
                     }}
                   />
-                  {touched.role && errors.role && (
+                  {touched?.role && errors?.role && (
                     <FormHelperText error id="remaining-payment-helper">
-                      {errors.role}
+                      {errors?.role}
                     </FormHelperText>
                   )}
                 </Stack>

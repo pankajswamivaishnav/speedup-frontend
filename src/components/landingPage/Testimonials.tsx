@@ -142,7 +142,7 @@ const Testimonials = () => {
                   {/* <img src={testimonial.image} alt={testimonial.name} className="w-12 h-12 rounded-full object-cover" /> */}
                   <div>
                     <div className="font-semibold text-gray-900">{testimonial.name}</div>
-                    <div className="text-sm text-gray-600">{testimonial.role}</div>
+                    <div className="text-sm text-gray-600">{testimonial?.role}</div>
                     <div className="text-sm text-primary-600 font-medium">{testimonial.company}</div>
                   </div>
                 </div>

@@ -34,7 +34,7 @@ const AddManagedDriver = ({
     address: 'INDIA',
     creator: {
       userId: user._id,
-      role: user.role === 'transporter' ? 'Transporter' : user.role === 'driver' ? 'Driver' : 'Vendors'
+      role: user?.role === 'transporter' ? 'Transporter' : user?.role === 'driver' ? 'Driver' : 'Vendors'
     }
   });
 
@@ -49,7 +49,7 @@ const AddManagedDriver = ({
         address: existingData.managedDriverData.address || 'INDIA',
         creator: existingData.managedDriverData.creator || {
           userId: user._id,
-          role: user.role === 'transporter' ? 'Transporter' : user.role === 'driver' ? 'Driver' : 'Vendors'
+          role: user?.role === 'transporter' ? 'Transporter' : user?.role === 'driver' ? 'Driver' : 'Vendors'
         }
       });
     }

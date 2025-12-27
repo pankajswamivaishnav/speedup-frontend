@@ -36,7 +36,7 @@ const AddManagedTransporter = ({
     email: '',
     creator: {
       userId: user._id,
-      role: user.role === 'transporter' ? 'Transporter' : user.role === 'driver' ? 'Driver' : 'Vendors'
+      role: user?.role === 'transporter' ? 'Transporter' : user?.role === 'driver' ? 'Driver' : 'Vendors'
     }
   });
 
@@ -53,7 +53,7 @@ const AddManagedTransporter = ({
         email: existingData.managedTransporterData.email || '',
         creator: existingData.managedTransporterData.creator || {
           userId: user._id,
-          role: user.role === 'transporter' ? 'Transporter' : user.role === 'driver' ? 'Driver' : 'Vendors'
+          role: user?.role === 'transporter' ? 'Transporter' : user?.role === 'driver' ? 'Driver' : 'Vendors'
         }
       });
     }

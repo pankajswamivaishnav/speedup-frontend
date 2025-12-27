@@ -27,9 +27,7 @@ const AddManagedVendor = ({
 }) => {
   const inputRef = useInputRef();
   const { user } = useAuth();
-  const [image, setImage] = useState<{ public_id: string; url: string } | null>(
-    existingData?.managedVendorData?.avatar || null
-  );
+  const [image, setImage] = useState<{ public_id: string; url: string } | null>(existingData?.managedVendorData?.avatar || null);
   const [isUploading, setIsUploading] = useState(false);
   const [initialValues, setInitialValues] = useState({
     first_name: '',
@@ -42,7 +40,7 @@ const AddManagedVendor = ({
     avatar: { public_id: '', url: '' },
     creator: {
       userId: user._id,
-      role: user.role === 'transporter' ? 'Transporter' : user.role === 'driver' ? 'Driver' : 'Vendors'
+      role: user?.role === 'transporter' ? 'Transporter' : user?.role === 'driver' ? 'Driver' : 'Vendors'
     }
   });
 
@@ -60,7 +58,7 @@ const AddManagedVendor = ({
         avatar: existingData.managedVendorData.avatar || { public_id: '', url: '' },
         creator: existingData.managedVendorData.creator || {
           userId: user._id,
-          role: user.role === 'transporter' ? 'Transporter' : user.role === 'driver' ? 'Driver' : 'Vendors'
+          role: user?.role === 'transporter' ? 'Transporter' : user?.role === 'driver' ? 'Driver' : 'Vendors'
         }
       });
       if (existingData.managedVendorData.avatar) {
@@ -285,4 +283,3 @@ const AddManagedVendor = ({
 };
 
 export default AddManagedVendor;
-

@@ -69,11 +69,7 @@ const Transporter = () => {
         { header: 'City', key: 'city', width: 30 },
         { header: 'State', key: 'state', width: 30 },
         { header: 'Country', key: 'country', width: 30 },
-        { header: 'Email', key: 'email', width: 30 },
-        { header: 'Password', key: 'password', width: 30 },
-        { header: 'Is Deleted', key: 'isDeleted', width: 30 },
-        { header: 'Role', key: 'role', width: 30 },
-        { header: 'Version', key: '__v', width: 30 }
+        { header: 'Email', key: 'email', width: 30 }
       ];
 
       if (transporterData) {
@@ -118,13 +114,13 @@ const Transporter = () => {
           <Grid item xs={12} className="flex flex-col xl:flex-row justify-between items-center gap-2 mb-5">
             {/* Left side - Buttons */}
             <div className="flex gap-2">
-              {user.role === 'super_admin' && (
+              {user?.role === 'super_admin' && (
                 <Button onClick={() => handleTogglePopup()} variant="outlined">
                   Add Transport
                 </Button>
               )}
 
-              {user.role === 'super_admin' && (
+              {user?.role === 'super_admin' && (
                 <Button onClick={() => navigate('/managed-transporters')} variant="outlined">
                   Manage Transporter
                 </Button>

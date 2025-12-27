@@ -46,7 +46,7 @@ const Profile = () => {
   // ------------- Render Profile According to Role -------------
   const renderProfileByRole = () => {
     if (!profileData) return null;
-    switch (profileData.role) {
+    switch (profileData?.role) {
       case 'transporter': {
         return (
           <Grid container spacing={3}>

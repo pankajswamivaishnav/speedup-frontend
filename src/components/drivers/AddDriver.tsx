@@ -249,7 +249,7 @@ const AddDriver = ({
                     )}
                   </Stack>
                 </Grid>
-                {user.role === 'super_admin' ? (
+                {user?.role === 'super_admin' ? (
                   <Grid item xs={12} sm={6}>
                     <InputLabel htmlFor="driver-last-name" className="mb-2">
                       Choose Transport

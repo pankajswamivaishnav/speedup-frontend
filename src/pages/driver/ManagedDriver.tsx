@@ -75,7 +75,7 @@ const ManagedDriver = () => {
         try {
           const response = await TransporterServiceInstance.getAllTransporter(0, 0);
           const formattedData = response.data.map((transporter: any) => ({
-            label: transporter.transportName,
+            label: transporter.transportName ? transporter.transportName : `${transporter.first_name}${transporter.last_name}`,
             id: transporter._id
           }));
           setTransportData(formattedData);
@@ -137,7 +137,7 @@ const ManagedDriver = () => {
                 </Button>
               )}
 
-              {user.role === 'super_admin' && (
+              {user?.role === 'super_admin' && (
                 <Button
                   onClick={() => setUnique(!unique)}
                   variant={unique ? 'contained' : 'outlined'}
@@ -150,7 +150,7 @@ const ManagedDriver = () => {
 
             {/* Right side - Filters and Search */}
             <div className="flex gap-2 items-center flex-wrap">
-              {user.role === 'super_admin' && (
+              {user?.role === 'super_admin' && (
                 <Autocomplete
                   sx={{ minWidth: 200 }}
                   value={selectedTransporter}

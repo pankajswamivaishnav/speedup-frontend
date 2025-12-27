@@ -154,7 +154,7 @@ const DriverTable = ({
                         </IconButton>
                       </Tooltip>
                     </TableCell>
-                    {user.role === 'super_admin' && (
+                    {user?.role === 'super_admin' && (
                       <TableCell>
                         <Tooltip title="delete" onClick={() => handleDeleteDriverToggle(row._id)}>
                           <IconButton>

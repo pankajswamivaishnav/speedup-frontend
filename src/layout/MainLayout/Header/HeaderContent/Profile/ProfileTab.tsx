@@ -120,7 +120,7 @@ const ProfileTab = ({ handleLogout }: Props) => {
     // Action according to index number
     switch (index) {
       case 0: {
-        switch (user.role) {
+        switch (user?.role) {
           case 'transporter': {
             handleTogglePopup();
             break;

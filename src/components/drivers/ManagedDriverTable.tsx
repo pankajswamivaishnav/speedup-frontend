@@ -116,7 +116,7 @@ const ManagedDriverTable = ({
     });
   };
 
-  const handleDeleteManagedDriverToggle = async (id: string) => {
+  const handleDeleteManagedDriverToggle = async (id: any) => {
     setDeleteConfirmModal((prev) => ({
       ...prev,
       data: { isEditMode: false, existingData: { id } },
@@ -150,7 +150,7 @@ const ManagedDriverTable = ({
                   <TableCell>Mobile Number</TableCell>
                   <TableCell>Truck Number</TableCell>
                   <TableCell>Address</TableCell>
-                  <TableCell align="center">Action</TableCell>
+                  <TableCell>Action</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -167,24 +167,22 @@ const ManagedDriverTable = ({
                     </TableCell>
                     <TableCell>{row.mobileNumber}</TableCell>
                     <TableCell>{row.truckNumber || '-'}</TableCell>
-                    <TableCell align="right" sx={{ pr: 3 }}>
-                      {row.address || 'INDIA'}
-                    </TableCell>
-                    <TableCell align="right">
+                    <TableCell sx={{ pr: 3 }}>{row.address || 'INDIA'}</TableCell>
+                    <TableCell>
                       <Stack direction="row" spacing={1}>
                         <Tooltip title="full-details">
                           <IconButton onClick={() => handleManagedDriverDetailTogglePopup(row)}>
                             <EyeOutlined className="text-blue-500" />
                           </IconButton>
                         </Tooltip>
-                        {user.role === 'super_admin' && (
+                        {user?.isPremium === true && (
                           <Tooltip title="edit">
                             <IconButton onClick={() => handleEditManagedDriverTogglePopup(row)}>
                               <EditOutlined className="text-green-500" />
                             </IconButton>
                           </Tooltip>
                         )}
-                        {user.role === 'super_admin' && (
+                        {user?.isPremium === true && (
                           <Tooltip title="delete">
                             <IconButton onClick={() => handleDeleteManagedDriverToggle(row._id)}>
                               <DeleteOutlined className="text-red-600" />

@@ -157,7 +157,7 @@ const TransportTable = ({
                         </IconButton>
                       </Tooltip>
                     </TableCell>
-                    {user.role === 'super_admin' && (
+                    {user?.role === 'super_admin' && (
                       <TableCell>
                         <Tooltip title="delete" onClick={() => handleDeleteTransporterToggle(row._id)}>
                           <IconButton>

@@ -76,7 +76,7 @@ const ManagedTransporter = () => {
         try {
           const response = await TransporterServiceInstance.getAllTransporter(0, 0);
           const formattedData = response.data.map((transporter: any) => ({
-            label: transporter.transportName,
+            label: transporter.transportName ? transporter.transportName : `${transporter.first_name}${transporter.last_name}`,
             id: transporter._id
           }));
           setTransportData(formattedData);
@@ -126,19 +126,19 @@ const ManagedTransporter = () => {
           <Grid item xs={12} className="flex flex-col xl:flex-row justify-between items-center gap-2 mb-5">
             {/* Left side - Buttons */}
             <div className="flex gap-2 flex-wrap">
-              {user.isPremium === true && (
+              {user?.isPremium === true && (
                 <Button onClick={() => handleTogglePopup()} variant="outlined">
                   Add Managed Transporter
                 </Button>
               )}
 
-              {user.isPremium === true && (
+              {user?.isPremium === true && (
                 <Button onClick={() => handleDownload()} variant="outlined">
                   Download Managed Transporters
                 </Button>
               )}
 
-              {user.role === 'super_admin' && (
+              {user?.role === 'super_admin' && (
                 <Button
                   onClick={() => setUnique(!unique)}
                   variant={unique ? 'contained' : 'outlined'}
@@ -151,7 +151,7 @@ const ManagedTransporter = () => {
 
             {/* Right side - Filters and Search */}
             <div className="flex gap-2 items-center flex-wrap">
-              {user.role === 'super_admin' && (
+              {user?.role === 'super_admin' && (
                 <Autocomplete
                   sx={{ minWidth: 200 }}
                   value={selectedTransporter}

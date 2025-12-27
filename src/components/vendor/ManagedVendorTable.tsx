@@ -150,7 +150,7 @@ const ManagedVendorTable = ({
                   <TableCell>Mobile Number</TableCell>
                   <TableCell>Email</TableCell>
                   <TableCell>Business</TableCell>
-                  <TableCell align="center">Action</TableCell>
+                  <TableCell>Action</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -172,9 +172,7 @@ const ManagedVendorTable = ({
                     </TableCell>
                     <TableCell>{row.mobileNumber}</TableCell>
                     <TableCell>{row.email || 'vendor@yopmail.com'}</TableCell>
-                    <TableCell align="right" sx={{ pr: 3 }}>
-                      {row.business || '-'}
-                    </TableCell>
+                    <TableCell sx={{ pr: 3 }}>{row.business || '-'}</TableCell>
                     <TableCell align="right">
                       <Stack direction="row" spacing={1}>
                         <Tooltip title="full-details">
@@ -182,14 +180,14 @@ const ManagedVendorTable = ({
                             <EyeOutlined className="text-blue-500" />
                           </IconButton>
                         </Tooltip>
-                        {user.role === 'super_admin' && (
+                        {user?.isPremium === true && (
                           <Tooltip title="edit">
                             <IconButton onClick={() => handleEditManagedVendorTogglePopup(row)}>
                               <EditOutlined className="text-green-500" />
                             </IconButton>
                           </Tooltip>
                         )}
-                        {user.role === 'super_admin' && (
+                        {user?.isPremium === true && (
                           <Tooltip title="delete">
                             <IconButton onClick={() => handleDeleteManagedVendorToggle(row._id)}>
                               <DeleteOutlined className="text-red-600" />

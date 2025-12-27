@@ -182,14 +182,14 @@ const ManagedTransportTable = ({
                             <EyeOutlined className="text-blue-500" />
                           </IconButton>
                         </Tooltip>
-                        {user.role === 'super_admin' && (
+                        {user?.isPremium === true && (
                           <Tooltip title="edit">
                             <IconButton onClick={() => handleEditManagedTransporterTogglePopup(row)}>
                               <EditOutlined className="text-green-500" />
                             </IconButton>
                           </Tooltip>
                         )}
-                        {user.role === 'super_admin' && (
+                        {user?.isPremium === true && (
                           <Tooltip title="delete">
                             <IconButton onClick={() => handleDeleteManagedTransporterToggle(row._id)}>
                               <DeleteOutlined className="text-red-600" />

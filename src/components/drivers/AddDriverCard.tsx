@@ -251,7 +251,7 @@ const AddDriverCard = ({
                   <Stack spacing={1.25}>
                     <InputLabel htmlFor="role">Role</InputLabel>
                     <FormControl fullWidth size="medium">
-                      <Select id="role" name="role" value={values.role} onChange={handleChange} onBlur={handleBlur} displayEmpty>
+                      <Select id="role" name="role" value={values?.role} onChange={handleChange} onBlur={handleBlur} displayEmpty>
                         <MenuItem value="">
                           <em>Select Role</em>
                         </MenuItem>
@@ -259,9 +259,9 @@ const AddDriverCard = ({
                         <MenuItem value="owner">Truck Owner</MenuItem>
                       </Select>
                     </FormControl>
-                    {touched.role && errors.role && (
+                    {touched?.role && errors?.role && (
                       <FormHelperText error id="role-helper">
-                        {errors.role}
+                        {errors?.role}
                       </FormHelperText>
                     )}
                   </Stack>
