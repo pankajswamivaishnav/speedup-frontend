@@ -11,7 +11,8 @@ import other, {
   dashboard,
   managedTransporters,
   managedDrivers,
-  managedVendors
+  managedVendors,
+  pricing
 } from './other';
 
 // ==============================|| MENU ITEMS ||============================== //
@@ -32,20 +33,21 @@ export const superAdminMenuItems: { items: NavItemType[] } = {
     bilty,
     transportCards,
     driverCards,
-    vendorCards
+    vendorCards,
+    pricing
   ]
 };
 
 export const transporterMenuItems: { items: NavItemType[] } = {
-  items: [dashboard, managedTransporters, managedDrivers, managedVendors, bilty, transportCards, driverCards, vendorCards]
+  items: [dashboard, managedTransporters, managedDrivers, managedVendors, bilty, transportCards, driverCards, vendorCards, pricing]
 };
 
 export const driverMenuItems: { items: NavItemType[] } = {
-  items: [dashboard, managedTransporters, managedDrivers, managedVendors, transportCards]
+  items: [dashboard, managedTransporters, managedDrivers, managedVendors, transportCards, pricing]
 };
 
 export const vendorMenuItems: { items: NavItemType[] } = {
-  items: [dashboard, managedTransporters, managedDrivers, managedVendors, transportCards]
+  items: [dashboard, managedTransporters, managedDrivers, managedVendors, transportCards, pricing]
 };
 
 export default menuItems;

@@ -12,7 +12,8 @@ import {
   UserOutlined,
   IdcardOutlined,
   TruckOutlined,
-  ShopOutlined
+  ShopOutlined,
+  PayCircleOutlined
 } from '@ant-design/icons';
 
 // type
@@ -29,7 +30,8 @@ const icons = {
   UserOutlined,
   IdcardOutlined,
   TruckOutlined,
-  ShopOutlined
+  ShopOutlined,
+  PayCircleOutlined
 };
 
 // ==============================|| MENU ITEMS - SUPPORT ||============================== //
@@ -151,6 +153,14 @@ export const managedVendors: NavItemType = {
   type: 'item',
   url: '/managed-vendors',
   icon: icons.UserOutlined
+};
+
+export const pricing: NavItemType = {
+  id: 'pricing',
+  title: <FormattedMessage id="Premium" defaultMessage="Premium" />,
+  type: 'item',
+  url: '/pricing',
+  icon: icons.PayCircleOutlined
 };
 
 export default other;
