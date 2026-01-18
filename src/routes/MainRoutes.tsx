@@ -8,7 +8,7 @@ import AuthGuard from 'utils/route-guard/AuthGuard';
 import Vendor from 'pages/vendor/Vendor';
 import ProfilePage from 'pages/Profile/ProfilePage';
 import LiveLocationMap from 'components/location/LiveLocationMap';
-import Pricing from 'pages/extra-pages/Pricing';
+import Subscription from 'pages/subscription/Subscription';
 // import LandingPage from 'pages/extra-pages/LandingPage';
 
 // pages routing
@@ -99,8 +99,8 @@ const MainRoutes = {
           element: <ManagedVendorPage />
         },
         {
-          path: 'pricing',
-          element: <Pricing />
+          path: 'subscription',
+          element: <Subscription />
         }
       ]
     },

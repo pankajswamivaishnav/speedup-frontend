@@ -126,7 +126,7 @@ const Transporter = () => {
                 </Button>
               )}
 
-              {user.isPremium === true && (
+              {user?.isPremium === true && (
                 <Button onClick={() => handleDownload()} variant="outlined">
                   Download Transporters
                 </Button>

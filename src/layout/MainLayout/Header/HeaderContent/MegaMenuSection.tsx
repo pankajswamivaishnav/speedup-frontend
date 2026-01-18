@@ -235,7 +235,7 @@ const MegaMenuSection = () => {
                                 </ListItemIcon>
                                 <ListItemText primary="Contact us" />
                               </ListItemButton>
-                              <ListItemButton disableRipple component={Link} to="/pricing">
+                              <ListItemButton disableRipple component={Link} to="/subscription">
                                 <ListItemIcon>
                                   <Dot size={7} color="secondary" variant="outlined" />
                                 </ListItemIcon>

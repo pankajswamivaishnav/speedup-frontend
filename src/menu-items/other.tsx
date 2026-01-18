@@ -159,7 +159,7 @@ export const pricing: NavItemType = {
   id: 'pricing',
   title: <FormattedMessage id="Premium" defaultMessage="Premium" />,
   type: 'item',
-  url: '/pricing',
+  url: '/subscription',
   icon: icons.PayCircleOutlined
 };
 
