@@ -117,6 +117,8 @@ export const JWTProvider = ({ children }: { children: React.ReactElement }) => {
       role
     });
 
+    console.log('response in register api==>', response);
+
     return response;
 
     // let users = response.data;

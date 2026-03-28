@@ -96,7 +96,7 @@ const AuthRegister = () => {
               values?.role
             );
 
-            if (scriptedRef.current) {
+            if (response) {
               setStatus({ success: true });
               setSubmitting(false);
               dispatch(
@@ -116,6 +116,18 @@ const AuthRegister = () => {
               }, 1500);
             }
           } catch (err: any) {
+            dispatch(
+              openSnackbar({
+                open: true,
+                message: err?.message,
+                variant: 'alert',
+                alert: {
+                  color: 'error'
+                },
+                close: false
+              })
+            );
+
             if (scriptedRef.current) {
               setStatus({ success: false });
               setErrors({ submit: err.message });
