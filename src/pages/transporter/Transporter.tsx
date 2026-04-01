@@ -15,6 +15,8 @@ import { exportToCsv } from 'utils/download';
 import SEO from 'components/SEO';
 import useAuth from 'hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
+import { useDebounce } from 'hooks/useDebounce';
+// import { TextField } from '@mui/material';
 
 const Transporter = () => {
   // const [isLoading, setLoading] = useState(true);
@@ -25,6 +27,8 @@ const Transporter = () => {
   const [query, setQuery] = useState<string>('');
   const { user } = useAuth();
   const navigate = useNavigate();
+  // ✅ debounce applied here
+  const debouncedQuery = useDebounce(query, 500);
   // -------------- Add transporter page pop up --------------
   const [transporterFormPopup, setTransporterFormPopup] = useState<TUniversalDialogProps>({
     action: {
@@ -85,9 +89,9 @@ const Transporter = () => {
     isLoading,
     isFetching
   } = useQuery({
-    queryKey: ['transporters_data', page, limit, query],
+    queryKey: ['transporters_data', page, limit, debouncedQuery],
     queryFn: async () => {
-      const response = await TransporterServiceInstance.getAllTransporter(page, limit, query);
+      const response = await TransporterServiceInstance.getAllTransporter(page, limit, debouncedQuery);
       return response;
     },
     refetchOnWindowFocus: false
@@ -136,6 +140,7 @@ const Transporter = () => {
             {/* Right side - Search */}
             <div className="w-full xl:w-auto">
               <Search setQuery={setQuery} />
+              {/* <TextField type="search" placeholder="Search..." value={query} onChange={(e: any) => setQuery(e.target.value)} fullWidth /> */}
             </div>
           </Grid>
 

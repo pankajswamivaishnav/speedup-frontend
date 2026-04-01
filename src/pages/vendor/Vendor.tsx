@@ -13,12 +13,16 @@ import AddVendor from 'components/vendor/AddVendor';
 import Search from 'layout/MainLayout/Header/HeaderContent/Search';
 import { exportToCsv } from 'utils/download';
 import SEO from 'components/SEO';
+import { useDebounce } from 'hooks/useDebounce';
+
 const Vendor = () => {
   const [vendorData, setVendorData] = useState();
   const [page, setPage] = useState<number>(0);
   const [limit, setLimit] = useState<number>(20);
   const [count, setCount] = useState<number>(0);
   const [query, setQuery] = useState<string>('');
+  // ✅ debounce applied here
+  const debouncedQuery = useDebounce(query, 500);
 
   // -------------- Add transporter page pop up --------------
   const [vendorFormPopup, setVendorFormPopup] = useState<TUniversalDialogProps>({
@@ -74,9 +78,9 @@ const Vendor = () => {
     isLoading,
     isFetching
   } = useQuery({
-    queryKey: ['vendors_data', page, limit, query],
+    queryKey: ['vendors_data', page, limit, debouncedQuery],
     queryFn: async () => {
-      const response = await VendorServiceInstance.getAllVendors(page, limit, query);
+      const response = await VendorServiceInstance.getAllVendors(page, limit, debouncedQuery);
       return response;
     }
   });

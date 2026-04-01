@@ -17,6 +17,7 @@ import Search from 'layout/MainLayout/Header/HeaderContent/Search';
 import { exportToCsv } from 'utils/download';
 import TransporterServiceInstance from 'services/transporter.services';
 import SEO from 'components/SEO';
+import { useDebounce } from 'hooks/useDebounce';
 
 const Bilty = () => {
   const [biltyData, setbiltyData] = useState();
@@ -26,6 +27,8 @@ const Bilty = () => {
   const [count, setCount] = useState<number>(0);
   const { user } = useAuth();
   const [query, setQuery] = useState<string>('');
+  // ✅ debounce applied here
+  const debouncedQuery = useDebounce(query, 500);
   // -------------- Add transporter page pop up --------------
   const [biltyFormPopup, setBiltyFormPopup] = useState<TUniversalDialogProps>({
     action: {
@@ -97,9 +100,9 @@ const Bilty = () => {
     isLoading,
     isFetching
   } = useQuery({
-    queryKey: ['bilties_data', page, limit, query],
+    queryKey: ['bilties_data', page, limit, debouncedQuery],
     queryFn: async () => {
-      const response = await biltyServiceInstance.getAllbilties(page, limit, query);
+      const response = await biltyServiceInstance.getAllbilties(page, limit, debouncedQuery);
       return response;
     }
   });

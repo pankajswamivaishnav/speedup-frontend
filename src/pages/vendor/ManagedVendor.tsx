@@ -15,6 +15,7 @@ import Search from 'layout/MainLayout/Header/HeaderContent/Search';
 import { exportToCsv } from 'utils/download';
 import SEO from 'components/SEO';
 import useAuth from 'hooks/useAuth';
+import { useDebounce } from 'hooks/useDebounce';
 
 const ManagedVendor = () => {
   const [managedVendorData, setManagedVendorData] = useState();
@@ -26,6 +27,8 @@ const ManagedVendor = () => {
   const [transportData, setTransportData] = useState<any[]>([]);
   const [unique, setUnique] = useState<boolean>(false);
   const { user } = useAuth();
+  // ✅ debounce applied here
+  const debouncedQuery = useDebounce(query, 500);
   // -------------- Add managed vendor page pop up --------------
   const [managedVendorFormPopup, setManagedVendorFormPopup] = useState<TUniversalDialogProps>({
     action: {
@@ -96,11 +99,11 @@ const ManagedVendor = () => {
     isLoading,
     isFetching
   } = useQuery({
-    queryKey: ['managed_vendors_data', page, limit, query, selectedTransporter?.id, unique, user?.role],
+    queryKey: ['managed_vendors_data', page, limit, debouncedQuery, selectedTransporter?.id, unique, user?.role],
     queryFn: async () => {
       const creatorId = selectedTransporter?.id || undefined;
       const isSuperAdmin = user?.role === 'super_admin';
-      const response = await VendorServiceInstance.getAllManagedVendors(page, limit, query, creatorId, unique, isSuperAdmin);
+      const response = await VendorServiceInstance.getAllManagedVendors(page, limit, debouncedQuery, creatorId, unique, isSuperAdmin);
       return response;
     },
     refetchOnWindowFocus: false

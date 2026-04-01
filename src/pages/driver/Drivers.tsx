@@ -15,6 +15,7 @@ import Search from 'layout/MainLayout/Header/HeaderContent/Search';
 import { exportToCsv } from 'utils/download';
 import SEO from 'components/SEO';
 import useAuth from 'hooks/useAuth';
+import { useDebounce } from 'hooks/useDebounce';
 
 const Drivers = () => {
   const [driversData, setDriversData] = useState();
@@ -24,6 +25,8 @@ const Drivers = () => {
   const [count, setCount] = useState<number>(0);
   const { user } = useAuth();
   const [query, setQuery] = useState<string>('');
+  // ✅ debounce applied here
+  const debouncedQuery = useDebounce(query, 500);
   // -------------- Add driver page pop up --------------
   const [driverFormPopup, setDriverFormPopup] = useState<TUniversalDialogProps>({
     action: {
@@ -95,9 +98,9 @@ const Drivers = () => {
     isLoading,
     isFetching
   } = useQuery({
-    queryKey: ['drivers_data', page, limit, query],
+    queryKey: ['drivers_data', page, limit, debouncedQuery],
     queryFn: async () => {
-      const response = await DriverServiceInstance.getAllDrivers(page, limit, query);
+      const response = await DriverServiceInstance.getAllDrivers(page, limit, debouncedQuery);
       return response;
     }
   });

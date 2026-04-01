@@ -11,10 +11,13 @@ import { useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import TransporterServiceInstance from 'services/transporter.services';
 import { TUniversalDialogProps } from 'types/types.UniversalDialog';
+import { useDebounce } from 'hooks/useDebounce';
 
 const TransportCardsPage = () => {
   const [query, setQuery] = useState<string>('');
   const [transportCards, setTransportCardData] = useState<VisitingCardProps[]>([]);
+  // ✅ debounce applied here
+  const debouncedQuery = useDebounce(query, 500);
   // -------------- Add transporter card pop up --------------
   const [transportCardFormPopup, setTransportCardFormPopup] = useState<TUniversalDialogProps>({
     action: {
@@ -46,9 +49,9 @@ const TransportCardsPage = () => {
     isLoading,
     isFetching
   } = useQuery({
-    queryKey: ['drivers_data', query],
+    queryKey: ['drivers_data', debouncedQuery],
     queryFn: async () => {
-      const response = await TransporterServiceInstance.getAllTransportCards(query);
+      const response = await TransporterServiceInstance.getAllTransportCards(debouncedQuery);
       return response;
     }
   });

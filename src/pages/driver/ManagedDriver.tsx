@@ -15,6 +15,7 @@ import Search from 'layout/MainLayout/Header/HeaderContent/Search';
 import { exportToCsv } from 'utils/download';
 import SEO from 'components/SEO';
 import useAuth from 'hooks/useAuth';
+import { useDebounce } from 'hooks/useDebounce';
 
 const ManagedDriver = () => {
   const [managedDriverData, setManagedDriverData] = useState();
@@ -26,6 +27,8 @@ const ManagedDriver = () => {
   const [transportData, setTransportData] = useState<any[]>([]);
   const [unique, setUnique] = useState<boolean>(false);
   const { user } = useAuth();
+  // ✅ debounce applied here
+  const debouncedQuery = useDebounce(query, 500);
   // -------------- Add managed driver page pop up --------------
   const [managedDriverFormPopup, setManagedDriverFormPopup] = useState<TUniversalDialogProps>({
     action: {
@@ -94,11 +97,11 @@ const ManagedDriver = () => {
     isLoading,
     isFetching
   } = useQuery({
-    queryKey: ['managed_drivers_data', page, limit, query, selectedTransporter?.id, unique, user?.role],
+    queryKey: ['managed_drivers_data', page, limit, debouncedQuery, selectedTransporter?.id, unique, user?.role],
     queryFn: async () => {
       const creatorId = selectedTransporter?.id || undefined;
       const isSuperAdmin = user?.role === 'super_admin';
-      const response = await DriverServiceInstance.getAllManagedDrivers(page, limit, query, creatorId, unique, isSuperAdmin);
+      const response = await DriverServiceInstance.getAllManagedDrivers(page, limit, debouncedQuery, creatorId, unique, isSuperAdmin);
       return response;
     },
     refetchOnWindowFocus: false

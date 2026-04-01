@@ -11,10 +11,13 @@ import { useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import DriverServiceInstance from 'services/driver.services';
 import { TUniversalDialogProps } from 'types/types.UniversalDialog';
+import { useDebounce } from 'hooks/useDebounce';
 
 const DriverCardPage = () => {
   const [driverCards, setDriverCardData] = useState<VisitingCardProps[]>([]);
   const [query, setQuery] = useState<string>('');
+  // ✅ debounce applied here
+  const debouncedQuery = useDebounce(query, 500);
   // -------------- Add transporter card pop up --------------
   const [driverCardFormPopup, setDriverCardFormPopup] = useState<TUniversalDialogProps>({
     action: {
@@ -47,9 +50,9 @@ const DriverCardPage = () => {
     isLoading,
     isFetching
   } = useQuery({
-    queryKey: ['drivers_data', query],
+    queryKey: ['drivers_data', debouncedQuery],
     queryFn: async () => {
-      const response = await DriverServiceInstance.getAllDriverCards(query);
+      const response = await DriverServiceInstance.getAllDriverCards(debouncedQuery);
       return response;
     }
   });

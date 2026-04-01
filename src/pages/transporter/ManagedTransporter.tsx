@@ -14,6 +14,7 @@ import Search from 'layout/MainLayout/Header/HeaderContent/Search';
 import { exportToCsv } from 'utils/download';
 import SEO from 'components/SEO';
 import useAuth from 'hooks/useAuth';
+import { useDebounce } from 'hooks/useDebounce';
 
 const ManagedTransporter = () => {
   const [managedTransporterData, setManagedTransporterData] = useState();
@@ -25,6 +26,8 @@ const ManagedTransporter = () => {
   const [transportData, setTransportData] = useState<any[]>([]);
   const [unique, setUnique] = useState<boolean>(false);
   const { user } = useAuth();
+  // ✅ debounce applied here
+  const debouncedQuery = useDebounce(query, 500);
   // -------------- Add managed transporter page pop up --------------
   const [managedTransporterFormPopup, setManagedTransporterFormPopup] = useState<TUniversalDialogProps>({
     action: {
@@ -95,11 +98,18 @@ const ManagedTransporter = () => {
     isLoading,
     isFetching
   } = useQuery({
-    queryKey: ['managed_transporters_data', page, limit, query, selectedTransporter?.id, unique, user?.role],
+    queryKey: ['managed_transporters_data', page, limit, debouncedQuery, selectedTransporter?.id, unique, user?.role],
     queryFn: async () => {
       const creatorId = selectedTransporter?.id || undefined;
       const isSuperAdmin = user?.role === 'super_admin';
-      const response = await TransporterServiceInstance.getAllManagedTransporters(page, limit, query, creatorId, unique, isSuperAdmin);
+      const response = await TransporterServiceInstance.getAllManagedTransporters(
+        page,
+        limit,
+        debouncedQuery,
+        creatorId,
+        unique,
+        isSuperAdmin
+      );
       return response;
     },
     refetchOnWindowFocus: false

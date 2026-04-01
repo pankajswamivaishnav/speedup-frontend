@@ -11,10 +11,13 @@ import { useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import VendorServiceInstance from 'services/vendor.services';
 import { TUniversalDialogProps } from 'types/types.UniversalDialog';
+import { useDebounce } from 'hooks/useDebounce';
 
 const VendorCardsPage = () => {
   const [query, setQuery] = useState<string>('');
   const [vendorCards, setVendorCardData] = useState<VisitingCardProps[]>([]);
+  // ✅ debounce applied here
+  const debouncedQuery = useDebounce(query, 500);
   // -------------- Add vendor card pop up --------------
   const [vendorCardFormPopup, setVendorCardFormPopup] = useState<TUniversalDialogProps>({
     action: {
@@ -46,9 +49,9 @@ const VendorCardsPage = () => {
     isLoading,
     isFetching
   } = useQuery({
-    queryKey: ['vendor_card_data', query],
+    queryKey: ['vendor_card_data', debouncedQuery],
     queryFn: async () => {
-      const response = await VendorServiceInstance.getAllVendorCards(query);
+      const response = await VendorServiceInstance.getAllVendorCards(debouncedQuery);
       return response;
     }
   });
