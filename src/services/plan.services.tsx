@@ -14,7 +14,7 @@ class PlanServices {
       store.dispatch(
         openSnackbar({
           open: true,
-          message: error.message,
+          message: error.error || error.message,
           variant: 'alert',
           alert: {
             color: 'error'

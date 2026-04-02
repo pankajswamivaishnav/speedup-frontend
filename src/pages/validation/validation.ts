@@ -4,7 +4,9 @@ export const transporterValidationSchema = Yup.object({
   transportName: Yup.string().required('Transport name is required'),
   first_name: Yup.string().required('First name is required'),
   last_name: Yup.string().required('Last name is required'),
-  email: Yup.string().email('Must be a valid email').required('Email is required'),
+  email: Yup.string()
+    .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, 'Enter valid email (example@gmail.com)')
+    .required('Email is required'),
   mobileNumber: Yup.string()
     .matches(/^\d{10}$/, 'Mobile number must be 10 digits')
     .required('Mobile number is required'),

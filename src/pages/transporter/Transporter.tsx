@@ -33,7 +33,7 @@ const Transporter = () => {
   const [transporterFormPopup, setTransporterFormPopup] = useState<TUniversalDialogProps>({
     action: {
       open: false,
-      fullScreen: true
+      maxWidth: 'md'
     },
     title: 'Add Transport',
     data: { existingData: {}, isEditMode: false }

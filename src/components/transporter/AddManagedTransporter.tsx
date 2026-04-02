@@ -121,7 +121,6 @@ const AddManagedTransporter = ({
                       onBlur={handleBlur}
                       onChange={handleChange}
                       placeholder="First Name"
-                      autoFocus
                       inputRef={inputRef}
                       disabled={isDisable}
                     />
@@ -145,7 +144,6 @@ const AddManagedTransporter = ({
                       onBlur={handleBlur}
                       onChange={handleChange}
                       placeholder="Last Name"
-                      autoFocus
                       inputRef={inputRef}
                       disabled={isDisable}
                     />

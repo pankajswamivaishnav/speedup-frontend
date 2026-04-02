@@ -72,7 +72,6 @@ export const JWTProvider = ({ children }: { children: React.ReactElement }) => {
           });
         }
       } catch (err) {
-        console.error(err);
         dispatch({
           type: LOGOUT
         });
@@ -88,20 +87,31 @@ export const JWTProvider = ({ children }: { children: React.ReactElement }) => {
    * @param password - User password
    */
   const login = async (emailOrMobile: string, password: string, keepSignedIn: boolean) => {
-    // Determine if input is email or mobile number
-    const isEmail = emailOrMobile.includes('@');
-    const loginData = isEmail ? { email: emailOrMobile, password, keepSignedIn } : { mobileNumber: emailOrMobile, password, keepSignedIn };
+    try {
+      console.log('emailOrMobile==>', emailOrMobile);
+      console.log('password==>', password);
+      console.log('keepSignedIn==>', keepSignedIn);
+      // Determine if input is email or mobile number
+      const isEmail = emailOrMobile.includes('@');
+      const loginData = isEmail
+        ? { email: emailOrMobile, password, keepSignedIn }
+        : { mobileNumber: emailOrMobile, password, keepSignedIn };
 
-    const response = await axios.post('/api/v1/auth/login', loginData);
-    const { serviceToken, user } = response.data.data;
-    setSession(serviceToken);
-    dispatch({
-      type: LOGIN,
-      payload: {
-        isLoggedIn: true,
-        user
-      }
-    });
+      const response = await axios.post('/api/v1/auth/login', loginData);
+      console.log('response in login api==>', response);
+      const { serviceToken, user } = response.data.data;
+      setSession(serviceToken);
+      dispatch({
+        type: LOGIN,
+        payload: {
+          isLoggedIn: true,
+          user
+        }
+      });
+    } catch (error) {
+      console.error('error in login time JWTContext==>', error);
+      throw error;
+    }
   };
 
   const register = async (email: string, mobileNumber: string, password: string, firstName: string, lastName: string, role: string) => {

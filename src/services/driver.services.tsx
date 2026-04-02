@@ -49,7 +49,7 @@ class DriverServices {
       store.dispatch(
         openSnackbar({
           open: true,
-          message: error.message,
+          message: error.error || error.message,
           variant: 'alert',
           alert: {
             color: 'error'
@@ -84,7 +84,7 @@ class DriverServices {
       store.dispatch(
         openSnackbar({
           open: true,
-          message: error.message,
+          message: error.error || error.message,
           variant: 'alert',
           alert: {
             color: 'primary'
@@ -175,7 +175,7 @@ class DriverServices {
       store.dispatch(
         openSnackbar({
           open: true,
-          message: error.message,
+          message: error.error || error.message,
           variant: 'alert',
           alert: {
             color: 'error'
@@ -264,7 +264,7 @@ class DriverServices {
       store.dispatch(
         openSnackbar({
           open: true,
-          message: error.message,
+          message: error.error || error.message,
           variant: 'alert',
           alert: {
             color: 'error'
