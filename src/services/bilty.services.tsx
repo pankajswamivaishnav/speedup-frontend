@@ -29,6 +29,7 @@ class BiltyServices {
   async createBilty(data: any) {
     try {
       const response: any = await axiosServices.post(`api/v1/bilty`, data);
+      console.log('response in createBilty time BiltyServices==>', response);
       if (response.data.success) {
         store.dispatch(
           openSnackbar({
