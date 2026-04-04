@@ -162,7 +162,7 @@ class TransporterServices {
             message: 'Transporter Card created successfully.',
             variant: 'alert',
             alert: {
-              color: 'info'
+              color: 'primary'
             },
             close: true
           })

@@ -34,7 +34,11 @@ export const driverCardValidationSchema = Yup.object({
   first_name: Yup.string().required('Driver first name is required'),
   last_name: Yup.string().required('Driver last name is required'),
   mobileNumber: Yup.number().required('Driver mobile number is required'),
-  truckNumber: Yup.string().required('Truck number is required')
+  truckNumber: Yup.string().required('Truck number is required'),
+  email: Yup.string()
+    .trim()
+    .nullable()
+    .matches(/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/, 'Invalid email format')
 });
 
 export const vendorValidationSchema = Yup.object({

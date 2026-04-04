@@ -20,13 +20,16 @@ const Navigation = () => {
           {/* Logo */}
           <Typography
             variant="h5"
+            className="text-red-600 font-bold "
             sx={{
               fontWeight: 'bold',
               color: '#2563eb',
               fontSize: '1.5rem'
             }}
           >
-            SpeedUp
+            {/* <h1 className="text-red-600 font-bold text-3xl"> */}
+            Speedup<span className="text-blue-600">Ora</span>
+            {/* </h1>{' '} */}
           </Typography>
 
           {/* Desktop Navigation */}

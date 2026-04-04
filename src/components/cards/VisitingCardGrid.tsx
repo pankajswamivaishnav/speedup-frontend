@@ -10,7 +10,7 @@ interface VisitingCardGridProps {
 const VisitingCardGrid: React.FC<VisitingCardGridProps> = ({
   cards,
   title = 'Professional Contacts',
-  subTitle = 'Welcome our speed up'
+  subTitle = 'Welcome our SpeedupOra'
 }) => {
   return (
     <div className="max-w-7xl mx-auto px-4 py-12">

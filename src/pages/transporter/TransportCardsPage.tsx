@@ -31,7 +31,7 @@ const TransportCardsPage = () => {
   //-------------------handlers-------------------
   const handleTogglePopup = async (id?: string) => {
     if (transportCardFormPopup.action.open === true) {
-      // refetchTransporterData();
+      refetchCards();
     }
     setTransportCardFormPopup((prev: any) => {
       return {
@@ -46,6 +46,7 @@ const TransportCardsPage = () => {
   // -----------useQuery-----------
   const {
     data: transportCardData,
+    refetch: refetchCards,
     isLoading,
     isFetching
   } = useQuery({

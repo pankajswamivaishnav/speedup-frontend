@@ -117,7 +117,6 @@ const AddManagedDriver = ({
                       onBlur={handleBlur}
                       onChange={handleChange}
                       placeholder="Last Name"
-                      autoFocus
                       inputRef={inputRef}
                       disabled={isDisable}
                     />
@@ -134,7 +133,6 @@ const AddManagedDriver = ({
                       Mobile Number <span style={{ color: 'red' }}>*</span>
                     </InputLabel>
                     <TextField
-                      type="number"
                       fullWidth
                       value={values.mobileNumber}
                       name="mobileNumber"

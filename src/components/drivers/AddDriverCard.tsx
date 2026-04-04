@@ -119,7 +119,6 @@ const AddDriverCard = ({
                       onBlur={handleBlur}
                       onChange={handleChange}
                       placeholder="Driver Last Name"
-                      autoFocus
                       inputRef={inputRef}
                       disabled={isDisable}
                     />
@@ -143,7 +142,6 @@ const AddDriverCard = ({
                       onBlur={handleBlur}
                       onChange={handleChange}
                       placeholder="Driver Number"
-                      autoFocus
                       inputRef={inputRef}
                       disabled={isDisable}
                       inputProps={{ maxLength: 10 }}
@@ -166,7 +164,6 @@ const AddDriverCard = ({
                       onBlur={handleBlur}
                       onChange={handleChange}
                       placeholder="Driver Email"
-                      autoFocus
                       inputRef={inputRef}
                       disabled={isDisable}
                     />
@@ -190,7 +187,6 @@ const AddDriverCard = ({
                       onBlur={handleBlur}
                       onChange={handleChange}
                       placeholder="Truck Number"
-                      autoFocus
                       inputRef={inputRef}
                       disabled={isDisable}
                       inputProps={{ maxLength: 10 }}
@@ -213,7 +209,6 @@ const AddDriverCard = ({
                       onBlur={handleBlur}
                       onChange={handleChange}
                       placeholder="Address"
-                      autoFocus
                       inputRef={inputRef}
                       disabled={isDisable}
                     />
@@ -235,7 +230,6 @@ const AddDriverCard = ({
                       onBlur={handleBlur}
                       onChange={handleChange}
                       placeholder="License Number"
-                      autoFocus
                       inputRef={inputRef}
                       disabled={isDisable}
                       inputProps={{ maxLength: 15 }}

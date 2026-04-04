@@ -51,8 +51,6 @@ const AddDriver = ({
     // eslint-disable-next-line
   }, [isEditMode, existingData]);
 
-  console.log('user--->', user);
-
   return (
     <>
       <Formik
@@ -115,7 +113,6 @@ const AddDriver = ({
                       onBlur={handleBlur}
                       onChange={handleChange}
                       placeholder="Driver Last Name"
-                      autoFocus
                       inputRef={inputRef}
                       disabled={isDisable}
                     />
@@ -139,7 +136,6 @@ const AddDriver = ({
                       onBlur={handleBlur}
                       onChange={handleChange}
                       placeholder="Driver Number"
-                      autoFocus
                       inputRef={inputRef}
                       disabled={isDisable}
                       inputProps={{ maxLength: 10 }}
@@ -164,7 +160,6 @@ const AddDriver = ({
                       onBlur={handleBlur}
                       onChange={handleChange}
                       placeholder="Truck Number"
-                      autoFocus
                       inputRef={inputRef}
                       disabled={isDisable}
                       inputProps={{ maxLength: 10 }}
@@ -189,7 +184,6 @@ const AddDriver = ({
                       onBlur={handleBlur}
                       onChange={handleChange}
                       placeholder="Address"
-                      autoFocus
                       inputRef={inputRef}
                       disabled={isDisable}
                     />
@@ -213,7 +207,6 @@ const AddDriver = ({
                       onBlur={handleBlur}
                       onChange={handleChange}
                       placeholder="License Number"
-                      autoFocus
                       inputRef={inputRef}
                       disabled={isDisable}
                       inputProps={{ maxLength: 15 }}
@@ -238,7 +231,6 @@ const AddDriver = ({
                       onBlur={handleBlur}
                       onChange={handleChange}
                       placeholder="Enter password"
-                      autoFocus
                       inputRef={inputRef}
                       disabled={isDisable}
                     />

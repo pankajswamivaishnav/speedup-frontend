@@ -151,7 +151,7 @@ const Hero = () => {
               };
             })
           }
-          title="How to use SpeedUp"
+          title="How to use SpeedupOra"
           hasPrimaryButton={false}
         >
           <iframe

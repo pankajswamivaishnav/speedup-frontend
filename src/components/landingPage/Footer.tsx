@@ -24,7 +24,10 @@ const Footer = () => {
           <div className="lg:col-span-2">
             <div className="flex items-center gap-2 mb-4">
               <Truck className="w-8 h-8 text-accent-500" />
-              <span className="text-2xl font-bold">SpeedUp</span>
+              <h1 className="text-accent-500 font-bold text-3xl">
+                Speedup<span className="text-white">Ora</span>
+              </h1>
+              {/* <span className="text-2xl font-bold">SpeedupOra</span> */}
             </div>
             <p className="text-white/80 mb-6 max-w-md">
               The complete transport management solution for modern logistics companies. Streamline your operations, track shipments, and

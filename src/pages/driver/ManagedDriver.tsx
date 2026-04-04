@@ -128,13 +128,13 @@ const ManagedDriver = () => {
           <Grid item xs={12} className="flex flex-col xl:flex-row justify-between items-center gap-2 mb-5">
             {/* Left side - Buttons */}
             <div className="flex gap-2 flex-wrap">
-              {user.isPremium === true && (
+              {user.isPremium && user?.isPremium === true && (
                 <Button onClick={() => handleTogglePopup()} variant="outlined">
                   Add Managed Driver
                 </Button>
               )}
 
-              {user.isPremium === true && (
+              {user?.isPremium === true && (
                 <Button onClick={() => handleDownload()} variant="outlined">
                   Download Managed Drivers
                 </Button>

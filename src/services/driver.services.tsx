@@ -31,7 +31,6 @@ class DriverServices {
   async createDriver(data: any) {
     try {
       const response = await axiosServices.post(`api/v1/createDriver`, data);
-      console.log('response in create driver');
       if (response) {
         store.dispatch(
           openSnackbar({
@@ -299,7 +298,7 @@ class DriverServices {
       store.dispatch(
         openSnackbar({
           open: true,
-          message: error.message,
+          message: error.error || error.message,
           variant: 'alert',
           alert: {
             color: 'error'
