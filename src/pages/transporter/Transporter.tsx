@@ -91,6 +91,7 @@ const Transporter = () => {
   } = useQuery({
     queryKey: ['transporters_data', page, limit, debouncedQuery],
     queryFn: async () => {
+      console.log('API CALLED 🔥');
       const response = await TransporterServiceInstance.getAllTransporter(page, limit, debouncedQuery);
       return response;
     },

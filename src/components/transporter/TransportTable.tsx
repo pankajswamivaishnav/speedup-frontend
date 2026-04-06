@@ -105,8 +105,15 @@ const TransportTable = ({
   const handleDeleteTransporter = async (id: string) => {
     try {
       const deleteTransport = await TransporterServiceInstance.deleteTransporter(id);
-      if (deleteTransport && refetchTransporterAllData) {
-        refetchTransporterAllData();
+      if (deleteTransport) {
+        // ✅ CLOSE MODAL
+        setDeleteConfirmModal((prev) => ({
+          ...prev,
+          action: { ...prev.action, open: false }
+        }));
+        console.log('refetchTransporterAllData==>', refetchTransporterAllData);
+        // ✅ REFETCH DATA (THIS WAS MISSING ❗)
+        refetchTransporterAllData?.();
       }
     } catch (error) {
       console.log('Error occured while delete transporter', error);
@@ -148,7 +155,7 @@ const TransportTable = ({
                     <TableCell>{` ${row.first_name} ${row.last_name}`}</TableCell>
                     <TableCell>{row.registrationNumber}</TableCell>
                     <TableCell align="right" sx={{ pr: 3 }}>
-                      {row.officeNumber}
+                      {row.mobileNumber}
                     </TableCell>
                     <TableCell align="right" onClick={() => handleTransporterDetailTogglePopup(row)}>
                       <Tooltip title="full-details">

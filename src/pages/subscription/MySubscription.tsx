@@ -20,9 +20,12 @@ const MySubscription = ({ setValue }: any) => {
     queryKey: ['my_subscription'],
     queryFn: async () => {
       const response = await planServiceInstance.getMySubscription();
-      console.log('response-->', response);
       return response;
-    }
+    },
+    staleTime: 5 * 60 * 1000,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
+    retry: 1
   });
 
   if (isLoading || isFetching) {

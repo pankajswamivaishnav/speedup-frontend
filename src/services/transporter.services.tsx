@@ -70,7 +70,7 @@ class TransporterServices {
             message: 'Transporter deleted successfully',
             variant: 'alert',
             alert: {
-              color: 'info'
+              color: 'primary'
             },
             close: true
           })
@@ -350,7 +350,7 @@ class TransporterServices {
             message: 'Managed transporter deleted successfully',
             variant: 'alert',
             alert: {
-              color: 'info'
+              color: 'primary'
             },
             close: true
           })

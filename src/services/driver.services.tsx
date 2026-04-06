@@ -38,7 +38,7 @@ class DriverServices {
             message: 'Driver created successfully',
             variant: 'alert',
             alert: {
-              color: 'info'
+              color: 'primary'
             },
             close: true
           })
@@ -287,7 +287,7 @@ class DriverServices {
             message: 'Managed driver deleted successfully',
             variant: 'alert',
             alert: {
-              color: 'info'
+              color: 'primary'
             },
             close: true
           })

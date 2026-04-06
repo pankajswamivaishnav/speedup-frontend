@@ -194,6 +194,7 @@ const Dashboard = () => {
                 page={page}
                 setPage={setPage}
                 count={transportersCount}
+                refetchTransporterAllData={fetchData}
               />
             )}
             {/* drivers table */}
@@ -454,6 +455,7 @@ const Dashboard = () => {
                 page={page}
                 setPage={setPage}
                 count={transportersCount}
+                refetchTransporterAllData={fetchData}
               />
             )}
             {/* bilties table */}
@@ -539,6 +541,7 @@ const Dashboard = () => {
                 page={page}
                 setPage={setPage}
                 count={transportersCount}
+                refetchTransporterAllData={fetchData}
               />
             )}
             {/* bilties table */}

@@ -38,7 +38,7 @@ class VendorServices {
             message: 'Vendor created successfully',
             variant: 'alert',
             alert: {
-              color: 'info'
+              color: 'primary'
             },
             close: true
           })
@@ -106,7 +106,7 @@ class VendorServices {
             message: 'Vendor Card created successfully',
             variant: 'alert',
             alert: {
-              color: 'info'
+              color: 'primary'
             },
             close: true
           })
@@ -285,7 +285,7 @@ class VendorServices {
             message: 'Managed vendor deleted successfully',
             variant: 'alert',
             alert: {
-              color: 'info'
+              color: 'primary'
             },
             close: true
           })
