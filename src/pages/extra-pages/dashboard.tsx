@@ -217,6 +217,7 @@ const Dashboard = () => {
                 page={page}
                 setPage={setPage}
                 count={vendorsCount}
+                refetchVendorAllData={fetchData}
               />
             )}
             {/* bilties table */}
@@ -370,6 +371,7 @@ const Dashboard = () => {
                 page={page}
                 setPage={setPage}
                 count={vendorsCount}
+                refetchVendorAllData={fetchData}
               />
             )}
             {/* bilties table */}

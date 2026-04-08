@@ -28,7 +28,7 @@ const Vendor = () => {
   const [vendorFormPopup, setVendorFormPopup] = useState<TUniversalDialogProps>({
     action: {
       open: false,
-      fullScreen: true
+      maxWidth: 'xl'
     },
     title: 'Add Vendor',
     data: { existingData: {}, isEditMode: false }

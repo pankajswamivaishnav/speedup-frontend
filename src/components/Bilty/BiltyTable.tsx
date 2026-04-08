@@ -88,11 +88,11 @@ const BiltyTable = ({
   const handleBiltyDetailTogglePopup = async (biltyData?: any) => {
     const formattedBiltyData = {
       company: {
-        name: biltyData.transportId.transportName,
-        branchCode: biltyData.transportId.registrationNumber || '', // not provided directly
+        name: biltyData?.transportId?.transportName,
+        branchCode: biltyData?.transportId?.registrationNumber || '', // not provided directly
         gstNo: biltyData.gstNumber,
-        panNo: biltyData.transportId.panCardNumber,
-        address: `${biltyData.transportId.transportAddress}, ${biltyData.transportId.city}, ${biltyData.transportId.state} - ${biltyData.transportId.pinCode}`,
+        panNo: biltyData?.transportId.panCardNumber,
+        address: `${biltyData?.transportId.transportAddress}, ${biltyData?.transportId.city}, ${biltyData?.transportId.state} - ${biltyData?.transportId.pinCode}`,
         email: biltyData.transportId.email,
         website: 'pankajswamivaishnav.vercel.app',
         phone: biltyData.transporterNumber
@@ -159,6 +159,8 @@ const BiltyTable = ({
       }
     };
 
+    console.log('formatted bilty data==>', formattedBiltyData);
+
     if (biltiesDetailsPopup.action.open === true) {
       // refetchTransporterData();
     }
@@ -171,6 +173,8 @@ const BiltyTable = ({
       };
     });
   };
+
+  console.log('biltiesDetailsPopup', biltiesDetailsPopup);
 
   const closeBiltyDetailsPopup = () => {
     setBiltyDetailsPopup((prev) => ({
@@ -233,11 +237,11 @@ const BiltyTable = ({
   const handleDownloadIcon = async (biltyData: any) => {
     const formattedBiltyData = {
       company: {
-        name: biltyData.transportId.transportName,
-        branchCode: biltyData.transportId.registrationNumber || '', // not provided directly
+        name: biltyData?.transportId?.transportName,
+        branchCode: biltyData?.transportId?.registrationNumber || '', // not provided directly
         gstNo: biltyData.gstNumber,
-        panNo: biltyData.transportId.panCardNumber,
-        address: `${biltyData.transportId.transportAddress}, ${biltyData.transportId.city}, ${biltyData.transportId.state} - ${biltyData.transportId.pinCode}`,
+        panNo: biltyData?.transportId?.panCardNumber,
+        address: `${biltyData?.transportId?.transportAddress}, ${biltyData?.transportId?.city}, ${biltyData?.transportId?.state} - ${biltyData?.transportId?.pinCode}`,
         email: biltyData.transportId.email,
         website: 'pankajswamivaishnav.vercel.app',
         phone: biltyData.transporterNumber

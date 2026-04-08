@@ -130,6 +130,7 @@ const AddBilty = ({
                       autoFocus
                       inputRef={inputRef}
                       disabled={isDisable}
+                      inputProps={{ maxLength: 10 }}
                     />
                     {touched.driverPhoneNumber && errors.driverPhoneNumber && (
                       <FormHelperText error id="transporter-email-helper">
@@ -173,7 +174,10 @@ const AddBilty = ({
                       value={values.truckNumber}
                       name="truckNumber"
                       onBlur={handleBlur}
-                      onChange={handleChange}
+                      onChange={(e) => {
+                        const upperValue = e.target.value.toUpperCase();
+                        setFieldValue('truckNumber', upperValue);
+                      }}
                       placeholder="Truck Number"
                       autoFocus
                       inputRef={inputRef}

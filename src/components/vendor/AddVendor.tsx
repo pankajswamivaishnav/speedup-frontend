@@ -126,7 +126,6 @@ const AddVendor = ({
                       onBlur={handleBlur}
                       onChange={handleChange}
                       placeholder="Vendor Last Name"
-                      autoFocus
                       inputRef={inputRef}
                       disabled={isDisable}
                     />
@@ -148,7 +147,6 @@ const AddVendor = ({
                       onBlur={handleBlur}
                       onChange={handleChange}
                       placeholder="Vendor email"
-                      autoFocus
                       inputRef={inputRef}
                       disabled={isDisable}
                     />
@@ -167,7 +165,6 @@ const AddVendor = ({
                       onBlur={handleBlur}
                       onChange={handleChange}
                       placeholder="Vendor Phone Number"
-                      autoFocus
                       inputRef={inputRef}
                       disabled={isDisable}
                       inputProps={{ maxLength: 10 }}
@@ -190,7 +187,6 @@ const AddVendor = ({
                       onBlur={handleBlur}
                       onChange={handleChange}
                       placeholder="Vendor Phone Number 2"
-                      autoFocus
                       inputRef={inputRef}
                       disabled={isDisable}
                       inputProps={{ maxLength: 10 }}
@@ -210,7 +206,6 @@ const AddVendor = ({
                       onBlur={handleBlur}
                       onChange={handleChange}
                       placeholder="Vendor Address"
-                      autoFocus
                       inputRef={inputRef}
                       disabled={isDisable}
                     />
