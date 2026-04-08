@@ -115,7 +115,7 @@ const TransportTable = ({
         refetchTransporterAllData?.();
       }
     } catch (error) {
-      console.log('Error occured while delete transporter', error);
+      console.log('Error occurred while delete transporter', error);
     }
   };
 
