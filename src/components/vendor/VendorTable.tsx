@@ -102,6 +102,10 @@ const VendorTable = ({
       const deleteVendor = await VendorServiceInstance.deleteVendor(id);
       if (deleteVendor && refetchVendorAllData) {
         refetchVendorAllData();
+        setDeleteConfirmModal((prev) => ({
+          ...prev,
+          action: { ...prev.action, open: false }
+        }));
       }
     } catch (error) {
       console.log('Error occured while delete transporter', error);

@@ -111,7 +111,6 @@ const TransportTable = ({
           ...prev,
           action: { ...prev.action, open: false }
         }));
-        console.log('refetchTransporterAllData==>', refetchTransporterAllData);
         // ✅ REFETCH DATA (THIS WAS MISSING ❗)
         refetchTransporterAllData?.();
       }
