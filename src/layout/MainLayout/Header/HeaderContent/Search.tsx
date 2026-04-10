@@ -160,7 +160,9 @@ const Search = ({ setQuery, universalSearch = false }: SearchProps) => {
             {hasResults ? (
               groupedResults.map((group) => (
                 <Box key={group.key}>
-                  <Typography sx={{ px: 1.5, pt: 1, pb: 0.5, fontSize: 12, fontWeight: 700, color: 'text.secondary' }}>{group.title}</Typography>
+                  <Typography sx={{ px: 1.5, pt: 1, pb: 0.5, fontSize: 12, fontWeight: 700, color: 'text.secondary' }}>
+                    {group.title}
+                  </Typography>
                   <List dense disablePadding>
                     {group.items.map((item, index) => (
                       <ListItemButton
