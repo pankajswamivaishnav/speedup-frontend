@@ -68,8 +68,10 @@ export const biltiesValidationSchema = Yup.object({
   driverPhoneNumber: Yup.string()
     .required('Driver phone number is required')
     .matches(/^[0-9]{10}$/, 'Driver phone number must be 10 digits'),
-  from: Yup.string().required('Loading place (from) is required'),
-  to: Yup.string().required('Drop point (to) is required'),
+  fromCity: Yup.string().required('From place is required'),
+  fromState: Yup.string().optional(),
+  toCity: Yup.string().required('To place is required'),
+  toState: Yup.string().optional(),
   date: Yup.date().required('Date is required'),
   senderName: Yup.string().required('Sender name is required'),
   senderNumber: Yup.number().required('Sender number is required'),

@@ -20,7 +20,7 @@ const BiltyDocument: React.FC<BiltyDocumentProps> = ({ data, className = '' }) =
         <p className="text-center opacity-90 mb-4">Providing The Best Services & IT Solutions</p>
         <div className="flex justify-between items-center text-sm">
           <span>Branch Code: {data.company.branchCode || 'N/A'}</span>
-          <span>GST No.: {data.company.gstNo || 'N/A'}</span>
+          <span>GST No.: {data?.consignor?.gstNo || 'N/A'}</span>
         </div>
       </Box>
 
@@ -97,7 +97,7 @@ const BiltyDocument: React.FC<BiltyDocumentProps> = ({ data, className = '' }) =
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 m-4">
         <div className="border border-border rounded-lg p-4">
           <h3 className="text-lg font-semibold mb-3 text-transport-header">Consignor (Sender)</h3>
-          <p className="font-semibold mb-1">{data.consignor.name}</p>
+          <p className="font-semibold mb-1">{data.consignor?.name}</p>
           <p className="text-sm text-muted-foreground mb-1">GST: {data.consignor.gstNo || 'N/A'}</p>
           <p className="text-sm text-muted-foreground mb-1">Mobile: {data.consignor.mobile || 'N/A'}</p>
           <p className="text-sm text-muted-foreground">{data.consignor.address}</p>

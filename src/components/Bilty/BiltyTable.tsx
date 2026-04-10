@@ -86,35 +86,49 @@ const BiltyTable = ({
 
   //-------------------handlers-------------------
   const handleBiltyDetailTogglePopup = async (biltyData?: any) => {
+    biltyData.senderInformation =
+      biltyData?.senderName || biltyData?.senderNumber
+        ? {
+            name: biltyData.senderName,
+            number: biltyData.senderNumber
+          }
+        : {};
+    biltyData.receiverInformation =
+      biltyData?.receiverName || biltyData?.receiverNumber
+        ? {
+            name: biltyData.receiverName,
+            number: biltyData.receiverNumber
+          }
+        : {};
     const formattedBiltyData = {
       company: {
         name: biltyData?.transportId?.transportName,
         branchCode: biltyData?.transportId?.registrationNumber || '', // not provided directly
-        gstNo: biltyData.gstNumber,
-        panNo: biltyData?.transportId.panCardNumber,
-        address: `${biltyData?.transportId.transportAddress}, ${biltyData?.transportId.city}, ${biltyData?.transportId.state} - ${biltyData?.transportId.pinCode}`,
-        email: biltyData.transportId.email,
+        gstNo: biltyData?.gstNumber,
+        panNo: biltyData?.transportId?.panCardNumber,
+        address: `${biltyData?.transportId?.transportAddress}, ${biltyData?.transportId?.city}, ${biltyData?.transportId?.state} - ${biltyData?.transportId?.pinCode}`,
+        email: biltyData?.transportId?.email,
         website: 'pankajswamivaishnav.vercel.app',
-        phone: biltyData.transporterNumber
+        phone: biltyData?.transporterNumber
       },
-      lrDate: moment(biltyData.date).format('DD-MM-YYYY'),
-      lrNo: biltyData.biltyNumber,
-      truckVehicleNo: biltyData.truckNumber,
+      lrDate: moment(biltyData?.date).format('DD-MM-YYYY'),
+      lrNo: biltyData?.biltyNumber,
+      truckVehicleNo: biltyData?.truckNumber,
       transportMode: 'By Road',
-      from: biltyData.from,
-      to: biltyData.to,
+      from: biltyData?.from,
+      to: biltyData?.to,
       deliveryType: '', // not present
-      paymentStatus: biltyData.paymentType ? 'Paid' : 'Unpaid', // simple assumption
+      paymentStatus: biltyData?.paymentType ? 'Paid' : 'Unpaid', // simple assumption
       consignor: {
-        name: biltyData.senderInformation.name,
-        gstNo: '', // not available
-        mobile: biltyData.senderInformation.number,
+        name: biltyData?.senderInformation?.name,
+        gstNo: biltyData?.gstNumber || '', // not available
+        mobile: biltyData?.senderInformation?.number,
         address: '' // not sender-specific address, but for display
       },
       consignee: {
-        name: biltyData.receiverInformation.name,
+        name: biltyData?.receiverInformation?.name,
         gstNo: '', // not available
-        mobile: biltyData.receiverInformation.number,
+        mobile: biltyData?.receiverInformation?.number,
         address: `` // not exact consignee address
       },
       insuranceDetails: 'Insurance details not available or not insured.',
@@ -159,8 +173,6 @@ const BiltyTable = ({
       }
     };
 
-    console.log('formatted bilty data==>', formattedBiltyData);
-
     if (biltiesDetailsPopup.action.open === true) {
       // refetchTransporterData();
     }
@@ -173,8 +185,6 @@ const BiltyTable = ({
       };
     });
   };
-
-  console.log('biltiesDetailsPopup', biltiesDetailsPopup);
 
   const closeBiltyDetailsPopup = () => {
     setBiltyDetailsPopup((prev) => ({

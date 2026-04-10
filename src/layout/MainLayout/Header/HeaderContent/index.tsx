@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 
 // material-ui
 import { Theme } from '@mui/material/styles';
@@ -23,8 +23,6 @@ import { MenuOrientation } from 'types/config';
 
 const HeaderContent = () => {
   const { menuOrientation } = useConfig();
-  const [query, setQuery] = useState<string>('');
-  console.log('query index header', query);
   const downLG = useMediaQuery((theme: Theme) => theme.breakpoints.down('lg'));
 
   const megaMenu = useMemo(() => <MegaMenuSection />, []);
@@ -32,7 +30,7 @@ const HeaderContent = () => {
   return (
     <>
       {menuOrientation === MenuOrientation.HORIZONTAL && !downLG && <DrawerHeader open={true} />}
-      {!downLG && <Search setQuery={setQuery} />}
+      {!downLG && <Search universalSearch />}
       {!downLG && megaMenu}
       {downLG && <Box sx={{ width: '100%', ml: 1 }} />}
 

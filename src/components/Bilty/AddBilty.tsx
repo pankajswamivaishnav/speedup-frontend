@@ -2,7 +2,7 @@
 import { Autocomplete, Button, FormHelperText, TextField } from '@mui/material';
 import { Box, Grid, InputLabel, Stack } from '@mui/material';
 import { Formik } from 'formik';
-import { RefObject, useEffect, useState } from 'react';
+import { RefObject, useEffect, useRef, useState } from 'react';
 import { useOutletContext } from 'react-router';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -15,6 +15,74 @@ import { biltiesValidationSchema } from 'pages/validation/validation';
 function useInputRef() {
   return useOutletContext<RefObject<HTMLInputElement>>();
 }
+
+const nominatimSuggestionListSx = {
+  position: 'absolute' as const,
+  top: '100%',
+  left: 0,
+  right: 0,
+  background: '#fff',
+  border: '1px solid #ccc',
+  maxHeight: '200px',
+  overflowY: 'auto' as const,
+  zIndex: 9999,
+  borderRadius: '4px',
+  marginTop: '4px',
+  listStyle: 'none',
+  padding: 0
+};
+
+const fetchPlaces = async (value: string, setSuggestions: (rows: any[]) => void) => {
+  const res = await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(value)}&format=json&addressdetails=1`, {
+    headers: {
+      'User-Agent': 'SpeeduporaTMS/1.0'
+    }
+  });
+  const data = await res.json();
+  setSuggestions(Array.isArray(data) ? data : []);
+};
+
+const applyPlaceToFrom = (place: any, setFieldValue: (f: string, v: any) => void, setSuggestions: (rows: any[]) => void) => {
+  const addr = place.address || {};
+  const city =
+    addr.city ||
+    addr.town ||
+    addr.village ||
+    addr.municipality ||
+    addr.county ||
+    (typeof place.display_name === 'string' ? place.display_name.split(',')[0]?.trim() : '');
+  const stateName = addr.state || addr.region || '';
+  const district = addr.state_district || addr.county || '';
+  setFieldValue('fromCity', city);
+  setFieldValue('fromDistrict', district);
+  setFieldValue('fromPinCode', addr.postcode || '');
+  setFieldValue('fromState', stateName);
+  setFieldValue('fromCountry', addr.country || '');
+  setFieldValue('fromLat', place?.lat || '');
+  setFieldValue('fromLong', place?.lon || '');
+  setSuggestions([]);
+};
+
+const applyPlaceToTo = (place: any, setFieldValue: (f: string, v: any) => void, setSuggestions: (rows: any[]) => void) => {
+  const addr = place.address || {};
+  const city =
+    addr.city ||
+    addr.town ||
+    addr.village ||
+    addr.municipality ||
+    addr.county ||
+    (typeof place.display_name === 'string' ? place.display_name.split(',')[0]?.trim() : '');
+  const stateName = addr.state || addr.region || '';
+  const district = addr.state_district || addr.county || '';
+  setFieldValue('toCity', city);
+  setFieldValue('toDistrict', district);
+  setFieldValue('toPinCode', addr.postcode || '');
+  setFieldValue('toState', stateName);
+  setFieldValue('toCountry', addr.country || '');
+  setFieldValue('toLat', place?.lat || '');
+  setFieldValue('toLong', place?.lon || '');
+  setSuggestions([]);
+};
 
 const AddBilty = ({
   onClose,
@@ -32,12 +100,29 @@ const AddBilty = ({
   refetchBilties?: () => void;
 }) => {
   const inputRef = useInputRef();
+  const [fromSuggestions, setFromSuggestions] = useState<any[]>([]);
+  const [toSuggestions, setToSuggestions] = useState<any[]>([]);
+  const fromDebounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const toDebounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
   const [initialValues, setInitialValues] = useState({
     transporterNumber: '',
     truckNumber: '',
     driverName: '',
-    from: '',
-    to: '',
+    fromCity: '',
+    fromDistrict: '',
+    fromState: '',
+    fromPinCode: '',
+    fromCountry: '',
+    fromLat: '',
+    fromLong: '',
+    toCity: '',
+    toDistrict: '',
+    toState: '',
+    toPinCode: '',
+    toCountry: '',
+    toLat: '',
+    toLong: '',
     brokingCharge: '',
     driverPhoneNumber: '',
     senderNumber: '',
@@ -60,31 +145,59 @@ const AddBilty = ({
   // Pre-fill form when editing
   useEffect(() => {
     if (isEditMode && existingData) {
-      setInitialValues({
-        ...initialValues,
-        ...existingData.transporterData
-      });
+      const d = existingData.transporterData || {};
+      setInitialValues((prev) => ({
+        ...prev,
+        ...d,
+        fromCity: d.fromCity ?? '',
+        fromDistrict: d.fromDistrict ?? '',
+        fromState: d.fromState ?? '',
+        fromPinCode: d.fromPinCode ?? '',
+        fromCountry: d.fromCountry ?? '',
+        fromLat: d.fromLat ?? '',
+        fromLong: d.fromLong ?? '',
+        toCity: d.toCity ?? '',
+        toDistrict: d.toDistrict ?? '',
+        toState: d.toState ?? '',
+        toPinCode: d.toPinCode ?? '',
+        toCountry: d.toCountry ?? '',
+        toLat: d.toLat ?? '',
+        toLong: d.toLong ?? ''
+      }));
     }
     // eslint-disable-next-line
   }, [isEditMode, existingData]);
+
+  useEffect(() => {
+    return () => {
+      if (fromDebounceRef.current) clearTimeout(fromDebounceRef.current);
+      if (toDebounceRef.current) clearTimeout(toDebounceRef.current);
+    };
+  }, []);
   return (
     <>
       <Formik
         initialValues={initialValues}
         enableReinitialize={true}
         validationSchema={biltiesValidationSchema}
-        onSubmit={async (values, { setErrors, setStatus, setSubmitting, setFieldValue }) => {
+        onSubmit={async (values, { setSubmitting }) => {
           setSubmitting(true);
-          let response;
-          if (isEditMode) {
-            response = await biltyServiceInstance.createBilty(values);
-          } else {
-            response = await biltyServiceInstance.createBilty(values);
-          }
-          if (response) {
-            onClose(true);
+          const from = [values.fromCity, values.fromDistrict, values.fromState].filter(Boolean).join(', ') || (values as any).from || '';
+          const to = [values.toCity, values.toDistrict, values.toState].filter(Boolean).join(', ') || (values as any).to || '';
+          const payload = {
+            ...values,
+            from,
+            to,
+            date: moment.isMoment(values.date) ? values.date.toISOString() : values.date
+          };
+          try {
+            const response = await biltyServiceInstance.createBilty(payload);
+            if (response) {
+              onClose(true);
+              refetchBilties && refetchBilties();
+            }
+          } finally {
             setSubmitting(false);
-            refetchBilties && refetchBilties();
           }
         }}
       >
@@ -152,7 +265,6 @@ const AddBilty = ({
                       onBlur={handleBlur}
                       onChange={handleChange}
                       placeholder="Driver Name"
-                      autoFocus
                       inputRef={inputRef}
                       disabled={isDisable}
                     />
@@ -179,7 +291,6 @@ const AddBilty = ({
                         setFieldValue('truckNumber', upperValue);
                       }}
                       placeholder="Truck Number"
-                      autoFocus
                       inputRef={inputRef}
                       disabled={isDisable}
                       inputProps={{ maxLength: 15 }}
@@ -192,49 +303,209 @@ const AddBilty = ({
                   </Stack>
                 </Grid>
                 <Grid item xs={12} sm={6} spacing={3}>
-                  <Stack spacing={1.25}>
-                    <InputLabel htmlFor="from">
-                      From <span style={{ color: 'red' }}>*</span>
+                  <Stack spacing={1.25} sx={{ position: 'relative' }}>
+                    <InputLabel htmlFor="fromCity">
+                      From pincode / place <span style={{ color: 'red' }}>*</span>
                     </InputLabel>
                     <TextField
                       fullWidth
-                      id="from"
-                      value={values.from}
-                      name="from"
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      placeholder="Enter starting point (From)"
-                      autoFocus
-                      inputRef={inputRef}
+                      id="fromCity"
+                      name="fromCity"
+                      value={values.fromCity}
                       disabled={isDisable}
+                      onChange={(e) => {
+                        handleChange(e);
+                        const value = e.target.value;
+                        if (fromDebounceRef.current) clearTimeout(fromDebounceRef.current);
+                        fromDebounceRef.current = setTimeout(() => {
+                          if (value.length > 2) {
+                            fetchPlaces(value, setFromSuggestions);
+                          } else {
+                            setFromSuggestions([]);
+                          }
+                        }, 300);
+                      }}
+                      onBlur={handleBlur}
+                      placeholder="Search pincode or place (from)"
+                      autoComplete="off"
                     />
-                    {touched.from && errors.from && (
-                      <FormHelperText error id="from-helper">
-                        {errors.from}
+                    {fromSuggestions.length > 0 && (
+                      <ul style={nominatimSuggestionListSx}>
+                        {fromSuggestions.map((place: any, index: number) => (
+                          <li
+                            key={place.place_id ?? index}
+                            onMouseDown={(e) => {
+                              e.preventDefault();
+                              applyPlaceToFrom(place, setFieldValue, setFromSuggestions);
+                            }}
+                            style={{ padding: '10px', cursor: 'pointer' }}
+                            onMouseEnter={(e) => (e.currentTarget.style.background = '#f5f5f5')}
+                            onMouseLeave={(e) => (e.currentTarget.style.background = '#fff')}
+                          >
+                            {place.display_name}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                    {touched.fromCity && errors.fromCity && (
+                      <FormHelperText error id="from-city-helper">
+                        {errors.fromCity}
+                      </FormHelperText>
+                    )}
+                  </Stack>
+                </Grid>
+                <Grid item xs={12} sm={6} spacing={3}>
+                  <Stack spacing={1.25} sx={{ position: 'relative' }}>
+                    <InputLabel htmlFor="toCity">
+                      To pincode / place <span style={{ color: 'red' }}>*</span>
+                    </InputLabel>
+                    <TextField
+                      fullWidth
+                      id="toCity"
+                      name="toCity"
+                      value={values.toCity}
+                      disabled={isDisable}
+                      onChange={(e) => {
+                        handleChange(e);
+                        const value = e.target.value;
+                        if (toDebounceRef.current) clearTimeout(toDebounceRef.current);
+                        toDebounceRef.current = setTimeout(() => {
+                          if (value.length > 2) {
+                            fetchPlaces(value, setToSuggestions);
+                          } else {
+                            setToSuggestions([]);
+                          }
+                        }, 300);
+                      }}
+                      onBlur={handleBlur}
+                      placeholder="Search pincode or place (to)"
+                      autoComplete="off"
+                    />
+                    {toSuggestions.length > 0 && (
+                      <ul style={nominatimSuggestionListSx}>
+                        {toSuggestions.map((place: any, index: number) => (
+                          <li
+                            key={place.place_id ?? index}
+                            onMouseDown={(e) => {
+                              e.preventDefault();
+                              applyPlaceToTo(place, setFieldValue, setToSuggestions);
+                            }}
+                            style={{ padding: '10px', cursor: 'pointer' }}
+                            onMouseEnter={(e) => (e.currentTarget.style.background = '#f5f5f5')}
+                            onMouseLeave={(e) => (e.currentTarget.style.background = '#fff')}
+                          >
+                            {place.display_name}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                    {touched.toCity && errors.toCity && (
+                      <FormHelperText error id="to-city-helper">
+                        {errors.toCity}
                       </FormHelperText>
                     )}
                   </Stack>
                 </Grid>
                 <Grid item xs={12} sm={6} spacing={3}>
                   <Stack spacing={1.25}>
-                    <InputLabel htmlFor="to">
-                      To <span style={{ color: 'red' }}>*</span>
+                    <InputLabel htmlFor="fromPinCode">From pincode</InputLabel>
+                    <TextField
+                      fullWidth
+                      id="fromPinCode"
+                      name="fromPinCode"
+                      value={values.fromPinCode}
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      placeholder="Pincode"
+                      disabled={isDisable}
+                    />
+                  </Stack>
+                </Grid>
+                <Grid item xs={12} sm={6} spacing={3}>
+                  <Stack spacing={1.25}>
+                    <InputLabel htmlFor="toPinCode">To pincode</InputLabel>
+                    <TextField
+                      fullWidth
+                      id="toPinCode"
+                      name="toPinCode"
+                      value={values.toPinCode}
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      placeholder="Pincode"
+                      disabled={isDisable}
+                    />
+                  </Stack>
+                </Grid>
+                <Grid item xs={12} sm={6} spacing={3}>
+                  <Stack spacing={1.25}>
+                    <InputLabel htmlFor="fromDistrict">From district</InputLabel>
+                    <TextField
+                      fullWidth
+                      id="fromDistrict"
+                      name="fromDistrict"
+                      value={values.fromDistrict}
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      placeholder="District"
+                      disabled={isDisable}
+                    />
+                  </Stack>
+                </Grid>
+                <Grid item xs={12} sm={6} spacing={3}>
+                  <Stack spacing={1.25}>
+                    <InputLabel htmlFor="toDistrict">To district</InputLabel>
+                    <TextField
+                      fullWidth
+                      id="toDistrict"
+                      name="toDistrict"
+                      value={values.toDistrict}
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      placeholder="District"
+                      disabled={isDisable}
+                    />
+                  </Stack>
+                </Grid>
+                <Grid item xs={12} sm={6} spacing={3}>
+                  <Stack spacing={1.25}>
+                    <InputLabel htmlFor="fromState">
+                      From state <span style={{ color: 'red' }}>*</span>
                     </InputLabel>
                     <TextField
                       fullWidth
-                      id="to"
-                      value={values.to}
-                      name="to"
+                      id="fromState"
+                      name="fromState"
+                      value={values.fromState}
                       onBlur={handleBlur}
                       onChange={handleChange}
-                      placeholder="Enter destination (To)"
-                      autoFocus
-                      inputRef={inputRef}
+                      placeholder="State"
                       disabled={isDisable}
                     />
-                    {touched.to && errors.to && (
-                      <FormHelperText error id="to-helper">
-                        {errors.to}
+                    {touched.fromState && errors.fromState && (
+                      <FormHelperText error id="from-state-helper">
+                        {errors.fromState}
+                      </FormHelperText>
+                    )}
+                  </Stack>
+                </Grid>
+                <Grid item xs={12} sm={6} spacing={3}>
+                  <Stack spacing={1.25}>
+                    <InputLabel htmlFor="toState">
+                      To state <span style={{ color: 'red' }}>*</span>
+                    </InputLabel>
+                    <TextField
+                      fullWidth
+                      id="toState"
+                      name="toState"
+                      value={values.toState}
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      placeholder="State"
+                      disabled={isDisable}
+                    />
+                    {touched.toState && errors.toState && (
+                      <FormHelperText error id="to-state-helper">
+                        {errors.toState}
                       </FormHelperText>
                     )}
                   </Stack>
@@ -252,7 +523,6 @@ const AddBilty = ({
                       onBlur={handleBlur}
                       onChange={handleChange}
                       placeholder="Sender Name"
-                      autoFocus
                       inputRef={inputRef}
                       disabled={isDisable}
                     />
@@ -276,7 +546,6 @@ const AddBilty = ({
                       onBlur={handleBlur}
                       onChange={handleChange}
                       placeholder="Sender Number"
-                      autoFocus
                       inputRef={inputRef}
                       disabled={isDisable}
                       inputProps={{ maxLength: 10 }}
@@ -301,7 +570,6 @@ const AddBilty = ({
                       onBlur={handleBlur}
                       onChange={handleChange}
                       placeholder="Receiver Name"
-                      autoFocus
                       inputRef={inputRef}
                       disabled={isDisable}
                     />
@@ -325,7 +593,6 @@ const AddBilty = ({
                       onBlur={handleBlur}
                       onChange={handleChange}
                       placeholder="Receiver Number"
-                      autoFocus
                       inputRef={inputRef}
                       disabled={isDisable}
                       inputProps={{ maxLength: 10 }}
@@ -350,7 +617,6 @@ const AddBilty = ({
                       onBlur={handleBlur}
                       onChange={handleChange}
                       placeholder="Transporter Number"
-                      autoFocus
                       inputRef={inputRef}
                       disabled={isDisable}
                       inputProps={{ maxLength: 10 }}
@@ -374,14 +640,13 @@ const AddBilty = ({
                       name="goodsCategory"
                       onBlur={handleBlur}
                       onChange={handleChange}
-                      placeholder="Transporter Number"
-                      autoFocus
+                      placeholder="Goods category"
                       inputRef={inputRef}
                       disabled={isDisable}
                     />
-                    {touched.transporterNumber && errors.transporterNumber && (
-                      <FormHelperText error id="transporter-number-helper">
-                        {errors.transporterNumber}
+                    {touched.goodsCategory && errors.goodsCategory && (
+                      <FormHelperText error id="goods-category-helper">
+                        {errors.goodsCategory}
                       </FormHelperText>
                     )}
                   </Stack>
@@ -399,7 +664,6 @@ const AddBilty = ({
                       onBlur={handleBlur}
                       onChange={handleChange}
                       placeholder="Enter Weight"
-                      autoFocus
                       inputRef={inputRef}
                       disabled={isDisable}
                     />
@@ -423,7 +687,6 @@ const AddBilty = ({
                       onBlur={handleBlur}
                       onChange={handleChange}
                       placeholder="Enter amount (e.g., 45000)"
-                      autoFocus
                       inputRef={inputRef}
                       disabled={isDisable}
                       inputProps={{ maxLength: 8 }}
@@ -448,7 +711,6 @@ const AddBilty = ({
                       onBlur={handleBlur}
                       onChange={handleChange}
                       placeholder="Enter advance amount"
-                      autoFocus
                       inputRef={inputRef}
                       disabled={isDisable}
                       inputProps={{ maxLength: 8 }}
@@ -473,7 +735,6 @@ const AddBilty = ({
                       onBlur={handleBlur}
                       onChange={handleChange}
                       placeholder="Enter remaining amount"
-                      autoFocus
                       inputRef={inputRef}
                       disabled={isDisable}
                       inputProps={{ maxLength: 8 }}
@@ -523,7 +784,6 @@ const AddBilty = ({
                       onBlur={handleBlur}
                       onChange={handleChange}
                       placeholder="Enter Commision amount"
-                      autoFocus
                       inputRef={inputRef}
                       disabled={isDisable}
                       inputProps={{ maxLength: 8 }}
