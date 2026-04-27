@@ -17,7 +17,8 @@ import biltyServiceInstance from 'services/bilty.services';
 import DriverServiceInstance from 'services/driver.services';
 import TransporterServiceInstance from 'services/transporter.services';
 import VendorServiceInstance from 'services/vendor.services';
-
+import PieChart from 'components/shared/PieChart';
+import BarChart from 'components/shared/BarChart';
 // types
 import { ThemeMode } from 'types/config';
 
@@ -564,30 +565,52 @@ const Dashboard = () => {
   };
 
   // ---------- Role-based Render ----------
+  let dashboardContent;
   switch (user?.role) {
     case 'super_admin':
-      return renderSuperAdmin();
+      dashboardContent = renderSuperAdmin();
+      break;
     case 'transporter':
-      return renderTransporter();
+      dashboardContent = renderTransporter();
+      break;
     case 'vendor':
-      return renderVendor();
+      dashboardContent = renderVendor();
+      break;
     case 'driver':
-      return renderDriver();
+      dashboardContent = renderDriver();
+      break;
     default:
-      return (
-        <>
-          <SEO
-            title="Dashboard | Speedupora TMS"
-            description="Speedupora TMS dashboard provides a centralized view of trips, vehicles, drivers, billing status, and daily transport operations."
-            canonicalUrl="https://www.speedupora.com/dashboard"
-            noIndex
-          />
-          <MainCard title="Dashboard">
-            <p>Role not recognized</p>
-          </MainCard>
-        </>
+      dashboardContent = (
+        <MainCard title="Dashboard">
+          <p>Role not recognized</p>
+        </MainCard>
       );
   }
+  return (
+    <>
+      <SEO
+        title="Dashboard | Speedupora TMS"
+        description="Speedupora TMS dashboard provides a centralized view of trips, vehicles, drivers, billing status, and daily transport operations."
+        canonicalUrl="https://www.speedupora.com/dashboard"
+        noIndex
+      />
+      {dashboardContent}
+
+      {/*  bilties Reports  */}
+      <Box className="pr-6">
+        <MainCard title="Turn-Over Reports" className="w-full">
+          <div className="flex flex-col xl:flex-row gap-6">
+            <div className="flex-1">
+              <PieChart />
+            </div>
+            <div className="flex-1">
+              <BarChart />
+            </div>
+          </div>
+        </MainCard>
+      </Box>
+    </>
+  );
 };
 
 export default Dashboard;

@@ -10,9 +10,7 @@ import useAuth from 'hooks/useAuth';
 import BiltyTable from 'components/Bilty/BiltyTable';
 import AddBilty from 'components/Bilty/AddBilty';
 import biltyServiceInstance from 'services/bilty.services';
-import MainCard from 'components/MainCard';
-import PieChart from 'components/shared/PieChart';
-import BarChart from 'components/shared/BarChart';
+// import MainCard from 'components/MainCard';
 import Search from 'layout/MainLayout/Header/HeaderContent/Search';
 import { exportToCsv } from 'utils/download';
 import TransporterServiceInstance from 'services/transporter.services';
@@ -185,20 +183,6 @@ const Bilty = () => {
               </Grid>
             </Grid>
           </Grid>
-        </Box>
-        {/*  bilties Reports  */}
-
-        <Box className="pr-6">
-          <MainCard title="Turn-Over Reports" className="w-full">
-            <div className="flex flex-col xl:flex-row gap-6">
-              <div className="flex-1">
-                <PieChart />
-              </div>
-              <div className="flex-1">
-                <BarChart />
-              </div>
-            </div>
-          </MainCard>
         </Box>
       </Grid>
       {/* -----------Universal dialog for open add transport page----------------*/}
